@@ -1,0 +1,17 @@
+# הגדרות פריסה ל-Netlify — Multi Brawn
+[build]
+  publish = "."                       # הקבצים הסטטיים מוגשים משורש הריפו
+  functions = "netlify/functions"     # פונקציות השרת (לא נגישות ככתובת סטטית)
+
+# כתובת נוחה לפונקציה (אופציונלי): /api/unlock → הפונקציה
+[[redirects]]
+  from = "/api/unlock"
+  to = "/.netlify/functions/unlock"
+  status = 200
+
+# מניעת אינדוקס של עמוד המדריך במנועי חיפוש
+[[headers]]
+  for = "/Guide.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"

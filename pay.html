@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תשלום ורכישה | Multi Brawn</title>
+  <meta name="description" content="תשלום מאובטח ב-99 ₪ דרך Bit וקבלת גישה למדריך המלא של Multi Brawn." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@300;400;500;700;800&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--purple:#7b2d8b;--purple2:#9c3fb5;--fuchsia:#c2185b;--gold:#d4a853;--cream:#fdf6ee;--text:#2d1a3e;--muted:#7a6880}
+    body{font-family:'Heebo',sans-serif;direction:rtl;color:var(--text);min-height:100vh;
+      background:linear-gradient(180deg,#fdf6ee 0%,#f9ede3 40%,#f5e8f0 70%,#efe8f8 100%)}
+    .wrap{max-width:620px;margin:0 auto;padding:28px 16px 70px}
+    a.back{color:var(--purple);text-decoration:none;font-size:.85rem;font-weight:600}
+    h1{font-family:'Frank Ruhl Libre',serif;font-size:clamp(1.5rem,5vw,2.2rem);font-weight:900;margin:16px 0 6px}
+    h1 span{color:var(--fuchsia)}
+    .muted{color:var(--muted);font-size:.9rem;line-height:1.6}
+    .card{background:rgba(255,250,245,.95);border:1px solid rgba(212,168,83,.2);border-radius:4px;padding:26px;margin:20px 0;
+      box-shadow:0 4px 32px rgba(123,45,139,.08);position:relative}
+    .card::before{content:'';position:absolute;inset:7px;border:1px solid rgba(194,24,91,.13);pointer-events:none}
+    .card>*{position:relative;z-index:1}
+    h2{font-family:'Frank Ruhl Libre',serif;font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .num{display:inline-flex;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;font-weight:800;align-items:center;justify-content:center}
+    .price{font-family:'Frank Ruhl Libre',serif;font-size:2.2rem;font-weight:900;color:var(--purple)}
+    .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;font-weight:800;font-size:1.05rem;padding:15px;border-radius:100px;border:none;cursor:pointer;transition:transform .2s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-bit{background:#00b5a5;color:#fff;box-shadow:0 6px 22px rgba(0,181,165,.4)}
+    .btn-guide{background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;box-shadow:0 6px 22px rgba(123,45,139,.38)}
+    .field{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(123,45,139,.25);background:#fff;color:var(--text);font-size:1.1rem;text-align:center;letter-spacing:2px;margin:10px 0}
+    .field:focus{outline:2px solid var(--fuchsia)}
+    .msg{font-size:.9rem;min-height:20px;text-align:center;margin-top:6px}
+    .err{color:#c2185b}.ok{color:#2e7d32}
+    .divider{height:1px;background:rgba(212,168,83,.3);margin:14px 0}
+    .wa{color:var(--purple);font-weight:600;text-decoration:none}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="index.html">→ חזרה לעמוד הבית</a>
+    <h1>רכישת המדריך · <span>99 ₪</span></h1>
+    <p class="muted">שני שלבים פשוטים: משלמים ב-Bit, ואז מזינים את קוד הגישה שמתקבל.</p>
+
+    <!-- שלב 1 -->
+    <section class="card">
+      <h2><span class="num">1</span>תשלום מאובטח דרך Bit</h2>
+      <p class="muted" style="margin:10px 0;">סכום לתשלום: <span class="price">99 ₪</span></p>
+      <!-- ⚠️ זהו לינק ה-Bit מהקובץ שלך. החליפי אם צריך. -->
+      <a class="btn btn-bit" href="https://www.bitpay.co.il/app/pay/multibrawn" target="_blank" rel="noopener">💳 לתשלום ב-Bit · 99 ₪</a>
+      <p class="muted" style="font-size:.82rem;margin-top:12px;">
+        לאחר התשלום תקבלי <b>קוד גישה אישי</b> בוואטסאפ. שמרי אותו והזיני אותו בשלב 2.
+      </p>
+    </section>
+
+    <!-- שלב 2 -->
+    <section class="card">
+      <h2><span class="num">2</span>כניסה למדריך עם קוד הגישה</h2>
+      <p class="muted" style="margin:10px 0;">כבר שילמת וקיבלת קוד? הזיני אותו כאן:</p>
+      <input class="field" id="code" type="text" inputmode="latin" autocomplete="off" placeholder="קוד גישה" />
+      <button class="btn btn-guide" id="unlockBtn">פתחי את המדריך 🔓</button>
+      <p class="msg err" id="msg"></p>
+      <div class="divider"></div>
+      <p class="muted" style="font-size:.8rem;">
+        לא קיבלת קוד? כתבי לנו ב<a class="wa" href="https://wa.me/972523983394?text=שילמתי%20ומבקשת%20קוד%20גישה%20למדריך" target="_blank">וואטסאפ</a>
+        ונשלח אותו מיד לאחר אימות התשלום.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const btn = document.getElementById('unlockBtn');
+    const msg = document.getElementById('msg');
+    const input = document.getElementById('code');
+    async function unlock(){
+      const code = input.value.trim();
+      if(!code){ msg.className='msg err'; msg.textContent='נא להזין קוד גישה.'; return; }
+      btn.disabled = true; msg.className='msg'; msg.textContent='בודק...';
+      try{
+        const res = await fetch('/.netlify/functions/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});
+        if(res.ok){
+          localStorage.setItem('mb_access_code', code);
+          msg.className='msg ok'; msg.textContent='הקוד אומת! מעבירים אותך למדריך...';
+          window.location.href='Guide.html';
+        } else {
+          const d = await res.json().catch(()=>({}));
+          msg.className='msg err'; msg.textContent = d.error || 'קוד שגוי. בדקי שוב או פני אלינו.';
+        }
+      } catch(e){ msg.className='msg err'; msg.textContent='שגיאת רשת. נסי שוב בעוד רגע.'; }
+      finally{ btn.disabled = false; }
+    }
+    btn.addEventListener('click', unlock);
+    input.addEventListener('keydown', e=>{ if(e.key==='Enter') unlock(); });
+  </script>
+</body>
+</html>

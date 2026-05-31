@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>המדריך המלא | Multi Brawn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@300;400;500;700;800;900&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
+  <!--
+    ⬇️⬇️⬇️  הוראה חשובה  ⬇️⬇️⬇️
+    העתיקי את כל בלוק ה-<style>...</style> מהקובץ המקורי שלך (Guide.html שהכנת)
+    והדביקי אותו כאן, מתחת לשורה הזו. זה מה שנותן למדריך את העיצוב המלא.
+  -->
+  <style>
+    /* עיצוב בסיסי לשער הכניסה בלבד — אל תמחקי */
+    body{font-family:'Heebo',sans-serif;direction:rtl;margin:0;background:#efe8f8}
+    #mb-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;
+      background:linear-gradient(180deg,#fdf6ee 0%,#f5e8f0 60%,#efe8f8 100%)}
+    #mb-gate .box{background:rgba(255,250,245,.97);border:1px solid rgba(212,168,83,.3);border-radius:4px;
+      padding:30px 26px;max-width:380px;width:100%;text-align:center;box-shadow:0 8px 48px rgba(123,45,139,.15);position:relative}
+    #mb-gate .box::before{content:'';position:absolute;inset:8px;border:1px dashed rgba(194,24,91,.2);pointer-events:none}
+    #mb-gate .box>*{position:relative;z-index:1}
+    #mb-gate .logo{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#7b2d8b,#9c3fb5);color:#fff;
+      font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+    #mb-gate h1{font-family:'Frank Ruhl Libre',serif;font-size:1.4rem;color:#2d1a3e;margin:0 0 6px}
+    #mb-gate p{color:#7a6880;font-size:.88rem;line-height:1.6;margin:0 0 14px}
+    #mb-gate input{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(123,45,139,.25);font-size:1.1rem;text-align:center;letter-spacing:2px;margin-bottom:12px}
+    #mb-gate input:focus{outline:2px solid #c2185b}
+    #mb-gate button{width:100%;padding:14px;border:none;border-radius:100px;cursor:pointer;font-weight:800;font-size:1rem;
+      background:linear-gradient(135deg,#7b2d8b,#9c3fb5);color:#fff}
+    #mb-gate .err{color:#c2185b;font-size:.85rem;min-height:18px;margin:8px 0 0}
+    #mb-gate a{color:#7b2d8b;font-weight:600}
+    #mb-loading{display:none;color:#7a6880}
+    .spinner{border:3px solid rgba(123,45,139,.2);border-top-color:#7b2d8b;border-radius:50%;width:34px;height:34px;animation:spin 1s linear infinite;margin:0 auto 10px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+
+  <!-- ===== שער כניסה (אל תמחקי) ===== -->
+  <div id="mb-gate">
+    <div class="box" id="mb-gate-form">
+      <div class="logo">MB</div>
+      <h1>🔒 גישה למדריך</h1>
+      <p>המדריך פתוח לרוכשים בלבד. הזיני את קוד הגישה שקיבלת לאחר התשלום.</p>
+      <input id="mb-code" type="text" inputmode="latin" autocomplete="off" placeholder="קוד גישה" />
+      <button id="mb-unlock">כניסה למדריך</button>
+      <p class="err" id="mb-err"></p>
+      <p style="font-size:.78rem;margin-top:14px;">עדיין לא רכשת? <a href="pay.html">לרכישת המדריך · 99 ₪</a></p>
+    </div>
+    <div class="box" id="mb-loading"><div class="spinner"></div>טוען...</div>
+  </div>
+
+  <!-- =================================================================== -->
+  <!--  ⬇️⬇️⬇️  הדביקי כאן את כל תוכן 25 השלבים מהקובץ שלך  ⬇️⬇️⬇️           -->
+  <!--  (כל מה שנמצא בין <body> ל-</body> בקובץ המקורי: ה-div.page-wrap,    -->
+  <!--   כפתורי הוואטסאפ וה-<script> של פס ההתקדמות)                        -->
+  <!-- =================================================================== -->
+  <div id="mb-guide" hidden>
+
+    <!-- ======== כאן מתחיל התוכן שלך ======== -->
+
+    <!-- ======== כאן מסתיים התוכן שלך ======== -->
+
+  </div>
+
+  <!-- ===== לוגיקת השער (אל תמחקי) ===== -->
+  <script>
+    (function(){
+      const gate = document.getElementById('mb-gate');
+      const form = document.getElementById('mb-gate-form');
+      const loading = document.getElementById('mb-loading');
+      const guide = document.getElementById('mb-guide');
+      const err = document.getElementById('mb-err');
+      const input = document.getElementById('mb-code');
+      const btn = document.getElementById('mb-unlock');
+
+      function reveal(){ gate.remove(); guide.hidden = false; document.body.style.background=''; }
+      function showForm(){ loading.style.display='none'; form.style.display=''; }
+      function showLoading(){ form.style.display='none'; loading.style.display=''; }
+
+      async function tryCode(code, manual){
+        showLoading();
+        try{
+          const res = await fetch('/.netlify/functions/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});
+          if(res.ok){ localStorage.setItem('mb_access_code', code); reveal(); }
+          else { localStorage.removeItem('mb_access_code'); showForm(); if(manual){ const d=await res.json().catch(()=>({})); err.textContent = d.error || 'קוד שגוי.'; } }
+        } catch(e){ showForm(); if(manual) err.textContent='שגיאת רשת. נסי שוב.'; }
+      }
+
+      btn.addEventListener('click', ()=>{ const c=input.value.trim(); if(!c){err.textContent='נא להזין קוד.';return;} err.textContent=''; tryCode(c,true); });
+      input.addEventListener('keydown', e=>{ if(e.key==='Enter') btn.click(); });
+
+      const saved = localStorage.getItem('mb_access_code');
+      if(saved) tryCode(saved,false); else showForm();
+    })();
+  </script>
+
+</body>
+</html>
