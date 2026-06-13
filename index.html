@@ -8,6 +8,10 @@
 <meta property="og:title" content="מדריך שבת חתן · Multi Brawn">
 <meta property="og:description" content="30 שלבים מוכחים שיהפכו את השבת שלכם לבלתי נשכחת.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://guide.multibrawn.co.il/images/hero.jpg">
+<meta property="og:url" content="https://guide.multibrawn.co.il">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
 <title>שבת חתן מושלמת מתחילה כאן · Multi Brawn</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -174,6 +178,24 @@ footer .links{margin:14px 0;display:flex;gap:18px;justify-content:center;flex-wr
 footer .links a{color:var(--muted)}
 footer .links a:hover{color:var(--fuchsia)}
 
+/* sticky scroll CTA bar */
+.sticky-cta{position:fixed;top:0;left:0;right:0;z-index:1001;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);box-shadow:0 6px 22px rgba(123,45,139,.14);transform:translateY(-100%);transition:transform .35s cubic-bezier(.2,.8,.2,1);border-bottom:1px solid var(--line)}
+.sticky-cta.show{transform:none}
+.sticky-cta .in{max-width:1040px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
+.sticky-cta .logo{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:19px;color:var(--ink)}
+.sticky-cta .logo span{color:var(--fuchsia)}
+.sticky-cta .price{margin-right:auto;font-weight:900;color:var(--purple);font-size:15px}
+.sticky-cta .price s{color:var(--muted);font-weight:400;font-size:13px}
+.sticky-cta .btn{padding:11px 22px;font-size:15px;box-shadow:0 8px 20px rgba(255,0,144,.35)}
+@media(max-width:520px){.sticky-cta .logo,.sticky-cta .price{display:none}.sticky-cta .btn{width:100%;justify-content:center}}
+
+/* Shabbat candles motif */
+.candles{position:relative;z-index:2;display:flex;justify-content:center;gap:30px;margin-bottom:24px}
+.candle{position:relative;width:14px;height:54px;border-radius:4px 4px 2px 2px;background:linear-gradient(#fff0f7,#ffd9ef);box-shadow:0 0 18px rgba(255,217,239,.4)}
+.candle::before{content:"";position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:10px;height:20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#fff,#ffd23f 45%,#ff8a00 80%);box-shadow:0 0 22px 6px rgba(255,180,40,.6);animation:flame 1.8s ease-in-out infinite alternate}
+.candle:nth-child(2)::before{animation-delay:.4s}
+@keyframes flame{0%{transform:translateX(-50%) scale(1) rotate(-2deg)}100%{transform:translateX(-50%) scale(1.12) rotate(2deg)}}
+
 /* WhatsApp float */
 .wa{position:fixed;bottom:22px;right:18px;z-index:1002;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(37,211,102,.45);animation:wapulse 2.4s infinite}
 .wa svg{width:32px;height:32px;fill:#fff}
@@ -187,10 +209,20 @@ footer .links a:hover{color:var(--fuchsia)}
 </head>
 <body>
 
+<!-- sticky scroll CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="in">
+    <span class="logo">Multi <span>Brawn</span></span>
+    <span class="price"><s>199</s> 99 ₪</span>
+    <button class="btn" data-cta>אני רוצה את המדריך <span class="ar">←</span></button>
+  </div>
+</div>
+
 <!-- ============ HERO ============ -->
 <header class="hero">
   <img class="hero-img" src="images/hero.jpg" alt="" onerror="this.remove()">
   <div class="hero-inner">
+    <div class="candles"><div class="candle"></div><div class="candle"></div></div>
     <span class="brand"><span class="dot"></span> MULTI BRAWN · מדריך פרימיום</span>
     <div class="tagline">השבת שכולם יזכרו</div>
     <h1>שבת חתן מושלמת <span class="glow">מתחילה כאן</span></h1>
@@ -303,7 +335,7 @@ footer .links a:hover{color:var(--fuchsia)}
         <div class="amount">99<span> ₪</span></div>
         <div class="once">תשלום חד־פעמי · חשבונית אוטומטית</div>
         <div style="margin-top:26px"><button class="btn" data-cta>אני רוצה את המדריך <span class="ar">←</span></button></div>
-        <div class="urgency">⏳ מחיר השקה — לזמן מוגבל</div>
+        <div class="urgency">⏳ מחיר השקה נגמר בעוד <b id="countdown" style="font-feature-settings:'tnum';margin-inline-start:4px">48:00:00</b></div>
         <div class="guarantee">🔒 תשלום מאובטח דרך Grow · גישה מיידית לאחר התשלום</div>
       </div>
     </div>
@@ -369,6 +401,28 @@ document.querySelectorAll('.faq-q').forEach(q=>{
 /* reveal on scroll */
 const io = new IntersectionObserver((en)=>{en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* sticky CTA appears after scrolling past the hero */
+const sticky = document.getElementById('stickyCta');
+window.addEventListener('scroll', ()=>{
+  sticky.classList.toggle('show', window.scrollY > window.innerHeight*0.85);
+}, {passive:true});
+
+/* evergreen launch-price countdown — 48h per visitor, persisted */
+(function(){
+  const el = document.getElementById('countdown');
+  if(!el) return;
+  const KEY='mb_launch_deadline', WIN=48*60*60*1000;
+  let deadline = parseInt(localStorage.getItem(KEY)||'0',10);
+  if(!deadline || deadline < Date.now()){ deadline = Date.now()+WIN; localStorage.setItem(KEY, deadline); }
+  const p = n => String(n).padStart(2,'0');
+  function tick(){
+    let d = Math.max(0, deadline - Date.now());
+    const h = Math.floor(d/3600000), m = Math.floor(d%3600000/60000), s = Math.floor(d%60000/1000);
+    el.textContent = `${p(h)}:${p(m)}:${p(s)}`;
+  }
+  tick(); setInterval(tick, 1000);
+})();
 </script>
 </body>
 </html>
