@@ -1,0 +1,116 @@
+{
+  "name": "Multi Brawn — Workflow #2: Payment Received",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mb-payment",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-grow",
+      "name": "Webhook (Grow)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 300],
+      "webhookId": "mb-payment"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "b1", "name": "email", "value": "={{ $json.body.email || $json.body.payerEmail || $json.body.customer?.email || '' }}", "type": "string" },
+            { "id": "b2", "name": "name",  "value": "={{ $json.body.name || $json.body.payerName || $json.body.customer?.name || '' }}", "type": "string" },
+            { "id": "b3", "name": "phone", "value": "={{ $json.body.phone || $json.body.payerPhone || '' }}", "type": "string" },
+            { "id": "b4", "name": "paidAt","value": "={{ $now.format('yyyy-LL-dd HH:mm') }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-payment",
+      "name": "Map Payment",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate an access token that matches the validator inside Guide.html\n// Format: MB-<base36 payload>-<2-char base36 checksum>\nfunction checksum(s){let sum=0;for(let i=0;i<s.length;i++){sum=(sum*31+s.charCodeAt(i))>>>0;}return (sum%1296).toString(36).padStart(2,'0');}\nconst payload=(Date.now().toString(36)+Math.random().toString(36).slice(2,8)).toLowerCase().replace(/[^0-9a-z]/g,'');\nconst base='MB-'+payload;\nconst token=base+'-'+checksum(base);\nconst item=$input.first().json;\nreturn [{ json: { ...item, token, guideLink: 'https://guide.multibrawn.co.il/Guide.html?token='+token, gamesLink: 'https://guide.multibrawn.co.il/mgames.html' } }];"
+      },
+      "id": "gen-token",
+      "name": "Generate Access Token",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": { "__rl": true, "value": "YOUR_GOOGLE_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Leads", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": ["מייל"],
+          "value": {
+            "מייל": "={{ $json.email }}",
+            "סטטוס": "שילם",
+            "תאריך תשלום": "={{ $json.paidAt }}",
+            "הערות": "=token: {{ $json.token }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "sheets-update",
+      "name": "Google Sheets — Mark Paid",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [880, 300],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "YOUR_SHEETS_CRED", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Generate Access Token').item.json.email }}",
+        "subject": "המדריך שלך מוכן! 🌸",
+        "emailType": "html",
+        "message": "<div dir=\"rtl\" style=\"font-family:Arial;color:#1a0020\"><p>שלום {{ $('Generate Access Token').item.json.name }},</p><p>התשלום התקבל בהצלחה! 🎉 הנה הקישור האישי למדריך המלא:</p><p><a href=\"{{ $('Generate Access Token').item.json.guideLink }}\" style=\"background:#FF0090;color:#fff;padding:14px 30px;border-radius:999px;text-decoration:none;font-weight:bold\">📖 פתיחת המדריך</a></p><p>🎁 ובמתנה — 7 משחקי חיבור לשבת:<br><a href=\"{{ $('Generate Access Token').item.json.gamesLink }}\">לפתיחת המשחקים ←</a></p><p>לכל שאלה: 052-398-3394 (וואטסאפ)</p><p>בברכה,<br>ערדית | Multi Brawn 🌸</p></div>",
+        "options": {}
+      },
+      "id": "gmail-guide",
+      "name": "Gmail — Send Guide Link",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [1100, 200],
+      "credentials": { "gmailOAuth2": { "id": "YOUR_GMAIL_CRED", "name": "Gmail account" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v19.0/YOUR_WHATSAPP_PHONE_ID/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $('Generate Access Token').item.json.phone.replace(/^0/, '972').replace(/\\D/g,'') }}\",\n  \"type\": \"text\",\n  \"text\": { \"body\": \"{{ $('Generate Access Token').item.json.name }}, המדריך שלך מוכן! 🌸\\nהקישור האישי:\\n{{ $('Generate Access Token').item.json.guideLink }}\\n\\n🎁 משחקי חיבור במתנה:\\n{{ $('Generate Access Token').item.json.gamesLink }}\" }\n}",
+        "options": {}
+      },
+      "id": "whatsapp-guide",
+      "name": "WhatsApp — Send Guide Link",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 400],
+      "credentials": { "httpHeaderAuth": { "id": "YOUR_WA_CRED", "name": "WhatsApp Cloud API (Bearer token)" } }
+    }
+  ],
+  "connections": {
+    "Webhook (Grow)": { "main": [[{ "node": "Map Payment", "type": "main", "index": 0 }]] },
+    "Map Payment": { "main": [[{ "node": "Generate Access Token", "type": "main", "index": 0 }]] },
+    "Generate Access Token": { "main": [[{ "node": "Google Sheets — Mark Paid", "type": "main", "index": 0 }]] },
+    "Google Sheets — Mark Paid": { "main": [[
+      { "node": "Gmail — Send Guide Link", "type": "main", "index": 0 },
+      { "node": "WhatsApp — Send Guide Link", "type": "main", "index": 0 }
+    ]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "tags": [{ "name": "Multi Brawn" }]
+}

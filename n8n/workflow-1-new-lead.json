@@ -1,0 +1,126 @@
+{
+  "name": "Multi Brawn — Workflow #1: New Lead",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mb-new-lead",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook-tally",
+      "name": "Webhook (Tally)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "mb-new-lead"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "a1", "name": "name",  "value": "={{ $json.body.data?.fields?.find(f => /שם|name/i.test(f.label))?.value || $json.body.name || '' }}", "type": "string" },
+            { "id": "a2", "name": "email", "value": "={{ $json.body.data?.fields?.find(f => /מייל|email/i.test(f.label))?.value || $json.body.email || '' }}", "type": "string" },
+            { "id": "a3", "name": "phone", "value": "={{ $json.body.data?.fields?.find(f => /טלפון|phone/i.test(f.label))?.value || $json.body.phone || '' }}", "type": "string" },
+            { "id": "a4", "name": "eventType", "value": "={{ $json.body.data?.fields?.find(f => /אירוע|event/i.test(f.label))?.value || $json.body.eventType || '' }}", "type": "string" },
+            { "id": "a5", "name": "growLink", "value": "https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA", "type": "string" },
+            { "id": "a6", "name": "date", "value": "={{ $now.format('yyyy-LL-dd HH:mm') }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-fields",
+      "name": "Map Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "value": "YOUR_GOOGLE_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Leads", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "תאריך": "={{ $json.date }}",
+            "שם": "={{ $json.name }}",
+            "מייל": "={{ $json.email }}",
+            "טלפון": "={{ $json.phone }}",
+            "סוג אירוע": "={{ $json.eventType }}",
+            "סטטוס": "ליד חדש",
+            "תאריך תשלום": "",
+            "הערות": ""
+          }
+        },
+        "options": {}
+      },
+      "id": "sheets-append",
+      "name": "Google Sheets — Append Lead",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [680, 300],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "YOUR_SHEETS_CRED", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Map Fields').item.json.email }}",
+        "subject": "ברוכים הבאים ל-Multi Brawn 🌸",
+        "emailType": "html",
+        "message": "<div dir=\"rtl\" style=\"font-family:Arial;color:#1a0020\"><p>שלום {{ $('Map Fields').item.json.name }},</p><p>תודה שפניתם אלינו! 🌸 המדריך הדיגיטלי שלנו מכיל 30 שלבים מוכחים לתכנון שבת חתן/בר מצוה/חתונה מושלמת.</p><p>לקבלת המדריך — להשלמת התשלום (99 ₪):</p><p><a href=\"{{ $('Map Fields').item.json.growLink }}\" style=\"background:#FF0090;color:#fff;padding:14px 30px;border-radius:999px;text-decoration:none;font-weight:bold\">👈 לתשלום וקבלת המדריך</a></p><p>גישה מיידית לאחר התשלום.</p><p>לכל שאלה: 052-398-3394 (וואטסאפ)</p><p>בברכה,<br>ערדית | Multi Brawn 🌸</p></div>",
+        "options": {}
+      },
+      "id": "gmail-customer",
+      "name": "Gmail — Welcome to Customer",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [900, 180],
+      "credentials": { "gmailOAuth2": { "id": "YOUR_GMAIL_CRED", "name": "Gmail account" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "multibrawn@gmail.com",
+        "subject": "=ליד חדש: {{ $('Map Fields').item.json.name }} — {{ $('Map Fields').item.json.eventType }}",
+        "emailType": "html",
+        "message": "<div dir=\"rtl\" style=\"font-family:Arial\"><h3>🌸 ליד חדש נכנס</h3><ul><li><b>שם:</b> {{ $('Map Fields').item.json.name }}</li><li><b>מייל:</b> {{ $('Map Fields').item.json.email }}</li><li><b>טלפון:</b> {{ $('Map Fields').item.json.phone }}</li><li><b>סוג אירוע:</b> {{ $('Map Fields').item.json.eventType }}</li><li><b>תאריך:</b> {{ $('Map Fields').item.json.date }}</li></ul></div>",
+        "options": {}
+      },
+      "id": "gmail-admin",
+      "name": "Gmail — Notify Ardit",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [900, 320],
+      "credentials": { "gmailOAuth2": { "id": "YOUR_GMAIL_CRED", "name": "Gmail account" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v19.0/YOUR_WHATSAPP_PHONE_ID/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $('Map Fields').item.json.phone.replace(/^0/, '972').replace(/\\D/g,'') }}\",\n  \"type\": \"text\",\n  \"text\": { \"body\": \"שלום {{ $('Map Fields').item.json.name }}, קיבלנו את הפנייה ל-Multi Brawn 🌸\\nלתשלום וקבלת המדריך:\\n{{ $('Map Fields').item.json.growLink }}\" }\n}",
+        "options": {}
+      },
+      "id": "whatsapp-customer",
+      "name": "WhatsApp — Send Pay Link",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 460],
+      "credentials": { "httpHeaderAuth": { "id": "YOUR_WA_CRED", "name": "WhatsApp Cloud API (Bearer token)" } }
+    }
+  ],
+  "connections": {
+    "Webhook (Tally)": { "main": [[{ "node": "Map Fields", "type": "main", "index": 0 }]] },
+    "Map Fields": { "main": [[{ "node": "Google Sheets — Append Lead", "type": "main", "index": 0 }]] },
+    "Google Sheets — Append Lead": { "main": [[
+      { "node": "Gmail — Welcome to Customer", "type": "main", "index": 0 },
+      { "node": "Gmail — Notify Ardit", "type": "main", "index": 0 },
+      { "node": "WhatsApp — Send Pay Link", "type": "main", "index": 0 }
+    ]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "tags": [{ "name": "Multi Brawn" }]
+}

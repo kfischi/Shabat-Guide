@@ -5,7 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#FF0090">
 <meta name="description" content="המדריך המלא לשבת חתן — 30 שלבים מעשיים לשבת מושלמת, מאת Multi Brawn.">
+<meta name="robots" content="noindex">
 <title>מדריך שבת חתן · Multi Brawn</title>
+
+<!-- ============================================================
+     ACCESS GATE — runs before paint.
+     Accepts ?token=... from the URL (sent after payment), validates
+     its format/checksum, persists it to localStorage for return
+     visits, then cleans the URL. No valid token → back to landing.
+     NOTE: client-side gating deters casual sharing only. For real
+     protection enable the optional Netlify Function (see SETUP.md).
+     ============================================================ -->
+<script>
+(function(){
+  // Must match the token generator used in N8N (see SETUP.md / n8n workflow #2).
+  // Format: MB-<base36 payload>-<2-char base36 checksum>
+  function checksum(s){
+    var sum=0; for(var i=0;i<s.length;i++){ sum=(sum*31 + s.charCodeAt(i))>>>0; }
+    return (sum % 1296).toString(36).padStart(2,'0');
+  }
+  function valid(t){
+    if(!t || typeof t!=='string') return false;
+    var m = t.match(/^MB-([0-9a-z]+)-([0-9a-z]{2})$/i);
+    if(!m) return false;
+    return checksum('MB-'+m[1].toLowerCase()) === m[2].toLowerCase();
+  }
+  try{
+    var params = new URLSearchParams(location.search);
+    var urlToken = params.get('token');
+    var stored = localStorage.getItem('mb_token');
+    var token = urlToken || stored;
+
+    if(!valid(token)){
+      location.replace('index.html');
+      return;
+    }
+    if(urlToken){
+      localStorage.setItem('mb_token', urlToken);
+      // strip token from the address bar so it isn't shoulder-surfed / shared by copy-paste
+      history.replaceState(null, '', location.pathname);
+    }
+    // mark as authorized; body stays hidden via CSS until this class is set
+    document.documentElement.classList.add('mb-authorized');
+  }catch(e){
+    location.replace('index.html');
+  }
+})();
+</script>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +74,9 @@
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
+/* keep content hidden until the access gate authorizes (avoids flash before redirect) */
+body{visibility:hidden}
+html.mb-authorized body{visibility:visible}
 body{
   font-family:'Heebo',sans-serif;
   background:var(--bg);

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF0090">
+<meta name="robots" content="noindex">
+<title>תודה! · Multi Brawn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Frank+Ruhl+Libre:wght@900&family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--fuchsia:#FF0090;--purple:#7b2d8b;--ink:#1a0020}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Heebo',sans-serif;color:#fff;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px 22px;overflow:hidden;
+  background:radial-gradient(900px 600px at 50% -10%,rgba(255,0,144,.55),transparent 60%),linear-gradient(160deg,#2a0833,#7b2d8b 50%,#1a0020)}
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.4;mix-blend-mode:overlay}
+.card{position:relative;z-index:2;max-width:560px}
+.badge{width:96px;height:96px;border-radius:50%;background:#1fae4d;display:flex;align-items:center;justify-content:center;margin:0 auto 26px;box-shadow:0 16px 40px rgba(31,174,77,.45);animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+.badge svg{width:50px;height:50px;color:#fff}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.tagline{font-family:'Dancing Script',cursive;font-weight:700;font-size:34px;color:#ffd9ef;margin-bottom:6px}
+h1{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(32px,9vw,52px);line-height:1.05;margin-bottom:16px}
+p.lead{font-size:18px;color:rgba(255,255,255,.9);margin-bottom:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:900;font-size:20px;color:#fff;background:linear-gradient(135deg,#7b2d8b,#ff0090);padding:20px 40px;border-radius:999px;box-shadow:0 14px 40px rgba(255,0,144,.5);transition:transform .2s,box-shadow .2s;border:none;cursor:pointer}
+.btn:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(255,0,144,.6)}
+.bonus{margin-top:34px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:24px}
+.bonus .big{font-family:'Dancing Script',cursive;font-size:26px;color:#ffd9ef}
+.bonus h3{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:22px;margin:4px 0 14px}
+.bonus a{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,.4);padding:12px 26px;border-radius:999px;transition:.2s}
+.bonus a:hover{background:#fff;color:var(--purple);border-color:#fff}
+.support{margin-top:30px;font-size:14px;color:rgba(255,255,255,.7)}
+.support a{color:#ffd9ef;font-weight:700}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+  <div class="tagline">איזה כיף 🌸</div>
+  <h1>תודה! התשלום התקבל בהצלחה</h1>
+  <p class="lead">המדריך המלא שלכם מוכן ומחכה. בנוסף, שלחנו לכם מייל והודעת וואטסאפ עם הקישור האישי.</p>
+  <a class="btn" id="open-guide" href="Guide.html">פתח את המדריך עכשיו <span>←</span></a>
+
+  <div class="bonus">
+    <div class="big">ובמתנה</div>
+    <h3>7 משחקי חיבור לשבת 🎲</h3>
+    <a href="mgames.html">לפתיחת המשחקים ←</a>
+  </div>
+
+  <p class="support">שאלה? אנחנו כאן: <a href="https://wa.me/972523983394" target="_blank" rel="noopener">052-398-3394</a></p>
+</div>
+
+<canvas id="confetti"></canvas>
+<script>
+/* Carry the access token from the URL onward to the guide */
+(function(){
+  const token = new URLSearchParams(location.search).get('token');
+  if(token){
+    try{ localStorage.setItem('mb_token', token); }catch(e){}
+    const g = document.getElementById('open-guide');
+    g.href = 'Guide.html?token=' + encodeURIComponent(token);
+  }
+})();
+
+/* confetti */
+(function(){
+  const c=document.getElementById('confetti'),x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;
+  const cols=['#FF0090','#7b2d8b','#ffd9ef','#fff','#ff5fb0'];
+  const P=Array.from({length:130},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,r:5+Math.random()*7,c:cols[Math.floor(Math.random()*cols.length)],vy:2+Math.random()*4,vx:-2+Math.random()*4,rot:Math.random()*6.28,vr:-.2+Math.random()*.4}));
+  let f=0;(function a(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.rot);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);x.restore();});if(f++<300)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height);})();
+})();
+</script>
+</body>
+</html>

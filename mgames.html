@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF0090">
+<meta name="description" content="7 משחקי חיבור לשבת — פעילויות שמחממות את האווירה בין שתי משפחות. מתנה מ-Multi Brawn.">
+<title>משחקי חיבור לשבת · Multi Brawn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--fuchsia:#FF0090;--purple:#7b2d8b;--ink:#1a0020;--muted:#7a6880;--line:#f0e6f0;--shadow:0 10px 40px rgba(123,45,139,.12);--shadow-lg:0 24px 70px rgba(123,45,139,.2)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:#fff;color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.hero{position:relative;text-align:center;color:#fff;padding:80px 22px 70px;overflow:hidden;
+  background:radial-gradient(900px 600px at 80% -10%,rgba(255,0,144,.55),transparent 60%),linear-gradient(160deg,#2a0833,#7b2d8b 50%,#1a0020)}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.4;mix-blend-mode:overlay}
+.hero-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.gift{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 16px;border-radius:999px;font-weight:900;font-size:13px;margin-bottom:22px}
+.tagline{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(24px,6vw,38px);color:#ffd9ef;margin-bottom:8px}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(34px,9vw,60px);line-height:1.05;margin-bottom:14px}
+.hero h1 .glow{color:var(--fuchsia)}
+.hero p{font-size:clamp(16px,4.4vw,20px);color:rgba(255,255,255,.9)}
+.back{display:inline-block;margin-top:24px;color:#ffd9ef;font-weight:700;font-size:15px;border-bottom:1px solid rgba(255,217,239,.4)}
+main{max-width:860px;margin:0 auto;padding:60px 22px 40px}
+.game{background:#fff;border:1px solid var(--line);border-right:5px solid var(--fuchsia);border-radius:18px;padding:26px 24px;margin-bottom:20px;box-shadow:0 6px 22px rgba(123,45,139,.07);transition:transform .25s,box-shadow .25s;display:flex;gap:18px;align-items:flex-start}
+.game:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.game .n{flex:0 0 auto;width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px}
+.game .b{flex:1;min-width:0}
+.game .meta{display:inline-flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.game .meta span{background:#fff0f7;color:var(--fuchsia);font-weight:700;font-size:12px;padding:3px 10px;border-radius:999px}
+.game h3{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:21px;margin-bottom:7px}
+.game p{color:#3a2a40;font-size:15.5px}
+.game .how{color:var(--muted);font-size:14.5px;margin-top:8px}
+.foot-cta{max-width:860px;margin:10px auto 0;padding:0 22px}
+.foot-cta a{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+.foot-cta a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.foot-cta .ico{flex:0 0 auto;width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:26px}
+.foot-cta .t b{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:19px;display:block}
+.foot-cta .t span{color:var(--muted);font-size:14px}
+.foot-cta .ar{margin-right:auto;color:var(--fuchsia);font-size:26px;font-weight:900}
+footer{text-align:center;padding:50px 22px 110px;color:var(--muted);font-size:14px}
+footer .logo{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:22px;color:var(--ink);margin-bottom:6px}
+footer .logo span{color:var(--fuchsia)}
+.wa{position:fixed;bottom:22px;right:18px;z-index:1002;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(37,211,102,.45)}
+.wa svg{width:32px;height:32px;fill:#fff}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <span class="gift">🎁 מתנה מ-Multi Brawn</span>
+    <div class="tagline">שתי משפחות, לב אחד</div>
+    <h1>7 משחקי <span class="glow">חיבור</span> לשבת</h1>
+    <p>שבת חתן מפגישה שתי משפחות שלא תמיד מכירות. המשחקים האלה שוברים את הקרח והופכים זרים לחברים.</p>
+    <a class="back" href="Guide.html">→ חזרה למדריך</a>
+  </div>
+</header>
+
+<main id="games"></main>
+
+<section class="foot-cta reveal">
+  <a href="Guide.html">
+    <div class="ico">📖</div>
+    <div class="t"><b>חזרה למדריך 30 השלבים</b><span>כל מה שצריך כדי שהשבת תהיה מושלמת.</span></div>
+    <div class="ar">‹</div>
+  </a>
+</section>
+
+<footer class="reveal">
+  <div class="logo">Multi <span>Brawn</span></div>
+  <p>משחקי חיבור לשבת · מתנה קטנה לשבת גדולה.</p>
+  <p style="margin-top:6px">שאלות: <a href="https://wa.me/972523983394" style="color:var(--purple);font-weight:700" target="_blank" rel="noopener">052-398-3394</a></p>
+</footer>
+
+<a class="wa" href="https://wa.me/972523983394" target="_blank" rel="noopener" aria-label="וואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.673-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg>
+</a>
+
+<script>
+const GAMES=[
+  {e:"🤝",time:"15 דק׳",ppl:"כל המשפחה",t:"שתי אמיתות ושקר",d:"כל אחד מספר על עצמו שני דברים נכונים ואחד מומצא — והשאר מנחשים מה השקר.",how:"מצוין לפתיחת ארוחת ליל שבת. מתחילים מהחתן והכלה, וממשיכים סביב השולחן."},
+  {e:"🔗",time:"10 דק׳",ppl:"מעורב",t:"מי מצא את הזוג?",d:"לכל אורח פתק עם חצי משפט מוכר. צריך למצוא את מי שמחזיק את החצי השני — וכך מתערבבות המשפחות.",how:"מחלקים פתקים בכניסה לחדר האוכל. הזוגות שנוצרו יושבים יחד."},
+  {e:"💬",time:"20 דק׳",ppl:"שולחן",t:"קופסת השאלות",d:"קופסה עם שאלות חמות: 'מה הזיכרון הכי יפה מילדות?', 'מה למדת השבוע?'. כל אחד שולף ועונה.",how:"מעולה לסעודה שלישית כשהאווירה רגועה. אפשר להכין מראש 30 פתקים."},
+  {e:"🎭",time:"15 דק׳",ppl:"קבוצות",t:"פנטומימה משפחתית",d:"מחלקים לשתי קבוצות מעורבות. כל קבוצה מציגה בפנטומימה רגעים מחיי הזוג, והשנייה מנחשת.",how:"הכינו מראש פתקים: 'ההצעה', 'הדייט הראשון', 'החתונה'. צחוק מובטח."},
+  {e:"⭐",time:"10 דק׳",ppl:"כל המשפחה",t:"מעגל הברכות",d:"יושבים במעגל וכל אחד מברך את החתן או הכלה במשפט אחד מהלב. רגע מרגש שמחבר את כולם.",how:"מתאים בין סעודה שלישית להבדלה. אפשר להקליט (אחרי שבת) כמזכרת."},
+  {e:"🧩",time:"25 דק׳",ppl:"זוגות",t:"חידון 'מי מכיר את הזוג?'",d:"שאלות על החתן והכלה: מאכל אהוב, איפה נפגשו, חלום משותף. הזוג שצובר הכי הרבה נקודות זוכה.",how:"מנחה שואל, המשפחות מתחרות. פרס קטן (ממתק) מוסיף התלהבות."},
+  {e:"🕯️",time:"15 דק׳",ppl:"ילדים + מבוגרים",t:"ציד האוצר של שבת",d:"רשימת רמזים שמובילה את הילדים (עם מבוגר) ברחבי המתחם — ומסתיימת בהפתעה מתוקה.",how:"מושלם לשבת בבוקר כדי להעסיק את הילדים. הכינו 6–8 תחנות עם רמזים."},
+];
+const wrap=document.getElementById('games');
+GAMES.forEach((g,i)=>{
+  const el=document.createElement('article');
+  el.className='game reveal';
+  el.innerHTML=`<div class="n">${g.e}</div><div class="b">
+    <div class="meta"><span>⏱ ${g.time}</span><span>👥 ${g.ppl}</span></div>
+    <h3>${i+1}. ${g.t}</h3><p>${g.d}</p><p class="how">▸ ${g.how}</p></div>`;
+  wrap.appendChild(el);
+});
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
