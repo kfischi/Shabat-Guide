@@ -58,6 +58,8 @@ a{color:inherit;text-decoration:none}
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.4;mix-blend-mode:overlay}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;z-index:0}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:50%;background:linear-gradient(to top,rgba(8,0,12,.85),transparent)}
+.hero-logo{position:absolute;top:20px;right:22px;z-index:3;font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:.5px}
+.hero-logo span{color:var(--fuchsia)}
 .hero-inner{position:relative;z-index:2;max-width:780px;margin:0 auto}
 .brand{display:inline-flex;align-items:center;gap:9px;font-weight:900;letter-spacing:.5px;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 16px;border-radius:999px;margin-bottom:26px;backdrop-filter:blur(8px)}
 .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--fuchsia);box-shadow:0 0 12px var(--fuchsia)}
@@ -220,6 +222,7 @@ footer .links a:hover{color:var(--fuchsia)}
 
 <!-- ============ HERO ============ -->
 <header class="hero">
+  <div class="hero-logo">MB<span>.</span></div>
   <img class="hero-img" src="images/hero.jpg" alt="" onerror="this.remove()">
   <div class="hero-inner">
     <div class="candles"><div class="candle"></div><div class="candle"></div></div>
@@ -243,9 +246,9 @@ footer .links a:hover{color:var(--fuchsia)}
     <h2 class="sec-title h-serif">תכנון שבת חתן זה סיוט.</h2>
     <p class="sec-lead">חודשים של דאגה, עשרות ספקים, מאות פרטים — ומספיק טעות אחת כדי שכל השבת תיפול.</p>
     <div class="pain-grid">
-      <div class="pain-card"><div class="emo">😵‍💫</div><h3>בלבול חדרים</h3><p>מי ישן איפה? סבתא בקומה שלישית בלי מעלית שבת, והזוג עם התינוק בחדר הקטן.</p></div>
-      <div class="pain-card"><div class="emo">📦</div><h3>ספקים שלא מגיעים</h3><p>הזמנת, שילמת, ובשישי בצהריים מגלים שאין מיחם גיבוי ואין למי להתקשר.</p></div>
-      <div class="pain-card"><div class="emo">🙁</div><h3>אורחים לא מרוצים</h3><p>אין פינת ילדים, האקוסטיקה נוראית, והאוכל התקרר על הפלטה כבר בצהריים.</p></div>
+      <div class="pain-card"><div class="emo">🤯</div><h3>לבד מול הכל</h3><p>50 אורחים, אינסוף פרטים — ואתם מתכננים את הכל לבד.</p></div>
+      <div class="pain-card"><div class="emo">😰</div><h3>ספקים וחדרים</h3><p>ספקים שלא מגיעים, חדרים לא מוכנים, ואוכל שלא מספיק.</p></div>
+      <div class="pain-card"><div class="emo">😞</div><h3>בזבוז כסף</h3><p>מבזבזים אלפי שקלים על דברים מיותרים שאפשר היה לחסוך.</p></div>
     </div>
   </div>
 </section>
@@ -257,12 +260,12 @@ footer .links a:hover{color:var(--fuchsia)}
     <h2 class="sec-title h-serif">30 שלבים מוכחים שיהפכו את השבת שלכם לבלתי נשכחת</h2>
     <p class="sec-lead">כל מה שמפיק אירועים מנוסה יודע — מרוכז במדריך אחד, צעד אחר צעד.</p>
     <div class="sol-grid">
-      <div class="sol-card"><div class="emo">🗺️</div><h3>תכנון ואסטרטגיה</h3><p>חזון, נוסחת חדרים ולוח זמנים מדויק.</p></div>
-      <div class="sol-card"><div class="emo">⚙️</div><h3>תפעול ותשתיות</h3><p>פלטות, מיחמים, גיבוי קרח ותיאום ספקים.</p></div>
-      <div class="sol-card"><div class="emo">🍲</div><h3>אוכל ואווירה</h3><p>תפריט חסין פלטה ועמדת קפה 24/6.</p></div>
-      <div class="sol-card"><div class="emo">🪑</div><h3>מרחב ואורחים</h3><p>תאורה, אקוסטיקה ונתיבי הליכה.</p></div>
-      <div class="sol-card"><div class="emo">🧸</div><h3>ילדים ויחס אישי</h3><p>בטיחות, פינת ילדים ופתק אישי בכל חדר.</p></div>
-      <div class="sol-card"><div class="emo">🕯️</div><h3>מלון לעומת מתחם</h3><p>כשרות, בעיות הלכתיות ו-10 שאלות לפני חתימה.</p></div>
+      <div class="sol-card"><div class="emo">📋</div><h3>30 שלבים מסודרים</h3><p>צעד אחר צעד, מהחזון ועד הפרידה — בלי לשכוח כלום.</p></div>
+      <div class="sol-card"><div class="emo">⏰</div><h3>לוח זמנים שישי–מוצ"ש</h3><p>שעה־שעה, מהדלקת נרות ועד הבדלה.</p></div>
+      <div class="sol-card"><div class="emo">💰</div><h3>איך לחסוך אלפי שקלים</h3><p>על מה באמת שווה לשלם — ועל מה לא.</p></div>
+      <div class="sol-card"><div class="emo">🏨</div><h3>מלון או מתחם — מה עדיף</h3><p>היתרונות, החסרונות והשאלות הנכונות.</p></div>
+      <div class="sol-card"><div class="emo">✡️</div><h3>בעיות הלכתיות שחובה לדעת</h3><p>מעלית שבת, נרות, חיישנים ודלתות.</p></div>
+      <div class="sol-card"><div class="emo">🎲</div><h3>7 משחקי חיבור במתנה</h3><p>שמחברים בין שתי המשפחות לאורך השבת.</p></div>
     </div>
   </div>
 </section>
@@ -274,9 +277,9 @@ footer .links a:hover{color:var(--fuchsia)}
     <h2 class="sec-title h-serif">שלושה דברים שלא תמצאו בשום מקום אחר</h2>
     <p class="sec-lead">אלה בדיוק הפרטים שמפילים שבתות — ואצלנו הם מסודרים לכם מראש.</p>
     <div class="prev-grid">
-      <div class="prev-card"><div class="ph pg1"><img src="images/preview-1.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 3</span></div><div class="pb"><h3>לוח זמנים מפורט שישי–שבת–מוצ"ש</h3><p>שעה־שעה, מהדלקת נרות ועד הבדלה. החלק שכולם מחפשים ולא מוצאים.</p></div></div>
-      <div class="prev-card"><div class="ph pg2"><img src="images/preview-2.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 30</span></div><div class="pb"><h3>10 שאלות שחובה לשאול מקום לפני חתימה</h3><p>הרשימה שתחסוך לכם אלפי שקלים ואינסוף הפתעות.</p></div></div>
-      <div class="prev-card"><div class="ph pg3"><img src="images/preview-3.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 29</span></div><div class="pb"><h3>בעיות הלכתיות במלון — מה לבדוק</h3><p>דלתות אלקטרוניות, חיישני תנועה, מעלית שבת ועוד.</p></div></div>
+      <div class="prev-card"><div class="ph pg1"><img src="images/preview-1.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 30</span></div><div class="pb"><h3>10 שאלות שחובה לשאול לפני חתימה</h3><p>הרשימה שתחסוך לכם אלפי שקלים ואינסוף הפתעות.</p></div></div>
+      <div class="prev-card"><div class="ph pg2"><img src="images/preview-2.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 9</span></div><div class="pb"><h3>היפוך ארוחות — למה זה קריטי</h3><p>בשרי מול חלבי, כמה שעות להמתין, ואיך לא ליפול על זה מול האורחים.</p></div></div>
+      <div class="prev-card"><div class="ph pg3"><img src="images/preview-3.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 29</span></div><div class="pb"><h3>בעיות הלכתיות במלון — המדריך המלא</h3><p>דלתות אלקטרוניות, חיישני תנועה, מעלית שבת ועוד.</p></div></div>
     </div>
   </div>
 </section>

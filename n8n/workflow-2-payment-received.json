@@ -35,7 +35,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Generate an access token that matches the validator inside Guide.html\n// Format: MB-<base36 payload>-<2-char base36 checksum>\nfunction checksum(s){let sum=0;for(let i=0;i<s.length;i++){sum=(sum*31+s.charCodeAt(i))>>>0;}return (sum%1296).toString(36).padStart(2,'0');}\nconst payload=(Date.now().toString(36)+Math.random().toString(36).slice(2,8)).toLowerCase().replace(/[^0-9a-z]/g,'');\nconst base='MB-'+payload;\nconst token=base+'-'+checksum(base);\nconst item=$input.first().json;\nreturn [{ json: { ...item, token, guideLink: 'https://guide.multibrawn.co.il/Guide.html?token='+token, gamesLink: 'https://guide.multibrawn.co.il/mgames.html' } }];"
+        "jsCode": "// Generate an access token that matches the validator inside Guide.html\n// Format: MB-<base36 payload>-<2-char base36 checksum>\nfunction checksum(s){let sum=0;for(let i=0;i<s.length;i++){sum=(sum*31+s.charCodeAt(i))>>>0;}return (sum%1296).toString(36).padStart(2,'0');}\nconst payload=(Date.now().toString(36)+Math.random().toString(36).slice(2,8)).toLowerCase().replace(/[^0-9a-z]/g,'');\nconst base='MB-'+payload;\nconst token=base+'-'+checksum(base);\nconst item=$input.first().json;\nreturn [{ json: { ...item, token, guideLink: 'https://guide.multibrawn.co.il/Guide.html?token='+token, gamesLink: 'https://guide.multibrawn.co.il/games.html?token='+token } }];"
       },
       "id": "gen-token",
       "name": "Generate Access Token",
@@ -85,20 +85,20 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://graph.facebook.com/v19.0/YOUR_WHATSAPP_PHONE_ID/messages",
+        "url": "https://waha.multibrawn.co.il/api/sendText",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $('Generate Access Token').item.json.phone.replace(/^0/, '972').replace(/\\D/g,'') }}\",\n  \"type\": \"text\",\n  \"text\": { \"body\": \"{{ $('Generate Access Token').item.json.name }}, המדריך שלך מוכן! 🌸\\nהקישור האישי:\\n{{ $('Generate Access Token').item.json.guideLink }}\\n\\n🎁 משחקי חיבור במתנה:\\n{{ $('Generate Access Token').item.json.gamesLink }}\" }\n}",
+        "jsonBody": "={\n  \"session\": \"default\",\n  \"chatId\": \"{{ $('Generate Access Token').item.json.phone.replace(/^0/, '972').replace(/\\D/g,'') }}@c.us\",\n  \"text\": \"{{ $('Generate Access Token').item.json.name }}, המדריך שלך מוכן! 🌸\\nהקישור האישי:\\n{{ $('Generate Access Token').item.json.guideLink }}\\n\\n🎁 משחקי חיבור במתנה:\\n{{ $('Generate Access Token').item.json.gamesLink }}\"\n}",
         "options": {}
       },
       "id": "whatsapp-guide",
-      "name": "WhatsApp — Send Guide Link",
+      "name": "WhatsApp (WAHA) — Send Guide Link",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [1100, 400],
-      "credentials": { "httpHeaderAuth": { "id": "YOUR_WA_CRED", "name": "WhatsApp Cloud API (Bearer token)" } }
+      "credentials": { "httpHeaderAuth": { "id": "YOUR_WAHA_CRED", "name": "WAHA API (X-Api-Key header)" } }
     }
   ],
   "connections": {
@@ -107,7 +107,7 @@
     "Generate Access Token": { "main": [[{ "node": "Google Sheets — Mark Paid", "type": "main", "index": 0 }]] },
     "Google Sheets — Mark Paid": { "main": [[
       { "node": "Gmail — Send Guide Link", "type": "main", "index": 0 },
-      { "node": "WhatsApp — Send Guide Link", "type": "main", "index": 0 }
+      { "node": "WhatsApp (WAHA) — Send Guide Link", "type": "main", "index": 0 }
     ]] }
   },
   "settings": { "executionOrder": "v1" },

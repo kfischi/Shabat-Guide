@@ -95,20 +95,20 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://graph.facebook.com/v19.0/YOUR_WHATSAPP_PHONE_ID/messages",
+        "url": "https://waha.multibrawn.co.il/api/sendText",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ $('Map Fields').item.json.phone.replace(/^0/, '972').replace(/\\D/g,'') }}\",\n  \"type\": \"text\",\n  \"text\": { \"body\": \"שלום {{ $('Map Fields').item.json.name }}, קיבלנו את הפנייה ל-Multi Brawn 🌸\\nלתשלום וקבלת המדריך:\\n{{ $('Map Fields').item.json.growLink }}\" }\n}",
+        "jsonBody": "={\n  \"session\": \"default\",\n  \"chatId\": \"{{ $('Map Fields').item.json.phone.replace(/^0/, '972').replace(/\\D/g,'') }}@c.us\",\n  \"text\": \"שלום {{ $('Map Fields').item.json.name }}, קיבלנו את הפנייה ל-Multi Brawn 🌸\\nלתשלום וקבלת המדריך:\\n{{ $('Map Fields').item.json.growLink }}\"\n}",
         "options": {}
       },
       "id": "whatsapp-customer",
-      "name": "WhatsApp — Send Pay Link",
+      "name": "WhatsApp (WAHA) — Send Pay Link",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [900, 460],
-      "credentials": { "httpHeaderAuth": { "id": "YOUR_WA_CRED", "name": "WhatsApp Cloud API (Bearer token)" } }
+      "credentials": { "httpHeaderAuth": { "id": "YOUR_WAHA_CRED", "name": "WAHA API (X-Api-Key header)" } }
     }
   ],
   "connections": {
@@ -117,7 +117,7 @@
     "Google Sheets — Append Lead": { "main": [[
       { "node": "Gmail — Welcome to Customer", "type": "main", "index": 0 },
       { "node": "Gmail — Notify Ardit", "type": "main", "index": 0 },
-      { "node": "WhatsApp — Send Pay Link", "type": "main", "index": 0 }
+      { "node": "WhatsApp (WAHA) — Send Pay Link", "type": "main", "index": 0 }
     ]] }
   },
   "settings": { "executionOrder": "v1" },
