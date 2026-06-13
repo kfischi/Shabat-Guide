@@ -543,7 +543,7 @@ document.querySelectorAll('.step').forEach(step=>{
   const check = step.querySelector('.check');
   check.addEventListener('click', e=>{ e.stopPropagation(); toggle(n, step); });
   check.addEventListener('keydown', e=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); toggle(n, step);} });
-  step.addEventListener('click', ()=> toggle(n, step));
+  step.addEventListener('click', e=>{ if(e.target.closest('a')) return; toggle(n, step); });
 });
 
 /* ============================================================
