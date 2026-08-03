@@ -35,6 +35,10 @@ function jsonRes(obj, status = 200) { return { ok: status < 400, status, json: a
 function textRes(status, txt) { return { ok: false, status, json: async () => ({}), text: async () => txt }; }
 global.fetch = async (url, opts) => {
   url = String(url);
+  if (url.includes('hook.make.test')) {
+    if (state.makeFail) return textRes(500, 'err');
+    return jsonRes({ url: 'https://pay.grow.link/DYNAMIC-123' });
+  }
   if (url.includes('api.anthropic.com')) {
     if (state.anthropicFail) return textRes(500, 'overloaded');
     state.anthropicCalls = (state.anthropicCalls || 0) + 1;
@@ -59,6 +63,7 @@ const { hebrewReason } = require('../netlify/functions/lib/mailer');
 const webhook = require('../netlify/functions/grow-webhook');
 const guide = require('../netlify/functions/guide');
 const ai = require('../netlify/functions/ai');
+const cpay = require('../netlify/functions/create-payment');
 process.env.ANTHROPIC_API_KEY = 'sk-ant-test';
 
 function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
@@ -236,6 +241,29 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     const res = await ai.handler({ httpMethod: 'POST', body: JSON.stringify({ id: 'TXAI', t, question: 'שאלה' }) });
     assert.strictEqual(res.statusCode, 200);
     assert.ok(JSON.parse(res.body).reply.length > 0);
+  });
+
+  console.log('CREATE PAYMENT (Make → GROW)');
+  await testAsync('with Make webhook -> returns dynamic payment url', async () => {
+    process.env.MAKE_PAYMENT_WEBHOOK = 'https://hook.make.test/abc';
+    const res = await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 99, product: 'premium' }) });
+    assert.strictEqual(res.statusCode, 200);
+    const b = JSON.parse(res.body);
+    assert.ok(/pay\.grow\.link/.test(b.url) && !b.fallback);
+  });
+  await testAsync('Make error -> graceful GROW fallback link', async () => {
+    process.env.MAKE_PAYMENT_WEBHOOK = 'https://hook.make.test/abc';
+    state.makeFail = true;
+    const res = await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 99 }) });
+    const b = JSON.parse(res.body);
+    assert.ok(b.url && b.fallback === true);
+    state.makeFail = false;
+  });
+  await testAsync('no Make webhook -> fallback link (sale never stuck)', async () => {
+    delete process.env.MAKE_PAYMENT_WEBHOOK;
+    const res = await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 50 }) });
+    const b = JSON.parse(res.body);
+    assert.ok(b.url && b.fallback === true);
   });
 
   console.log('MAILER reasons');

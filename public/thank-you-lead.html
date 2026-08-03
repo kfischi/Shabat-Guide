@@ -46,7 +46,7 @@ p.lead{font-size:18px;color:rgba(255,255,255,.9);margin-bottom:30px}
   <div class="tagline">קיבלנו! 🌸</div>
   <h1>תודה על ההרשמה</h1>
   <p class="lead">שלחנו אליכם מייל והודעת וואטסאפ עם המשך התהליך. כדי לקבל גישה מיידית למדריך — אפשר להשלים את התשלום כבר עכשיו:</p>
-  <a class="btn" href="https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA">לתשלום וקבלת המדריך — 99 ₪ <span>←</span></a>
+  <button class="btn" id="mb-pay" data-amount="50">לתשלום וקבלת המדריך — 50 ₪ <span>←</span></button>
 
   <div class="steps">
     <div class="s"><div class="num">1</div><span>השלמת תשלום מאובטח (99 ₪, כולל חשבונית)</span></div>
@@ -56,5 +56,19 @@ p.lead{font-size:18px;color:rgba(255,255,255,.9);margin-bottom:30px}
 
   <p class="support">שאלה לפני התשלום? כתבו לנו: <a href="https://wa.me/972523983394" target="_blank" rel="noopener">052-398-3394</a></p>
 </div>
+<script>
+/* יוצר עסקת GROW דרך Make (create-payment) ומעביר לתשלום */
+document.getElementById('mb-pay').addEventListener('click', async function(){
+  var btn=this, orig=btn.innerHTML; btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
+  try{
+    var r=await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({amount:(+btn.dataset.amount||50), product:''})});
+    var d=await r.json();
+    if(d&&d.url){ location.href=d.url; return; }
+  }catch(e){}
+  btn.disabled=false; btn.innerHTML=orig;
+  alert('הייתה תקלה ביצירת התשלום. נסו שוב עוד רגע, או פנו אלינו בוואטסאפ.');
+});
+</script>
 </body>
 </html>

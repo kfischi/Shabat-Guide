@@ -49,6 +49,15 @@
 | `SHEET_ID` | מזהה הגיליון (מה-URL: `/spreadsheets/d/<ID>/edit`) |
 | `ANTHROPIC_API_KEY` | מפתח Anthropic — מפעיל את **היועץ החכם (AI)** במדריך הפרימיום. בלעדיו היועץ פשוט לא זמין (הכלים האחרים עובדים). מקבלים ב-[console.anthropic.com](https://console.anthropic.com) |
 | `ANTHROPIC_MODEL` | אופציונלי — ברירת מחדל `claude-opus-5`. אפשר לשנות למודל חסכוני יותר (למשל `claude-haiku-4-5`) כדי להוזיל עלות לכל שאלה |
+| `MAKE_PAYMENT_WEBHOOK` | ה-webhook של **Make** שיוצר עסקת GROW (GROW חינמי דרך Make). בלעדיו — נופלים ללינק GROW קבוע כדי שהמכירה לא תיתקע |
+| `SITE_URL` | אופציונלי — כתובת האתר (ברירת מחדל `https://guide.multibrawn.co.il`). משמשת לבניית `successUrl`/`cancelUrl` |
+| `GROW_FALLBACK_LINK` | אופציונלי — לינק GROW קבוע לגיבוי אם Make לא זמין |
+
+### תשלום דרך Make (GROW חינמי)
+כשלוחצים "תשלום", האתר קורא ל-`/create-payment` (פונקציית שרת — בלי CORS), שמעבירה ל-Make:
+`{ amount, customerName, email, successUrl, cancelUrl }`. **ה-Make scenario צריך:** לקבל את זה ב-Webhook → ליצור עסקה ב-GROW עם הסכום וכתובות החזרה → להחזיר את **לינק התשלום** במודול **Webhook Response** (כ-JSON `{"url":"…"}` או כטקסט עם ה-URL). האתר מקבל את הלינק ומעביר את הלקוח לתשלום.
+- `successUrl` שנבנה אוטומטית: `/thank-you.html?amount=<סכום>[&product=premium]` — כך דף התודה פותח את המדריך הנכון (50₪ → בסיסי, 99₪ → פרימיום).
+- אם Make לא מוגדר / נכשל — הפונקציה מחזירה לינק GROW קבוע, כך שאפשר למכור גם לפני שסוגרים את Make.
 
 ## הקמה — שלב אחר שלב
 1. **Google Sheet:** צרו גיליון בשם "Multi Brawn - Leads" עם העמודות: `תאריך | מזהה עסקה | שם | אימייל | טלפון | סכום | קישור אישי | מייל ללקוח | התראה לערדית | וואטסאפ נשלח`. **שתפו אותו עם ה-service account** (הרשאת עריכה).

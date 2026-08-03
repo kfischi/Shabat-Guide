@@ -267,12 +267,23 @@ footer .logo span{color:var(--fuchsia)}
 </footer>
 
 <script>
-/* ====== CONFIG — swap with your dedicated GROW link for the premium (99₪+) product ====== */
-const PAY_URL = "https://pay.grow.link/YOUR-PREMIUM-99-LINK";  // TODO: לינק GROW נפרד למדריך הפרימיום
-/* אם תשני מחיר, עדכני גם את הטקסט ב-#price-big וב-value stack */
+/* מחיר הפרימיום — אם משנים, לעדכן גם את #price-big ואת ה-value stack */
+const PREMIUM_PRICE = 99;
 
+/* יצירת עסקת GROW דרך Make (create-payment) ומעבר לתשלום */
+async function buyPremium(btn){
+  var orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'רגע, יוצרים תשלום…';
+  try{
+    var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({amount:PREMIUM_PRICE, product:'premium'})});
+    var d = await r.json();
+    if(d && d.url){ location.href = d.url; return; }
+  }catch(e){}
+  btn.disabled = false; btn.innerHTML = orig;
+  alert('הייתה תקלה ביצירת התשלום. נסו שוב עוד רגע, או פנו אלינו בוואטסאפ.');
+}
 document.querySelectorAll('[data-buy]').forEach(b=>{
-  b.addEventListener('click', e=>{ e.preventDefault(); window.location.href = PAY_URL; });
+  b.addEventListener('click', e=>{ e.preventDefault(); buyPremium(b); });
 });
 document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>q.closest('.faq-item').classList.toggle('open')));
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.1});
