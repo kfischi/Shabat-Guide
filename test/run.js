@@ -178,6 +178,27 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.strictEqual(res.statusCode, 200);
     assert.ok(res.body.includes('משחקי'));
   });
+  await testAsync('6e. premium guide served with valid token', async () => {
+    reset();
+    const t = makeToken('TXP', process.env.TOKEN_SECRET);
+    const res = await guide.handler({ queryStringParameters: { id: 'TXP', t, page: 'premium' } });
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(res.body.includes('מהדורת הפרימיום'));
+    assert.ok(res.body.includes('מחשבון כמויות אוכל'));
+    assert.ok(!res.body.includes('__GAMES_URL__'));
+  });
+
+  console.log('PRODUCT ROUTING (§ two-tier)');
+  await testAsync('99₪ payment -> premium link; 50₪ -> free guide link', async () => {
+    reset();
+    await webhook.handler(signedEvent({ transactionId: 'P99', fullName: 'א', email: 'a@a.com', phone: '0501112222', amount: '99' }));
+    const prem = state.appended[0][6];
+    reset();
+    await webhook.handler(signedEvent({ transactionId: 'P50', fullName: 'ב', email: 'b@b.com', phone: '0501112222', amount: '50' }));
+    const free = state.appended[0][6];
+    assert.ok(/page=premium/.test(prem), 'expected premium link for 99');
+    assert.ok(!/page=premium/.test(free), 'expected free link for 50');
+  });
 
   console.log('MAILER reasons');
   test('hebrewReason maps 401', () => assert.ok(/שגוי/.test(hebrewReason(new Error('Resend 401: unauthorized api key')))));

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#A06BFF">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='84'>👑</text></svg>">
+<title>המדריך המלא לשבת חתן · מהדורת הפרימיום · Multibrawn</title>
+<!-- מוגש רק דרך netlify/functions/guide.js אחרי אימות. אין שער בצד לקוח. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF8FF; --bg2:#F3ECFD; --card:#ffffff;
+  --ink:#1A0B2E; --muted:#66557E; --line:#EBE2F7;
+  --purple:#A06BFF; --purple-d:#7b2d8b; --fuchsia:#FF0090; --gold:#E7B34A;
+  --shadow:0 12px 40px rgba(123,45,139,.10);
+  --shadow-lg:0 28px 70px rgba(123,45,139,.18);
+  --radius:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:'Frank Ruhl Libre',serif}
+input,select,button{font-family:'Heebo',sans-serif}
+
+/* progress */
+#bar-wrap{position:fixed;top:0;left:0;right:0;height:5px;background:rgba(160,107,255,.14);z-index:1000}
+#bar{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--fuchsia));box-shadow:0 0 12px rgba(255,0,144,.5);transition:width .3s}
+
+/* ===== COVER ===== */
+.cover{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px 60px;color:#fff;overflow:hidden;
+  background:radial-gradient(1000px 700px at 75% -10%,rgba(255,0,144,.45),transparent 60%),radial-gradient(800px 600px at 10% 20%,rgba(160,107,255,.9),transparent 55%),linear-gradient(160deg,#2a0d3f,#7b2d8b 55%,#1A0B2E)}
+.cover::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:26px 26px;opacity:.4;mix-blend-mode:overlay}
+.cover-in{position:relative;z-index:2;max-width:760px}
+.crown{font-size:52px;margin-bottom:10px;filter:drop-shadow(0 8px 20px rgba(231,179,74,.5))}
+.ribbon{display:inline-flex;align-items:center;gap:9px;background:rgba(231,179,74,.16);border:1px solid rgba(231,179,74,.5);color:#ffe9be;font-weight:900;letter-spacing:1px;font-size:13px;padding:8px 18px;border-radius:999px;margin-bottom:22px}
+.cover .script{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(26px,6vw,40px);color:#ffd9ef;margin-bottom:10px}
+.cover h1{font-weight:900;font-size:clamp(38px,10vw,74px);line-height:1.03;margin-bottom:18px;text-shadow:0 6px 30px rgba(0,0,0,.4)}
+.cover h1 .g{color:#ffd9ef}
+.cover p.sub{font-size:clamp(16px,4.4vw,20px);color:rgba(255,255,255,.9);max-width:560px;margin:0 auto}
+.cover .feats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+.cover .feats span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:8px 15px;border-radius:999px;font-size:13.5px;font-weight:500;backdrop-filter:blur(6px)}
+.cover .cue{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:3;color:rgba(255,255,255,.7);font-size:12px;animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ===== TOC NAV ===== */
+.toc{position:sticky;top:0;z-index:900;background:rgba(251,248,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.toc-in{max-width:1000px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+.toc-in::-webkit-scrollbar{display:none}
+.toc a{flex:0 0 auto;font-weight:700;font-size:13.5px;color:var(--muted);padding:8px 14px;border-radius:999px;white-space:nowrap;transition:.2s}
+.toc a:hover,.toc a.active{background:var(--purple);color:#fff}
+
+/* ===== LAYOUT ===== */
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+section.block{padding:64px 0 8px;scroll-margin-top:64px}
+.eyebrow{color:var(--fuchsia);font-weight:900;letter-spacing:2px;font-size:12px;text-transform:uppercase;margin-bottom:10px}
+.block h2{font-weight:900;font-size:clamp(26px,6.5vw,40px);line-height:1.15;margin-bottom:12px}
+.block .lead{color:var(--muted);font-size:17px;max-width:640px;margin-bottom:30px}
+
+/* tool card */
+.tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:22px}
+.tool h3{font-size:22px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.tool h3 .ico{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto}
+.tool .hint{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+.inp{flex:1;min-width:130px}
+.inp label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+.inp input,.inp select{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;font-size:16px;color:var(--ink);background:#fff;transition:.2s}
+.inp input:focus,.inp select:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(160,107,255,.14)}
+.btn{cursor:pointer;border:none;font-weight:900;font-size:15px;color:#fff;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));padding:13px 24px;border-radius:11px;transition:transform .15s,box-shadow .15s;box-shadow:0 8px 20px rgba(255,0,144,.28)}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:#fff;color:var(--purple-d);border:1.5px solid var(--purple);box-shadow:none}
+.out{margin-top:20px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.rc{background:var(--bg2);border-radius:14px;padding:16px;text-align:center}
+.rc b{display:block;font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:900;color:var(--purple-d)}
+.rc span{font-size:13px;color:var(--muted)}
+table.grid{width:100%;border-collapse:collapse;margin-top:8px;font-size:14.5px}
+table.grid th,table.grid td{text-align:right;padding:10px 12px;border-bottom:1px solid var(--line)}
+table.grid th{color:var(--muted);font-weight:700;font-size:13px}
+table.grid tr:last-child td{border-bottom:none}
+.pill{display:inline-block;background:#eafff0;color:#1a8f43;font-weight:700;font-size:12px;padding:3px 10px;border-radius:999px}
+
+/* timeline result */
+.tl{margin-top:16px;border-right:2px dashed var(--line);padding-right:16px}
+.tl .r{display:flex;gap:12px;padding:7px 0;font-size:15px}
+.tl .r .t{flex:0 0 80px;font-weight:900;color:var(--fuchsia);font-feature-settings:'tnum'}
+.tl .r.day .t{color:var(--purple-d)}
+.tl .r.day{margin-top:8px;font-weight:700}
+
+/* chapter */
+.chapter{background:var(--card);border:1px solid var(--line);border-right:5px solid var(--fuchsia);border-radius:18px;box-shadow:0 6px 22px rgba(123,45,139,.06);margin-bottom:16px;overflow:hidden}
+.chapter > summary{cursor:pointer;list-style:none;padding:20px 24px;display:flex;align-items:center;gap:14px;font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:20px}
+.chapter > summary::-webkit-details-marker{display:none}
+.chapter > summary .n{flex:0 0 auto;width:42px;height:42px;border-radius:12px;background:var(--bg2);color:var(--purple-d);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
+.chapter > summary .chev{margin-right:auto;color:var(--purple);transition:transform .3s;font-size:20px}
+.chapter[open] > summary .chev{transform:rotate(180deg)}
+.chapter .body{padding:0 24px 22px 24px}
+.chapter .body p{margin-bottom:12px}
+.chapter .body h4{font-size:17px;margin:16px 0 6px;color:var(--purple-d)}
+.chapter .body ul{margin:0 18px 12px 0}
+.chapter .body li{margin-bottom:6px}
+.callout{background:var(--bg2);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:14.5px}
+.callout b{color:var(--fuchsia)}
+
+/* templates */
+.tpl{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px}
+.tpl .top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tpl .top b{font-family:'Frank Ruhl Libre',serif;font-size:17px}
+.tpl .copy{margin-right:auto;cursor:pointer;background:var(--bg2);border:none;color:var(--purple-d);font-weight:700;font-size:13px;padding:7px 14px;border-radius:999px;transition:.2s}
+.tpl .copy:hover{background:var(--purple);color:#fff}
+.tpl pre{white-space:pre-wrap;font-family:'Heebo';font-size:14.5px;color:#3a2a44;background:var(--bg);border-radius:10px;padding:14px;line-height:1.7}
+
+/* checklist */
+.ck-group{margin-bottom:20px}
+.ck-group > h4{font-size:16px;color:var(--purple-d);margin-bottom:8px}
+.ck{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.2s}
+.ck.done{background:#fbfff9;border-color:#cdeccd}
+.ck .box{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ck .box svg{width:14px;height:14px;color:#fff;opacity:0;transform:scale(.4);transition:.2s}
+.ck.done .box{background:#1fae4d;border-color:#1fae4d}
+.ck.done .box svg{opacity:1;transform:scale(1)}
+.ck span{font-size:15px}
+.ck.done span{color:var(--muted);text-decoration:line-through}
+
+/* crisis */
+.crisis{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.crisis .c{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+.crisis .c b{color:var(--fuchsia);display:block;margin-bottom:6px;font-size:15px}
+.crisis .c p{font-size:14.5px;color:#3a2a44}
+
+/* games + footer */
+.foot-cta{margin:30px 0 0}
+.foot-cta a{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow)}
+.foot-cta .ico{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 auto}
+.foot-cta b{font-family:'Frank Ruhl Libre',serif;font-size:18px;display:block}
+.foot-cta span{color:var(--muted);font-size:14px}
+footer{text-align:center;padding:50px 22px 120px;color:var(--muted);font-size:14px}
+footer .logo{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:22px;color:var(--ink)}
+footer .logo span{color:var(--fuchsia)}
+.printbtn{position:fixed;bottom:22px;left:18px;z-index:950;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);color:var(--purple-d);font-weight:700;font-size:14px;padding:12px 18px;border-radius:999px;cursor:pointer}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}*{animation:none!important}}
+@media print{
+  .toc,.printbtn,#bar-wrap,.cover .cue,.foot-cta{display:none!important}
+  .cover{min-height:auto;padding:30px;color:#1A0B2E;background:#fff}
+  .cover .script,.cover h1 .g{color:var(--purple-d)}
+  .chapter[open] .body,.chapter .body{display:block!important}
+  .reveal{opacity:1;transform:none}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<div id="bar-wrap"><div id="bar"></div></div>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-in">
+    <div class="crown">👑</div>
+    <span class="ribbon">מהדורת הפרימיום · MULTIBRAWN</span>
+    <div class="script">כל מה שצריך. במקום אחד.</div>
+    <h1>המדריך המלא ל<span class="g">שבת חתן</span></h1>
+    <p class="sub">לא עוד רשימה — מערכת תכנון שלמה: כלים חכמים, תבניות מוכנות, ופלייבוק שמכסה כל תרחיש. השבת שלכם, מנוהלת כמו אירוע מקצועי.</p>
+    <div class="feats">
+      <span>🧮 5 כלים אינטראקטיביים</span>
+      <span>✉️ תבניות מוכנות</span>
+      <span>🧯 פלייבוק משברים</span>
+      <span>🖨️ מותאם להדפסה</span>
+    </div>
+  </div>
+  <div class="cue">גללו למטה ↓</div>
+</header>
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-in" id="toc">
+    <a href="#tools">הכלים</a>
+    <a href="#food">כמויות אוכל</a>
+    <a href="#timeline">לוח זמנים</a>
+    <a href="#budget">תקציב</a>
+    <a href="#vendors">ספקים</a>
+    <a href="#deep">המדריך המלא</a>
+    <a href="#templates">תבניות</a>
+    <a href="#crisis">משברים</a>
+    <a href="#questions">10 שאלות</a>
+    <a href="#checklist">צ'קליסט</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- INTRO / TOOLS -->
+  <section class="block reveal" id="tools">
+    <div class="eyebrow">מה שהופך את זה לפרימיום</div>
+    <h2>הכלים שחוסכים לכם ימי עבודה</h2>
+    <p class="lead">כל אחד מהכלים כאן מחליף גיליון אקסל, חיפוש בגוגל, או שיחת טלפון מלחיצה. הזינו את הנתונים שלכם — והכל מחושב בשבילכם, ונשמר במכשיר.</p>
+  </section>
+
+  <!-- FOOD CALCULATOR -->
+  <section class="block reveal" id="food" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico">🧮</span> מחשבון כמויות אוכל</h3>
+      <p class="hint">כמה חלות? כמה בשר? כמה יין? הזינו מספר אורחים וקבלו רשימת קנייה מדויקת — כבר כולל 15% גיבוי.</p>
+      <div class="row">
+        <div class="inp"><label>מספר אורחים (מבוגרים)</label><input type="number" id="f-adults" min="0" value="40" inputmode="numeric"></div>
+        <div class="inp"><label>מספר ילדים</label><input type="number" id="f-kids" min="0" value="15" inputmode="numeric"></div>
+        <button class="btn" onclick="calcFood()">חשב כמויות</button>
+      </div>
+      <div class="out" id="food-out"></div>
+    </div>
+  </section>
+
+  <!-- TIMELINE BUILDER -->
+  <section class="block reveal" id="timeline" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico">⏰</span> בונה לוח הזמנים</h3>
+      <p class="hint">הזינו את שעת הדלקת הנרות ושעת צאת השבת (לפי הלוח באזור שלכם) — ותקבלו לוח זמנים מלא לשישי, שבת ומוצ"ש.</p>
+      <div class="row">
+        <div class="inp"><label>הדלקת נרות (שישי)</label><input type="time" id="t-candle" value="17:30"></div>
+        <div class="inp"><label>צאת השבת</label><input type="time" id="t-havdala" value="18:35"></div>
+        <button class="btn" onclick="calcTimeline()">בנה לוח זמנים</button>
+      </div>
+      <div class="out" id="tl-out"></div>
+    </div>
+  </section>
+
+  <!-- BUDGET -->
+  <section class="block reveal" id="budget" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico">💰</span> מחשבון תקציב</h3>
+      <p class="hint">הזינו עלות לכל קטגוריה — נחשב סה"כ, עלות לאורח, ונראה לכם איפה הכסף הולך. נשמר אוטומטית.</p>
+      <table class="grid" id="budget-table">
+        <thead><tr><th>קטגוריה</th><th style="width:150px">עלות (₪)</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="row" style="margin-top:14px">
+        <div class="inp"><label>מספר אורחים לחישוב עלות ממוצעת</label><input type="number" id="b-guests" min="1" value="55" inputmode="numeric"></div>
+      </div>
+      <div class="out" id="budget-out"></div>
+    </div>
+  </section>
+
+  <!-- VENDORS -->
+  <section class="block reveal" id="vendors" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico">📋</span> מעקב ספקים</h3>
+      <p class="hint">כלל הזהב: ספק בלי אישור כתוב = לא נסגר. עקבו כאן אחרי כל ספק, שעת הגעה ואישור. נשמר במכשיר.</p>
+      <div class="row">
+        <div class="inp"><label>שם ספק</label><input type="text" id="v-name" placeholder="קייטרינג / הסעות…"></div>
+        <div class="inp"><label>שעת הגעה</label><input type="time" id="v-time"></div>
+        <div class="inp"><label>איש קשר</label><input type="text" id="v-contact" placeholder="טלפון"></div>
+        <button class="btn" onclick="addVendor()">הוסף</button>
+      </div>
+      <div class="out"><table class="grid" id="v-table"><thead><tr><th>ספק</th><th>שעה</th><th>איש קשר</th><th>אישור</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- DEEP GUIDE -->
+  <section class="block reveal" id="deep">
+    <div class="eyebrow">התוכן המלא</div>
+    <h2>המדריך המעמיק — 7 פרקים</h2>
+    <p class="lead">כל פרק עם ההסבר, המספרים המדויקים, וה"מה לומר" — לא רק מה לעשות, אלא בדיוק איך.</p>
+
+    <details class="chapter" open><summary><span class="n">1</span> תכנון ואסטרטגיה <span class="chev">⌄</span></summary>
+      <div class="body">
+        <p>שבת חתן מוצלחת מתחילה בהחלטה אחת: <b>מה הכי חשוב לכם</b> — קרבה לבית, בית כנסת בנוסח המשפחה, או גינה לילדים. כל שאר ההחלטות נגזרות מזה.</p>
+        <h4>נוסחת החדרים</h4>
+        <ul>
+          <li><b>סבא וסבתא</b> — קומת קרקע, קרוב לשירותים, מיטה גבוהה.</li>
+          <li><b>זוג עם תינוק</b> — חדר גדול, מקום לעריסה, קרוב אליכם.</li>
+          <li><b>בחורים / בנות</b> — בנפרד, באגפים שונים אם אפשר.</li>
+        </ul>
+        <div class="callout">💡 <b>טיפ פרימיום:</b> הכינו מראש רשימת חדרים עם שמות + מיקום, ותלו אותה בכניסה. חוסך 30 שיחות "איפה אני ישן?".</div>
+      </div>
+    </details>
+
+    <details class="chapter"><summary><span class="n">2</span> תפעול ותשתיות <span class="chev">⌄</span></summary>
+      <div class="body">
+        <p>זה החלק ש"נופל" הכי הרבה. הכלל: <b>לכל דבר קריטי — גיבוי.</b></p>
+        <ul>
+          <li><b>מיחם:</b> ראשי + גיבוי. מיחם אחד לא מספיק ל-50 איש.</li>
+          <li><b>פלטות:</b> תו תקן הלכתי, על משטח יציב ורחוק ממעבר.</li>
+          <li><b>קירור:</b> Plan B למקרר שמתקלקל בשישי — מיכל קרח + מספר ספק חירום.</li>
+          <li><b>ניקיון:</b> שירותים כל שעה. לוח קבוע: 9, 12, 15, 18, 21.</li>
+        </ul>
+        <div class="callout">🧾 השתמשו ב<b>מעקב הספקים</b> למעלה — ספק בלי אישור כתוב = לא נסגר.</div>
+      </div>
+    </details>
+
+    <details class="chapter"><summary><span class="n">3</span> אוכל ואווירה <span class="chev">⌄</span></summary>
+      <div class="body">
+        <p>מה נשאר טעים אחרי 12 שעות על פלטה? <b>מאכלים יציבים</b> — חמין, קוגל, מאפים. הימנעו מסלטים עדינים ודגים מטוגנים.</p>
+        <h4>היפוך ארוחות (חשוב!)</h4>
+        <p>ארוחת הבוקר בשבת חלבית — אבל אם הייתה ארוחת בשר בלילה, צריך להמתין. בדקו עם הרב כמה שעות בין בשרי לחלבי לפי מנהג המשפחה, וכתבו את זה בלוח הזמנים.</p>
+        <div class="callout">☕ <b>הסוד שמדברים עליו:</b> עמדת מיחם + קפה/תה/חלב/ממתקים זמינה 24/6. יוצרת תחושת בית יותר מכל דבר אחר.</div>
+      </div>
+    </details>
+
+    <details class="chapter"><summary><span class="n">4</span> מרחב ואורחים <span class="chev">⌄</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>תאורה:</b> דימרים לפני קידוש, נרות על כל שולחן, אפס LED לבן קר בארוחות.</li>
+          <li><b>אקוסטיקה:</b> 60 איש + תקרה גבוהה = רעש. שטיחים ווילונות פותרים.</li>
+          <li><b>מרחב נשימה:</b> 2 פינות שקטות בחוץ — לאמהות עם תינוקות ולמבוגרים.</li>
+          <li><b>נתיבי הליכה:</b> לכו פיזית את כל המסלולים לפני השבת, האירו שבילים לבית הכנסת, סמנו מדרגות.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="chapter"><summary><span class="n">5</span> ילדים ויחס אישי <span class="chev">⌄</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>בטיחות:</b> גדרו בריכה, הגדירו אחראי ילדים, שמרו טלפוני הורים, בקשו ביטוח כתוב מהמקום.</li>
+          <li><b>פינת ילדים:</b> יצירה + משחקי קופסה + מדריכ/ה = הורים שמחים. 500₪ שמחזירים את עצמם.</li>
+          <li><b>יחס אישי:</b> פתק כתוב יד + פרח + ספר תהילים בכל חדר. 20₪ לחדר, ערך בלתי נשכח.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="chapter"><summary><span class="n">6</span> חוויה וסגירה <span class="chev">⌄</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>משחקי חיבור:</b> שתי משפחות + שבת ארוכה = צריך מנחה ומשחקים (יש לכם אותם במתנה 🎁).</li>
+          <li><b>מזכרות:</b> ריבה ביתית / נר ריחני עם תווית ושם הזוג. אריזה יפה = חוויה שלמה.</li>
+          <li><b>פרידה חלקה:</b> שקיות לשאריות + תזכורת ביציאה. הרגע האחרון = הזיכרון האחרון.</li>
+          <li><b>שימור קשר:</b> תודה בוואטסאפ עד שעה אחרי הבדלה + גלריה משותפת + בקשת המלצה בטון חם.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="chapter"><summary><span class="n">7</span> מלון או מתחם — לבחור נכון <span class="chev">⌄</span></summary>
+      <div class="body">
+        <p><b>מלון</b> = שירות + כשרות מובנית + פחות גמישות. <b>מתחם</b> = חופש + אחריות עליכם.</p>
+        <h4>כשרות — מה לבדוק</h4>
+        <p>שלחו תעודת כשרות לרב המשפחה <b>לפני חתימה</b>. בדקו: חלק או בשרי? הפרדה מלאה? מכירים קהל חרדי?</p>
+        <h4>בעיות הלכתיות במלון</h4>
+        <ul>
+          <li>דלתות אלקטרוניות → בקשו מפתח רגיל.</li>
+          <li>חיישני תנועה → בקשו לבטל בחדרים ובמסדרונות.</li>
+          <li>גלאי עשן → בררו היכן מדליקים נרות.</li>
+          <li>מעלית שבת → באיזו קומה, ומתי היא פועלת.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- TEMPLATES -->
+  <section class="block reveal" id="templates">
+    <div class="eyebrow">תבניות מוכנות</div>
+    <h2>העתק · הדבק · שלח</h2>
+    <p class="lead">נוסחים מדויקים שכבר כתבנו בשבילכם — לספקים, לאורחים ולפתק בחדר. לחצו "העתק" ושלחו.</p>
+
+    <div class="tpl"><div class="top"><b>אישור מול ספק</b><button class="copy" onclick="copyTpl(this)">העתק</button></div>
+      <pre>שלום [שם ספק], מאשרים את ההזמנה לשבת [תאריך]:
+• שירות: [מה סוכם]
+• שעת הגעה: [שעה]
+• מחיר סופי: [סכום] ₪ כולל מע"מ
+נא לאשר בחזרה בכתב שהפרטים נכונים. תודה!</pre></div>
+
+    <div class="tpl"><div class="top"><b>הודעת ברוכים הבאים לאורחים</b><button class="copy" onclick="copyTpl(this)">העתק</button></div>
+      <pre>שלום לכולם 🌸 מתרגשים לארח אתכם בשבת חתן של [שם].
+כניסה לחדרים: יום שישי מ-14:00.
+הדלקת נרות: [שעה] | קבלת שבת: [שעה]
+כתובת: [כתובת] | לכל שאלה: [טלפון]
+מחכים לכם!</pre></div>
+
+    <div class="tpl"><div class="top"><b>פתק אישי בחדר</b><button class="copy" onclick="copyTpl(this)">העתק</button></div>
+      <pre>ברוכים הבאים 🤍
+שמחים שאתם חוגגים איתנו את השבת המיוחדת הזו.
+בחדר מחכים לכם [פרח / כיבוד קל].
+שבת שלום ומבורכת — משפחת [שם].</pre></div>
+
+    <div class="tpl"><div class="top"><b>תודה במוצאי שבת</b><button class="copy" onclick="copyTpl(this)">העתק</button></div>
+      <pre>איזו שבת 🤍 תודה ענקית שהייתם חלק ממנה.
+העלינו את התמונות לכאן: [קישור לגלריה]
+נשמח נורא אם תשתפו אותנו במשוב. שבוע טוב!</pre></div>
+  </section>
+
+  <!-- CRISIS PLAYBOOK -->
+  <section class="block reveal" id="crisis">
+    <div class="eyebrow">כשמשהו משתבש</div>
+    <h2>פלייבוק משברים</h2>
+    <p class="lead">לכל תרחיש — תשובה מוכנה מראש. כי בשבת אי אפשר להרים טלפון.</p>
+    <div class="crisis">
+      <div class="c"><b>המקרר התקלקל בשישי</b><p>מיכל קרח שהוכן מראש + מעבר מיידי של מוצרים רגישים. מספר ספק חירום שמור בטלפון לפני שבת.</p></div>
+      <div class="c"><b>ספק לא הגיע</b><p>הוציאו את טבלת הגיבוי (מי מחליף את מי). התקשרו לפני כניסת שבת. אם זה בשבת — עברו ל-Plan B שהוגדר מראש.</p></div>
+      <div class="c"><b>לא מספיק אוכל</b><p>ה-15% גיבוי מהמחשבון נכנס לפעולה. חמין וקוגל "מתרחבים" בקלות — הוסיפו תוספות ולחם.</p></div>
+      <div class="c"><b>ילד נעלם לרגע</b><p>אחראי הילדים שהוגדר מראש מפעיל בדיקת נוכחות. כל המבוגרים יודעים מי האחראי ואיפה נקודת המפגש.</p></div>
+      <div class="c"><b>בעיה חשמלית / תאורה</b><p>אתרו את לוח החשמל מראש, סמנו אותו, והשאירו פנס. דעו מי איש הקשר של המקום בשבת.</p></div>
+      <div class="c"><b>מזג אוויר הפתיע</b><p>תוכנית פנים לכל פעילות חוץ. שמיכות/מטריות/מאווררים לפי העונה, מוכנים בצד.</p></div>
+    </div>
+  </section>
+
+  <!-- 10 QUESTIONS -->
+  <section class="block reveal" id="questions">
+    <div class="eyebrow">לפני שחותמים</div>
+    <h2>10 השאלות + מה לחפש בתשובה</h2>
+    <p class="lead">לא רק מה לשאול — אלא איזו תשובה היא "דגל אדום".</p>
+    <table class="grid">
+      <thead><tr><th>השאלה</th><th>דגל אדום 🚩</th></tr></thead>
+      <tbody id="q-table"></tbody>
+    </table>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section class="block reveal" id="checklist">
+    <div class="eyebrow">שלא תשכחו כלום</div>
+    <h2>הצ'קליסט המלא</h2>
+    <p class="lead">מסומן ונשמר במכשיר. עברו עליו שבוע לפני, ויום לפני.</p>
+    <div id="ck-root"></div>
+  </section>
+
+  <!-- GAMES -->
+  <section class="foot-cta reveal">
+    <a href="__GAMES_URL__">
+      <div class="ico">🎲</div>
+      <div><b>7 משחקי חיבור לשבת</b><span>הבונוס שמחבר בין שתי המשפחות — כלול אצלכם.</span></div>
+    </a>
+  </section>
+
+</main>
+
+<footer class="reveal">
+  <div class="logo">Multi<span>brawn</span> · מהדורת הפרימיום</div>
+  <p style="margin-top:8px">נבנה כדי שהשבת שלכם תתנהל כמו אירוע מקצועי.</p>
+  <p style="margin-top:6px">תמיכה: <a href="https://wa.me/972523983394" style="color:var(--purple-d);font-weight:700">052-398-3394</a></p>
+</footer>
+
+<button class="printbtn" onclick="window.print()">🖨️ הדפסה / PDF</button>
+
+<script>
+const STORE='mb_premium_v1';
+function load(){try{return JSON.parse(localStorage.getItem(STORE))||{}}catch(e){return {}}}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(DB))}catch(e){}}
+let DB=load();
+DB.budget=DB.budget||{};DB.vendors=DB.vendors||[];DB.checks=DB.checks||{};
+
+/* ---- FOOD CALCULATOR ---- */
+function calcFood(){
+  const a=Math.max(0,+document.getElementById('f-adults').value||0);
+  const k=Math.max(0,+document.getElementById('f-kids').value||0);
+  const eaters=a+k*0.5; // ילד ~חצי מנה
+  const b=1.15; // 15% גיבוי
+  const rows=[
+    ['חלות (ל-3 סעודות)', Math.ceil(eaters/4*3*b), 'יח׳'],
+    ['בשר / עוף (2 סעודות)', (eaters*0.25*2*b).toFixed(1), 'ק״ג'],
+    ['חמין', Math.ceil(eaters*b), 'מנות'],
+    ['סלטים', Math.ceil(eaters/8*b), 'קערות'],
+    ['יין / מיץ ענבים', Math.ceil(a*0.2*b), 'בקבוקים'],
+    ['שתייה קלה', Math.ceil(eaters*0.5*b), 'ליטר'],
+    ['עוגות / קינוחים', Math.ceil(eaters/10*b), 'תבניות'],
+  ];
+  let h='<div class="result-grid">';
+  h+=`<div class="rc"><b>${Math.round(eaters)}</b><span>"סועדים" שווי-ערך</span></div>`;
+  h+='</div><table class="grid" style="margin-top:14px"><thead><tr><th>פריט</th><th>כמות</th></tr></thead><tbody>';
+  rows.forEach(r=>h+=`<tr><td>${r[0]}</td><td><b>${r[1]}</b> ${r[2]}</td></tr>`);
+  h+='</tbody></table><div class="callout" style="margin-top:12px">✅ הכמויות כוללות כבר <b>15% גיבוי</b>. ילדים חושבו כחצי מנה.</div>';
+  document.getElementById('food-out').innerHTML=h;
+}
+
+/* ---- TIMELINE ---- */
+function toMin(t){const [h,m]=t.split(':').map(Number);return h*60+m;}
+function fmt(m){m=((m%1440)+1440)%1440;const h=Math.floor(m/60),mm=m%60;return String(h).padStart(2,'0')+':'+String(mm).padStart(2,'0');}
+function calcTimeline(){
+  const c=toMin(document.getElementById('t-candle').value);
+  const hav=toMin(document.getElementById('t-havdala').value);
+  const rows=[
+    ['day','שישי',''],
+    ['','14:00','כניסה לחדרים'],
+    ['',fmt(c),'הדלקת נרות'],
+    ['',fmt(c+40),'קבלת שבת + ערבית'],
+    ['',fmt(c+90),'ארוחת ליל שבת'],
+    ['day','שבת',''],
+    ['','08:30','שחרית'],
+    ['','10:30','עליית החתן לתורה + קידוש'],
+    ['','12:30','ארוחת צהריים'],
+    ['',fmt(hav-120),'מנחה'],
+    ['',fmt(hav-60),'סעודה שלישית'],
+    ['day','מוצ"ש',''],
+    ['',fmt(hav),'צאת השבת + הבדלה'],
+    ['',fmt(hav+45),'ארוחת מוצ"ש'],
+  ];
+  let h='<div class="tl">';
+  rows.forEach(r=>h+=`<div class="r ${r[0]}"><span class="t">${r[1]}</span><span>${r[2]}</span></div>`);
+  h+='</div><div class="callout" style="margin-top:12px">🖨️ אפשר להדפיס את הלוח ולתלות בכניסה (כפתור ההדפסה למטה).</div>';
+  document.getElementById('tl-out').innerHTML=h;
+}
+
+/* ---- BUDGET ---- */
+const BUDGET_CATS=['מתחם / מלון','קייטרינג / אוכל','ספקי שירות','מזכרות ופרחים','פעילות ילדים','שונות'];
+function renderBudget(){
+  const tb=document.querySelector('#budget-table tbody');tb.innerHTML='';
+  BUDGET_CATS.forEach(cat=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${cat}</td><td><input type="number" min="0" inputmode="numeric" data-cat="${cat}" value="${DB.budget[cat]||''}" placeholder="0" style="width:100%;border:1.5px solid var(--line);border-radius:9px;padding:9px 11px;font-size:15px"></td>`;
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{DB.budget[i.dataset.cat]=+i.value||0;save();sumBudget();}));
+  sumBudget();
+}
+function sumBudget(){
+  const total=BUDGET_CATS.reduce((s,c)=>s+(+DB.budget[c]||0),0);
+  const g=Math.max(1,+document.getElementById('b-guests').value||1);
+  document.getElementById('budget-out').innerHTML=
+    `<div class="result-grid"><div class="rc"><b>${total.toLocaleString()}</b><span>סה"כ ₪</span></div>`+
+    `<div class="rc"><b>${Math.round(total/g).toLocaleString()}</b><span>₪ לאורח</span></div></div>`;
+}
+
+/* ---- VENDORS ---- */
+function renderVendors(){
+  const tb=document.querySelector('#v-table tbody');tb.innerHTML='';
+  if(!DB.vendors.length){tb.innerHTML='<tr><td colspan="5" style="color:var(--muted)">עדיין לא הוספתם ספקים.</td></tr>';return;}
+  DB.vendors.forEach((v,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${esc(v.name)}</td><td>${esc(v.time||'')}</td><td>${esc(v.contact||'')}</td>`+
+      `<td><span class="pill" style="cursor:pointer;background:${v.ok?'#eafff0':'#fff0f7'};color:${v.ok?'#1a8f43':'#c01a72'}" onclick="toggleVendor(${i})">${v.ok?'✓ אושר':'ממתין'}</span></td>`+
+      `<td><button onclick="delVendor(${i})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+function addVendor(){
+  const name=document.getElementById('v-name').value.trim();if(!name)return;
+  DB.vendors.push({name,time:document.getElementById('v-time').value,contact:document.getElementById('v-contact').value.trim(),ok:false});
+  save();renderVendors();
+  document.getElementById('v-name').value='';document.getElementById('v-time').value='';document.getElementById('v-contact').value='';
+}
+function toggleVendor(i){DB.vendors[i].ok=!DB.vendors[i].ok;save();renderVendors();}
+function delVendor(i){DB.vendors.splice(i,1);save();renderVendors();}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ---- TEMPLATES COPY ---- */
+function copyTpl(btn){
+  const txt=btn.closest('.tpl').querySelector('pre').innerText;
+  navigator.clipboard?.writeText(txt).then(()=>{const o=btn.textContent;btn.textContent='הועתק ✓';setTimeout(()=>btn.textContent=o,1500);});
+}
+
+/* ---- 10 QUESTIONS ---- */
+const QS=[
+  ['כמה חדרים פנויים בפועל לתאריך שלי?','"נבדוק ונחזור" בלי התחייבות'],
+  ['מה גיל המקום ומתי שופץ לאחרונה?','התחמקות מתשובה מדויקת'],
+  ['האם יש מעלית שבת ובאיזו קומה?','אין / "אפשר לרדת במדרגות"'],
+  ['האם ניתן לקבל מפתחות רגילים?','רק כרטיס מגנטי'],
+  ['היכן מותר להדליק נרות שבת?','"אסור בכלל"'],
+  ['האם יש בית כנסת פרטי לקבוצה?','שיתוף עם קבוצות אחרות'],
+  ['מה הנוסח בבית הכנסת?','לא תואם למשפחה'],
+  ['האם יש חיישני תנועה בחדרים?','יש ואי אפשר לבטל'],
+  ['האם החדרים שלנו באותו אגף?','מפוזרים בכל הבניין'],
+  ['האם יש חדר אוכל פרטי לקבוצה?','משותף עם אורחים אחרים'],
+];
+document.getElementById('q-table').innerHTML=QS.map((q,i)=>`<tr><td><b>${i+1}.</b> ${q[0]}</td><td style="color:#c01a72">${q[1]}</td></tr>`).join('');
+
+/* ---- CHECKLIST ---- */
+const CK={
+  'חודש לפני':['לסגור מתחם/מלון עם חוזה','לשלוח תעודת כשרות לרב','לבנות נוסחת חדרים','לתאם קייטרינג/אוכל'],
+  'שבוע לפני':['לאשר בכתב כל ספק','להזמין מזכרות ופרחים','להכין פתקים אישיים לחדרים','לחשב כמויות אוכל (מחשבון למעלה)','לבנות לוח זמנים ולהדפיס'],
+  'יום לפני':['לסמן לוח חשמל + מדרגות','להכין מיכל קרח לגיבוי','לוודא מיחם ראשי + גיבוי','לחלק אחריות ניקיון (9/12/15/18/21)','להגדיר אחראי ילדים'],
+  'ביום עצמו':['לתלות רשימת חדרים בכניסה','להניח פתקים בחדרים','להדליק דימרים לפני קידוש','לבדוק שהכל על הפלטה בזמן'],
+};
+function renderCk(){
+  const root=document.getElementById('ck-root');root.innerHTML='';
+  Object.entries(CK).forEach(([grp,items])=>{
+    const g=document.createElement('div');g.className='ck-group';g.innerHTML=`<h4>${grp}</h4>`;
+    items.forEach(it=>{
+      const id=grp+'|'+it;const done=DB.checks[id];
+      const el=document.createElement('div');el.className='ck'+(done?' done':'');
+      el.innerHTML=`<span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>${it}</span>`;
+      el.onclick=()=>{DB.checks[id]=!DB.checks[id];save();el.classList.toggle('done');};
+      g.appendChild(el);
+    });
+    root.appendChild(g);
+  });
+}
+
+/* ---- SCROLL: progress + toc active + reveal ---- */
+const bar=document.getElementById('bar');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;const pct=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  bar.style.width=pct+'%';
+},{passive:true});
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const secs=[...document.querySelectorAll('section.block')];const links=[...document.querySelectorAll('#toc a')];
+const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));}}),{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(s=>io2.observe(s));
+
+/* init */
+calcFood();calcTimeline();renderBudget();renderVendors();renderCk();
+document.getElementById('b-guests').addEventListener('input',sumBudget);
+</script>
+</body>
+</html>

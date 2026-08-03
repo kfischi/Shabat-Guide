@@ -160,17 +160,20 @@ exports.handler = async (event) => {
     console.error('[grow-webhook] בדיקת כפילות נכשלה:', hebrewReason(e));
   }
 
-  // §5.3 — קישור אישי
+  // §5.3 — קישור אישי. המוצר נגזר מהסכום: 99₪+ → מדריך הפרימיום, אחרת → מדריך הכניסה (50₪).
   const phone = normalizePhone(rawPhone);
   const secret = process.env.TOKEN_SECRET;
+  const amtNum = parseFloat(String(amount).replace(/[^\d.]/g, '')) || 0;
+  const pageParam = amtNum >= 99 ? '&page=premium' : '';
+  const productName = amtNum >= 99 ? 'מהדורת הפרימיום' : 'המדריך';
   let link;
   try {
     const token = makeToken(transactionId, secret);
-    link = `${SITE}/guide?id=${encodeURIComponent(transactionId)}&t=${token}`;
+    link = `${SITE}/guide?id=${encodeURIComponent(transactionId)}&t=${token}${pageParam}`;
   } catch (e) {
     // TOKEN_SECRET חסר → קישור מגובה שמאמת מול הגיליון (בלי טוקן).
     console.error('[grow-webhook] TOKEN_SECRET חסר — קישור ללא טוקן.');
-    link = `${SITE}/guide?id=${encodeURIComponent(transactionId)}`;
+    link = `${SITE}/guide?id=${encodeURIComponent(transactionId)}${pageParam}`;
   }
 
   // §5.4 — שתי שליחות עצמאיות במקביל

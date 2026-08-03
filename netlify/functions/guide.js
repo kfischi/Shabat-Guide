@@ -10,7 +10,7 @@ const path = require('path');
 const { verifyToken } = require('./lib/token');
 const sheets = require('./lib/sheets');
 
-const PAGES = { guide: 'guide.html', games: 'games.html' };
+const PAGES = { guide: 'guide.html', games: 'games.html', premium: 'premium-guide.html' };
 
 function loadPrivate(fileName) {
   const candidates = [
