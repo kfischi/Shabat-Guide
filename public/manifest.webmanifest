@@ -1,0 +1,17 @@
+{
+  "name": "Multibrawn — מדריך שבת חתן",
+  "short_name": "Multibrawn",
+  "description": "המדריך התפעולי לשבת חתן: כלים חכמים, יועץ AI, צ'קליסט ומשחקים.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1A0B2E",
+  "theme_color": "#FF0090",
+  "categories": ["lifestyle", "productivity"],
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

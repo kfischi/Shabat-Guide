@@ -26,6 +26,14 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 .sub a{color:var(--purple);font-weight:700;text-decoration:none}
 .fallback{background:var(--bg2);border-radius:16px;padding:24px;margin-top:6px}
 </style>
+<!-- pwa -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icon.svg">
+<style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
+<script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
 </head>
 <body>
 <div class="card" id="card">

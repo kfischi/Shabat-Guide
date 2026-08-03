@@ -221,6 +221,14 @@ footer .links a:hover{color:var(--fuchsia)}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none;transition:none}}
 </style>
+<!-- pwa -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icon.svg">
+<style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
+<script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
 </head>
 <body>
 
@@ -249,6 +257,7 @@ footer .links a:hover{color:var(--fuchsia)}
       <span>✓ <b>יועץ AI</b> חכם</span>
       <span>✓ <b>7 משחקים</b> במתנה</span>
     </div>
+    <button id="installApp" style="display:none;margin-top:22px;align-items:center;gap:8px;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-family:'Heebo';font-weight:700;font-size:14px;padding:11px 20px;border-radius:999px;backdrop-filter:blur(8px)">📲 התקנת האפליקציה</button>
   </div>
 </header>
 
@@ -461,6 +470,19 @@ document.querySelectorAll('.faq-q').forEach(q=>{
 /* reveal on scroll */
 const io = new IntersectionObserver((en)=>{en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* PWA install prompt — show the install button only when the browser offers it */
+let mbDeferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); mbDeferredPrompt = e;
+  const b = document.getElementById('installApp'); if (b) b.style.display = 'inline-flex';
+});
+const installBtn = document.getElementById('installApp');
+if (installBtn) installBtn.addEventListener('click', async () => {
+  if (!mbDeferredPrompt) return;
+  mbDeferredPrompt.prompt(); await mbDeferredPrompt.userChoice; mbDeferredPrompt = null;
+  installBtn.style.display = 'none';
+});
 
 /* sticky CTA appears after scrolling past the hero */
 const sticky = document.getElementById('stickyCta');
