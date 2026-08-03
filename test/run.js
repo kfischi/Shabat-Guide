@@ -35,6 +35,11 @@ function jsonRes(obj, status = 200) { return { ok: status < 400, status, json: a
 function textRes(status, txt) { return { ok: false, status, json: async () => ({}), text: async () => txt }; }
 global.fetch = async (url, opts) => {
   url = String(url);
+  if (url.includes('api.anthropic.com')) {
+    if (state.anthropicFail) return textRes(500, 'overloaded');
+    state.anthropicCalls = (state.anthropicCalls || 0) + 1;
+    return jsonRes({ content: [{ type: 'text', text: 'צריך בערך 15 חלות ל-60 איש.' }], stop_reason: 'end_turn' });
+  }
   if (url.includes('oauth2.googleapis.com/token')) return jsonRes({ access_token: 'tok', expires_in: 3600 });
   if (url.includes('sheets.googleapis.com') && /:append/.test(url)) { state.appended.push(JSON.parse(opts.body).values[0]); return jsonRes({}); }
   if (url.includes('sheets.googleapis.com')) return jsonRes({ values: state.rows });
@@ -45,7 +50,7 @@ global.fetch = async (url, opts) => {
   }
   throw new Error('unexpected fetch ' + url);
 };
-function reset() { state.rows = []; state.appended = []; state.emails = []; state.resendFail = false; }
+function reset() { state.rows = []; state.appended = []; state.emails = []; state.resendFail = false; state.anthropicFail = false; state.anthropicCalls = 0; }
 
 // --- מודולים נבדקים ---
 const { makeToken, verifyToken } = require('../netlify/functions/lib/token');
@@ -53,6 +58,8 @@ const { normalizePhone } = require('../netlify/functions/lib/phone');
 const { hebrewReason } = require('../netlify/functions/lib/mailer');
 const webhook = require('../netlify/functions/grow-webhook');
 const guide = require('../netlify/functions/guide');
+const ai = require('../netlify/functions/ai');
+process.env.ANTHROPIC_API_KEY = 'sk-ant-test';
 
 function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
   const body = JSON.stringify(bodyObj);
@@ -198,6 +205,37 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     const free = state.appended[0][6];
     assert.ok(/page=premium/.test(prem), 'expected premium link for 99');
     assert.ok(!/page=premium/.test(free), 'expected free link for 50');
+  });
+
+  console.log('AI ASSISTANT');
+  await testAsync('authorized (token) -> 200 with reply', async () => {
+    reset();
+    const t = makeToken('TXAI', process.env.TOKEN_SECRET);
+    const res = await ai.handler({ httpMethod: 'POST', body: JSON.stringify({ id: 'TXAI', t, messages: [{ role: 'user', content: 'כמה חלות ל-60 איש?' }] }) });
+    assert.strictEqual(res.statusCode, 200);
+    const b = JSON.parse(res.body);
+    assert.ok(b.reply && b.reply.includes('חלות'));
+    assert.strictEqual(state.anthropicCalls, 1);
+  });
+  await testAsync('authorized via sheet (no token) -> 200', async () => {
+    reset();
+    state.rows = [['2026', 'TXS2', 'x', 'x@x.com', '972', '99', 'l', 'נשלח', 'נשלח', '']];
+    const res = await ai.handler({ httpMethod: 'POST', body: JSON.stringify({ id: 'TXS2', question: 'טיפ לחיבור המשפחות?' }) });
+    assert.strictEqual(res.statusCode, 200);
+  });
+  await testAsync('unauthorized -> 403, no Anthropic call', async () => {
+    reset();
+    const res = await ai.handler({ httpMethod: 'POST', body: JSON.stringify({ id: 'NOPE', t: 'bad', question: 'hi' }) });
+    assert.strictEqual(res.statusCode, 403);
+    assert.ok(!state.anthropicCalls);
+  });
+  await testAsync('Anthropic error -> graceful 200 (no crash)', async () => {
+    reset();
+    state.anthropicFail = true;
+    const t = makeToken('TXAI', process.env.TOKEN_SECRET);
+    const res = await ai.handler({ httpMethod: 'POST', body: JSON.stringify({ id: 'TXAI', t, question: 'שאלה' }) });
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(JSON.parse(res.body).reply.length > 0);
   });
 
   console.log('MAILER reasons');

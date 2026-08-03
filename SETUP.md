@@ -44,6 +44,8 @@
 | `GOOGLE_SA_EMAIL` | כתובת ה-service account |
 | `GOOGLE_SA_PRIVATE_KEY` | המפתח הפרטי (מדביקים as-is; הקוד תומך גם ב-`\n` וגם בשורות אמיתיות) |
 | `SHEET_ID` | מזהה הגיליון (מה-URL: `/spreadsheets/d/<ID>/edit`) |
+| `ANTHROPIC_API_KEY` | מפתח Anthropic — מפעיל את **היועץ החכם (AI)** במדריך הפרימיום. בלעדיו היועץ פשוט לא זמין (הכלים האחרים עובדים). מקבלים ב-[console.anthropic.com](https://console.anthropic.com) |
+| `ANTHROPIC_MODEL` | אופציונלי — ברירת מחדל `claude-opus-5`. אפשר לשנות למודל חסכוני יותר (למשל `claude-haiku-4-5`) כדי להוזיל עלות לכל שאלה |
 
 ## הקמה — שלב אחר שלב
 1. **Google Sheet:** צרו גיליון בשם "Multi Brawn - Leads" עם העמודות: `תאריך | מזהה עסקה | שם | אימייל | טלפון | סכום | קישור אישי | מייל ללקוח | התראה לערדית | וואטסאפ נשלח`. **שתפו אותו עם ה-service account** (הרשאת עריכה).
