@@ -55,13 +55,31 @@ p.lead{font-size:18px;color:rgba(255,255,255,.9);margin-bottom:34px}
 
 <canvas id="confetti"></canvas>
 <script>
-/* Carry the access token from the URL onward to the guide */
-(function(){
-  const token = new URLSearchParams(location.search).get('token');
+/* Grant guide access on this post-payment page.
+   Grow redirects here after a successful payment, so reaching this page IS
+   the proof of purchase. If the URL already carries a token (from the
+   Make/N8N email flow) we use it; otherwise we mint a fresh valid token
+   (same SHA-256 scheme the guide validates) so the buyer gets straight in. */
+(async function(){
+  async function sha256hex(s){
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  async function mint(){
+    const payload = (await sha256hex('mb|'+Date.now()+'|'+Math.random())).slice(0,12);
+    const check = (await sha256hex('MB-'+payload)).slice(0,8);
+    return 'MB-'+payload+'-'+check;
+  }
+  let token = new URLSearchParams(location.search).get('token') || localStorage.getItem('mb_token');
+  try{
+    if(!token){ token = await mint(); }
+    localStorage.setItem('mb_token', token);
+  }catch(e){}
   if(token){
-    try{ localStorage.setItem('mb_token', token); }catch(e){}
-    const g = document.getElementById('open-guide');
-    g.href = 'Guide.html?token=' + encodeURIComponent(token);
+    const q = '?token=' + encodeURIComponent(token);
+    document.getElementById('open-guide').href = 'Guide.html' + q;
+    const gm = document.querySelector('.bonus a');
+    if(gm) gm.href = 'games.html' + q;
   }
 })();
 
