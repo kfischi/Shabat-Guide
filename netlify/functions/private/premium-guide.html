@@ -64,7 +64,9 @@ section.block{padding:64px 0 8px;scroll-margin-top:64px}
 /* tool card */
 .tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:22px}
 .tool h3{font-size:22px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.tool h3 .ico{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto}
+.tool h3 .ico{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:#fff}
+.tool h3 .ico svg{width:21px;height:21px}
+.crown{color:var(--gold)}.crown svg{width:52px;height:52px}
 .tool .hint{color:var(--muted);font-size:14.5px;margin-bottom:18px}
 .row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
 .inp{flex:1;min-width:130px}
@@ -136,7 +138,8 @@ table.grid tr:last-child td{border-bottom:none}
 /* games + footer */
 .foot-cta{margin:30px 0 0}
 .foot-cta a{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow)}
-.foot-cta .ico{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 auto}
+.foot-cta .ico{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:#fff}
+.foot-cta .ico svg{width:24px;height:24px}
 .foot-cta b{font-family:'Frank Ruhl Libre',serif;font-size:18px;display:block}
 .foot-cta span{color:var(--muted);font-size:14px}
 footer{text-align:center;padding:50px 22px 120px;color:var(--muted);font-size:14px}
@@ -163,7 +166,7 @@ footer .logo span{color:var(--fuchsia)}
 <!-- COVER -->
 <header class="cover">
   <div class="cover-in">
-    <div class="crown">👑</div>
+    <div class="crown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 4.5 4L12 4l4.5 6L21 6l-2 12H5L3 6z"/><path d="M5 20h14"/></svg></div>
     <span class="ribbon">מהדורת הפרימיום · MULTIBRAWN</span>
     <div class="script">כל מה שצריך. במקום אחד.</div>
     <h1>המדריך המלא ל<span class="g">שבת חתן</span></h1>
@@ -189,6 +192,7 @@ footer .logo span{color:var(--fuchsia)}
     <a href="#rooms">חלוקת חדרים</a>
     <a href="#vendors">ספקים</a>
     <a href="#invite">הזמנה לאורחים</a>
+    <a href="#game">המשחק</a>
     <a href="#deep">המדריך המלא</a>
     <a href="#templates">תבניות</a>
     <a href="#crisis">משברים</a>
@@ -218,7 +222,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- COUNTDOWN -->
   <section class="block reveal" id="countdown" style="padding-top:12px">
     <div class="tool">
-      <h3><span class="ico">📅</span> ספירה לאחור לשבת</h3>
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span> ספירה לאחור לשבת</h3>
       <p class="hint">הזינו את תאריך השבת — ונגיד לכם כמה זמן נשאר, ובעיקר <b>על מה להתמקד עכשיו</b> בדיוק לפי השלב.</p>
       <div class="row">
         <div class="inp"><label>תאריך השבת (יום שישי)</label><input type="date" id="cd-date"></div>
@@ -231,7 +235,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- FOOD CALCULATOR -->
   <section class="block reveal" id="food" style="padding-top:12px">
     <div class="tool">
-      <h3><span class="ico">🧮</span> מחשבון כמויות אוכל</h3>
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h4"/></svg></span> מחשבון כמויות אוכל</h3>
       <p class="hint">כמה חלות? כמה בשר? כמה יין? הזינו מספר אורחים וקבלו רשימת קנייה מדויקת — כבר כולל 15% גיבוי.</p>
       <div class="row">
         <div class="inp"><label>מספר אורחים (מבוגרים)</label><input type="number" id="f-adults" min="0" value="40" inputmode="numeric"></div>
@@ -245,7 +249,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- TIMELINE BUILDER -->
   <section class="block reveal" id="timeline" style="padding-top:12px">
     <div class="tool">
-      <h3><span class="ico">⏰</span> בונה לוח הזמנים</h3>
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span> בונה לוח הזמנים</h3>
       <p class="hint">הזינו את שעת הדלקת הנרות ושעת צאת השבת (לפי הלוח באזור שלכם) — ותקבלו לוח זמנים מלא לשישי, שבת ומוצ"ש.</p>
       <div class="row">
         <div class="inp"><label>הדלקת נרות (שישי)</label><input type="time" id="t-candle" value="17:30"></div>
@@ -259,7 +263,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- BUDGET -->
   <section class="block reveal" id="budget" style="padding-top:12px">
     <div class="tool">
-      <h3><span class="ico">💰</span> מחשבון תקציב</h3>
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M21 12a2 2 0 0 0-2-2h-3a2 2 0 0 0 0 4h3a2 2 0 0 0 2-2z"/></svg></span> מחשבון תקציב</h3>
       <p class="hint">הזינו עלות לכל קטגוריה — נחשב סה"כ, עלות לאורח, ונראה לכם איפה הכסף הולך. נשמר אוטומטית.</p>
       <table class="grid" id="budget-table">
         <thead><tr><th>קטגוריה</th><th style="width:150px">עלות (₪)</th></tr></thead>
@@ -275,7 +279,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- ROOMS -->
   <section class="block reveal" id="rooms" style="padding-top:12px">
     <div class="tool">
-      <h3><span class="ico">🛏️</span> מתכנן חלוקת חדרים</h3>
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16M2 9h18a2 2 0 0 1 2 2v9M2 16h20"/><path d="M6 9V6a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/></svg></span> מתכנן חלוקת חדרים</h3>
       <p class="hint">הזינו כל משפחה/קבוצה — ונמליץ על סוג החדר המתאים לפי הכללים (סבא־סבתא בקומת קרקע, זוג עם תינוק בחדר גדול, בחורים/בנות בנפרד). נשמר במכשיר.</p>
       <div class="row">
         <div class="inp"><label>שם המשפחה/קבוצה</label><input type="text" id="r-name" placeholder="משפחת כהן"></div>
@@ -297,7 +301,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- VENDORS -->
   <section class="block reveal" id="vendors" style="padding-top:12px">
     <div class="tool">
-      <h3><span class="ico">📋</span> מעקב ספקים</h3>
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg></span> מעקב ספקים</h3>
       <p class="hint">כלל הזהב: ספק בלי אישור כתוב = לא נסגר. עקבו כאן אחרי כל ספק, שעת הגעה ואישור. נשמר במכשיר.</p>
       <div class="row">
         <div class="inp"><label>שם ספק</label><input type="text" id="v-name" placeholder="קייטרינג / הסעות…"></div>
@@ -312,7 +316,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- WHATSAPP INVITE GENERATOR -->
   <section class="block reveal" id="invite" style="padding-top:12px">
     <div class="tool">
-      <h3><span class="ico">💬</span> מחולל הזמנה לאורחים</h3>
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> מחולל הזמנה לאורחים</h3>
       <p class="hint">מלאו את הפרטים — ותקבלו הודעת הזמנה מנוסחת, מוכנה להעתקה ולשליחה בוואטסאפ.</p>
       <div class="row">
         <div class="inp"><label>שם הזוג / החתן</label><input type="text" id="i-name" placeholder="דוד ושרה"></div>
@@ -324,6 +328,21 @@ footer .logo span{color:var(--fuchsia)}
         <button class="btn" onclick="genInvite()">צור הזמנה</button>
       </div>
       <div class="out" id="i-out"></div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE GAME -->
+  <section class="block reveal" id="game" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> משחק ההיכרות</h3>
+      <p class="hint">המשחק שמחבר בין שתי המשפחות — ליד השולחן, מהנייד. בוחרים קטגוריה, לוחצים, ומקבלים שאלה או אתגר. מעבירים את הטלפון סביב.</p>
+      <div id="game-tabs" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+        <button class="btn ghost" data-cat="icebreak" onclick="pickGame('icebreak')">שאלות היכרות</button>
+        <button class="btn ghost" data-cat="couple" onclick="pickGame('couple')">על הזוג</button>
+        <button class="btn ghost" data-cat="challenge" onclick="pickGame('challenge')">אתגרים קלים</button>
+      </div>
+      <div id="game-card" style="border-radius:18px;padding:38px 26px;text-align:center;color:#fff;min-height:150px;display:flex;align-items:center;justify-content:center;font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:clamp(20px,5vw,28px);line-height:1.4;background:radial-gradient(600px 300px at 70% -20%,rgba(255,0,144,.5),transparent 60%),linear-gradient(150deg,#7b2d8b,#1A0B2E)">לחצו "שאלה חדשה" כדי להתחיל 🎉</div>
+      <div style="text-align:center;margin-top:16px"><button class="btn" onclick="pickGame()">שאלה חדשה ↻</button></div>
     </div>
   </section>
 
@@ -485,7 +504,7 @@ footer .logo span{color:var(--fuchsia)}
   <!-- GAMES -->
   <section class="foot-cta reveal">
     <a href="__GAMES_URL__">
-      <div class="ico">🎲</div>
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
       <div><b>7 משחקי חיבור לשבת</b><span>הבונוס שמחבר בין שתי המשפחות — כלול אצלכם.</span></div>
     </a>
   </section>
@@ -701,6 +720,43 @@ function copyInvite(btn){
   navigator.clipboard?.writeText(txt).then(()=>{const o=btn.textContent;btn.textContent='הועתק ✓';setTimeout(()=>btn.textContent=o,1500);});
 }
 
+/* ---- INTERACTIVE GAME ---- */
+const GAME={
+  icebreak:[
+    'מה הזיכרון הכי יפה שלך מילדות?','מה הדבר שהכי מרגש אותך בשבת הזו?',
+    'אם היית יכול/ה לשבת לארוחה עם דמות אחת מהתנ״ך — מי, ולמה?','מה הברכה שהכי היית רוצה לתת לזוג?',
+    'ספר/י על מקום אחד בעולם שאתה חולם/ת לבקר בו.','מה התכונה שהכי מעריכים בך בבית?',
+    'מה למדת השבוע — קטן או גדול?','אם היה לך יום חופש מושלם — איך הוא נראה?',
+    'מהי מסורת משפחתית שאתה הכי אוהב/ת?','ספר/י על אדם שהשפיע עליך והמשפחה השנייה לא מכירה.'
+  ],
+  couple:[
+    'תנחשו: איך הזוג נפגש?','מי מהשניים קם ראשון בבוקר?','מה התחביב המשותף של הזוג?',
+    'תנחשו את המאכל האהוב על החתן/הכלה.','מי מהשניים יותר מסודר?','איזה שיר מזכיר להם אחד את השני?',
+    'תנחשו לאן הם נסעו בטיול הראשון יחד.','מה החלום המשותף של הזוג לחמש השנים הקרובות?',
+    'מי מהם צוחק יותר בקלות?','ספרו רגע מצחיק שאתם זוכרים עם החתן או הכלה.'
+  ],
+  challenge:[
+    'תגידו מחמאה כנה למישהו שלא הכרתם עד השבת הזו.','שירו יחד שיר שבת שכולם מכירים.',
+    'ספרו בדיחה נקייה — מי שמצחיק הכי הרבה מנצח.','מצאו 3 דברים משותפים עם האדם שיושב מולכם.',
+    'כל אחד יאמר מילה אחת שמתארת את השבת — סבבה סביב השולחן.','חקו חיה, והשאר מנחשים.',
+    'תנו "טוסט" קצר לכבוד הזוג.','ספרו ברכה שקיבלתם פעם וזכרתם.',
+    'החליפו מקום עם מישהו מהמשפחה השנייה לחמש דקות של שיחה.','מצאו יחד מנגינה שכולם יכולים לפזם.'
+  ]
+};
+let gCat='icebreak', gLast='';
+function pickGame(cat){
+  if(cat) gCat=cat;
+  document.querySelectorAll('#game-tabs button').forEach(b=>{
+    const on=b.dataset.cat===gCat; b.classList.toggle('ghost',!on);
+  });
+  const arr=GAME[gCat]; let p;
+  do{ p=arr[Math.floor(Math.random()*arr.length)]; }while(arr.length>1 && p===gLast);
+  gLast=p;
+  const card=document.getElementById('game-card');
+  card.style.opacity=0;
+  setTimeout(()=>{ card.textContent=p; card.style.transition='opacity .25s'; card.style.opacity=1; },120);
+}
+
 /* ---- SCROLL: progress + toc active + reveal ---- */
 const bar=document.getElementById('bar');
 addEventListener('scroll',()=>{
@@ -715,6 +771,7 @@ secs.forEach(s=>io2.observe(s));
 
 /* init */
 calcFood();calcTimeline();renderBudget();renderVendors();renderRooms();renderCk();
+document.querySelector('#game-tabs button[data-cat="icebreak"]').classList.remove('ghost');
 document.getElementById('b-guests').addEventListener('input',sumBudget);
 </script>
 </body>
