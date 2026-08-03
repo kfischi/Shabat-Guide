@@ -8,23 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
 <meta name="robots" content="noindex">
 <title>משחקי חיבור לשבת · Multi Brawn</title>
-
-<!-- ACCESS GATE — identical to Guide.html (SHA-256 token). Requires a valid
-     ?token= or a previously stored mb_token; otherwise redirects to landing. -->
-<script>
-(function(){
-  async function sha256hex(s){var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
-  async function valid(t){if(!t||typeof t!=='string')return false;var m=t.match(/^MB-([0-9a-z]+)-([0-9a-f]{8})$/i);if(!m)return false;var h=await sha256hex('MB-'+m[1].toLowerCase());return h.slice(0,8)===m[2].toLowerCase();}
-  (async function(){
-    try{
-      var p=new URLSearchParams(location.search),u=p.get('token'),t=u||localStorage.getItem('mb_token');
-      if(!(await valid(t))){ location.replace('index.html'); return; }
-      if(u){ localStorage.setItem('mb_token',u); history.replaceState(null,'',location.pathname); }
-      document.documentElement.classList.add('mb-authorized');
-    }catch(e){ location.replace('index.html'); }
-  })();
-})();
-</script>
+<!-- מוגש רק דרך netlify/functions/guide.js אחרי אימות. אין שער בצד לקוח. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -32,8 +16,6 @@
 :root{--fuchsia:#FF0090;--purple:#7b2d8b;--ink:#1a0020;--muted:#7a6880;--line:#f0e6f0;--shadow:0 10px 40px rgba(123,45,139,.12);--shadow-lg:0 24px 70px rgba(123,45,139,.2)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{visibility:hidden}
-html.mb-authorized body{visibility:visible}
 body{font-family:'Heebo',sans-serif;background:#fff;color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 .hero{position:relative;text-align:center;color:#fff;padding:80px 22px 70px;overflow:hidden;
@@ -80,14 +62,14 @@ footer .logo span{color:var(--fuchsia)}
     <div class="tagline">שתי משפחות, לב אחד</div>
     <h1>7 משחקי <span class="glow">חיבור</span> לשבת</h1>
     <p>שבת חתן מפגישה שתי משפחות שלא תמיד מכירות. המשחקים האלה שוברים את הקרח והופכים זרים לחברים.</p>
-    <a class="back" href="Guide.html">→ חזרה למדריך</a>
+    <a class="back" href="__GUIDE_URL__">→ חזרה למדריך</a>
   </div>
 </header>
 
 <main id="games"></main>
 
 <section class="foot-cta reveal">
-  <a href="Guide.html">
+  <a href="__GUIDE_URL__">
     <div class="ico">📖</div>
     <div class="t"><b>חזרה למדריך 30 השלבים</b><span>כל מה שצריך כדי שהשבת תהיה מושלמת.</span></div>
     <div class="ar">‹</div>

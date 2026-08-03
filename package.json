@@ -1,0 +1,13 @@
+{
+  "name": "multibrawn-shabat-guide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multibrawn — מדריך תפעולי לשבת חתן: אתר סטטי + Netlify Functions למסירת המדריך אחרי תשלום GROW.",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node test/run.js"
+  }
+}

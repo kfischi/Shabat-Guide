@@ -8,49 +8,7 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
 <title>מדריך שבת חתן · Multi Brawn</title>
-
-<!-- ============================================================
-     ACCESS GATE — runs before paint (body hidden until authorized).
-     Accepts ?token=... (sent after payment), validates it, persists to
-     localStorage for return visits, cleans the URL. No valid token → landing.
-     Token format: MB-<hex payload>-<first 8 hex of SHA-256("MB-"+payload)>.
-     SHA-256 so Make/N8N/Netlify can all generate matching tokens natively.
-     NOTE: client-side gating deters casual sharing only. For real protection
-     enable the optional Netlify Function (see SETUP.md).
-     ============================================================ -->
-<script>
-(function(){
-  async function sha256hex(s){
-    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
-    return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
-  }
-  async function valid(t){
-    if(!t || typeof t!=='string') return false;
-    var m = t.match(/^MB-([0-9a-z]+)-([0-9a-f]{8})$/i);
-    if(!m) return false;
-    var h = await sha256hex('MB-'+m[1].toLowerCase());
-    return h.slice(0,8) === m[2].toLowerCase();
-  }
-  (async function(){
-    try{
-      var params = new URLSearchParams(location.search);
-      var urlToken = params.get('token');
-      var token = urlToken || localStorage.getItem('mb_token');
-      if(!(await valid(token))){
-        location.replace('index.html');
-        return;
-      }
-      if(urlToken){
-        localStorage.setItem('mb_token', urlToken);
-        history.replaceState(null, '', location.pathname);
-      }
-      document.documentElement.classList.add('mb-authorized');
-    }catch(e){
-      location.replace('index.html');
-    }
-  })();
-})();
-</script>
+<!-- מוגש רק דרך netlify/functions/guide.js אחרי אימות. אין שער בצד לקוח. -->
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,9 +31,6 @@
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-/* keep content hidden until the access gate authorizes (avoids flash before redirect) */
-body{visibility:hidden}
-html.mb-authorized body{visibility:visible}
 body{
   font-family:'Heebo',sans-serif;
   background:var(--bg);
@@ -356,7 +311,7 @@ footer a.tel{color:var(--purple);font-weight:700}
 
 <!-- GAMES CTA -->
 <section class="games-cta reveal">
-  <a href="games.html">
+  <a href="__GAMES_URL__">
     <div class="ico">🎲</div>
     <div class="txt">
       <b>משחקי חיבור לשבת</b>
@@ -448,7 +403,7 @@ const DATA = [
   {
     g:"g6", num:"קטגוריה ו׳", title:"חוויה וסגירה", sub:"שהזיכרון יישאר", img:"images/cat-6.jpg",
     steps:[
-      {n:20,t:"משחקי חיבור",h:`<p>2 משפחות + שבת ארוכה = צריך מנחה ומשחקים. ראו קובץ <a href="games.html" style="color:var(--fuchsia);font-weight:700">משחקי החיבור</a>.</p>`},
+      {n:20,t:"משחקי חיבור",h:`<p>2 משפחות + שבת ארוכה = צריך מנחה ומשחקים. ראו קובץ <a href="__GAMES_URL__" style="color:var(--fuchsia);font-weight:700">משחקי החיבור</a>.</p>`},
       {n:21,t:"מזכרות",h:`<p>ריבה ביתית / נר ריחני / ספר קטן — עם תווית ושם הזוג. אריזה יפה = חוויה שלמה.</p>`},
       {n:22,t:"ניהול משברים",h:`<p>תוכנית גיבוי לכל ספק קריטי. רשימת טלפוני חירום. מי מחליט בשבת?</p>`},
       {n:23,t:"פרידה חלקה",h:`<p>תזכורת ביציאה + שקיות לשאריות. הרגע האחרון = הזיכרון האחרון.</p>`},
