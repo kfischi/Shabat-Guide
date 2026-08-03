@@ -9,18 +9,20 @@
 <meta name="robots" content="noindex">
 <title>משחקי חיבור לשבת · Multi Brawn</title>
 
-<!-- ACCESS GATE — identical to Guide.html. Requires a valid ?token= or a
-     previously stored mb_token; otherwise redirects to the landing page. -->
+<!-- ACCESS GATE — identical to Guide.html (SHA-256 token). Requires a valid
+     ?token= or a previously stored mb_token; otherwise redirects to landing. -->
 <script>
 (function(){
-  function checksum(s){var sum=0;for(var i=0;i<s.length;i++){sum=(sum*31+s.charCodeAt(i))>>>0;}return (sum%1296).toString(36).padStart(2,'0');}
-  function valid(t){if(!t||typeof t!=='string')return false;var m=t.match(/^MB-([0-9a-z]+)-([0-9a-z]{2})$/i);if(!m)return false;return checksum('MB-'+m[1].toLowerCase())===m[2].toLowerCase();}
-  try{
-    var p=new URLSearchParams(location.search),u=p.get('token'),s=localStorage.getItem('mb_token'),t=u||s;
-    if(!valid(t)){ location.replace('index.html'); return; }
-    if(u){ localStorage.setItem('mb_token',u); history.replaceState(null,'',location.pathname); }
-    document.documentElement.classList.add('mb-authorized');
-  }catch(e){ location.replace('index.html'); }
+  async function sha256hex(s){var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
+  async function valid(t){if(!t||typeof t!=='string')return false;var m=t.match(/^MB-([0-9a-z]+)-([0-9a-f]{8})$/i);if(!m)return false;var h=await sha256hex('MB-'+m[1].toLowerCase());return h.slice(0,8)===m[2].toLowerCase();}
+  (async function(){
+    try{
+      var p=new URLSearchParams(location.search),u=p.get('token'),t=u||localStorage.getItem('mb_token');
+      if(!(await valid(t))){ location.replace('index.html'); return; }
+      if(u){ localStorage.setItem('mb_token',u); history.replaceState(null,'',location.pathname); }
+      document.documentElement.classList.add('mb-authorized');
+    }catch(e){ location.replace('index.html'); }
+  })();
 })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">

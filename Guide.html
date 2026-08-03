@@ -10,47 +10,45 @@
 <title>מדריך שבת חתן · Multi Brawn</title>
 
 <!-- ============================================================
-     ACCESS GATE — runs before paint.
-     Accepts ?token=... from the URL (sent after payment), validates
-     its format/checksum, persists it to localStorage for return
-     visits, then cleans the URL. No valid token → back to landing.
-     NOTE: client-side gating deters casual sharing only. For real
-     protection enable the optional Netlify Function (see SETUP.md).
+     ACCESS GATE — runs before paint (body hidden until authorized).
+     Accepts ?token=... (sent after payment), validates it, persists to
+     localStorage for return visits, cleans the URL. No valid token → landing.
+     Token format: MB-<hex payload>-<first 8 hex of SHA-256("MB-"+payload)>.
+     SHA-256 so Make/N8N/Netlify can all generate matching tokens natively.
+     NOTE: client-side gating deters casual sharing only. For real protection
+     enable the optional Netlify Function (see SETUP.md).
      ============================================================ -->
 <script>
 (function(){
-  // Must match the token generator used in N8N (see SETUP.md / n8n workflow #2).
-  // Format: MB-<base36 payload>-<2-char base36 checksum>
-  function checksum(s){
-    var sum=0; for(var i=0;i<s.length;i++){ sum=(sum*31 + s.charCodeAt(i))>>>0; }
-    return (sum % 1296).toString(36).padStart(2,'0');
+  async function sha256hex(s){
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
   }
-  function valid(t){
+  async function valid(t){
     if(!t || typeof t!=='string') return false;
-    var m = t.match(/^MB-([0-9a-z]+)-([0-9a-z]{2})$/i);
+    var m = t.match(/^MB-([0-9a-z]+)-([0-9a-f]{8})$/i);
     if(!m) return false;
-    return checksum('MB-'+m[1].toLowerCase()) === m[2].toLowerCase();
+    var h = await sha256hex('MB-'+m[1].toLowerCase());
+    return h.slice(0,8) === m[2].toLowerCase();
   }
-  try{
-    var params = new URLSearchParams(location.search);
-    var urlToken = params.get('token');
-    var stored = localStorage.getItem('mb_token');
-    var token = urlToken || stored;
-
-    if(!valid(token)){
+  (async function(){
+    try{
+      var params = new URLSearchParams(location.search);
+      var urlToken = params.get('token');
+      var token = urlToken || localStorage.getItem('mb_token');
+      if(!(await valid(token))){
+        location.replace('index.html');
+        return;
+      }
+      if(urlToken){
+        localStorage.setItem('mb_token', urlToken);
+        history.replaceState(null, '', location.pathname);
+      }
+      document.documentElement.classList.add('mb-authorized');
+    }catch(e){
       location.replace('index.html');
-      return;
     }
-    if(urlToken){
-      localStorage.setItem('mb_token', urlToken);
-      // strip token from the address bar so it isn't shoulder-surfed / shared by copy-paste
-      history.replaceState(null, '', location.pathname);
-    }
-    // mark as authorized; body stays hidden via CSS until this class is set
-    document.documentElement.classList.add('mb-authorized');
-  }catch(e){
-    location.replace('index.html');
-  }
+  })();
 })();
 </script>
 

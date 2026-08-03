@@ -1,6 +1,8 @@
 # Multi Brawn — מדריך הקמת המשפך 🌸
 
-מסמך זה מסביר איך לחבר את כל החלקים שכבר נבנו בקוד לשירותים החיצוניים (Tally, Google Sheets, N8N, WAHA, Grow).
+מסמך זה מסביר איך לחבר את כל החלקים שכבר נבנו בקוד לשירותים החיצוניים (Tally, Google Sheets, WAHA, Grow) דרך מנוע אוטומציה.
+
+> **מנוע האוטומציה:** אפשר להשתמש ב-**Make** (מומלץ אם כבר התחלת שם) או ב-**N8N**. ה-token עבר ל-SHA-256 כך ששניהם יכולים לייצר אותו נייטיב. שלבי N8N מפורטים למטה + קבצי JSON מוכנים לייבוא; מתכון ה-token ל-Make נמצא בסעיף "אבטחת token". בשני המקרים ה-webhook, ה-Sheet, המיילים וה-WAHA זהים — רק "הצינור" שמחבר אותם שונה.
 
 > ⚠️ **אבטחה — קראו לפני הכל:** מפתחות וסיסמאות (Tally API key, N8N JWT, סיסמת WAHA, Service Account JSON, Gmail App Password) **לא נשמרים בריפו אף פעם**. הם מוזנים רק ב-UI של N8N (Credentials) או כ-Environment Variables ב-Netlify. אם מפתח נחשף בצ'אט/מסמך — מומלץ להחליף אותו (rotate).
 
@@ -99,10 +101,20 @@ https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA
 
 ---
 
-## אבטחת token
-- `Guide.html` מאמת את ה-token בצד לקוח (checksum). זה **מרתיע שיתוף מזדמן** אך לא חוסם משתמש טכני — קוד הלקוח גלוי.
-- האלגוריתם ב-`Guide.html` חייב להישאר זהה ל-node "Generate Access Token" ב-Workflow #2. אל תשנו אחד בלי השני.
-- **לאבטחה אמיתית** (מומלץ אם מוכרים בהיקף): הפעילו את `netlify/functions/verify-token.js` — אימות מול רשימת tokens חתומה בצד שרת. ראו הערות בקובץ עצמו.
+## אבטחת token (SHA-256 — עובד עם Make, N8N ו-Netlify)
+- **פורמט ה-token:** `MB-<payload>-<check>` כאשר `payload` = מחרוזת hex ייחודית, ו-`check` = 8 התווים הראשונים של `SHA-256("MB-" + payload)`.
+- `Guide.html` ו-`games.html` מאמתים את זה נייטיב בדפדפן (SHA-256). כל מנוע (Make / N8N / Netlify) יכול לייצר token תואם כי SHA-256 מובנה בכולם.
+- זה **מרתיע שיתוף מזדמן** אך לא חוסם משתמש טכני — קוד הלקוח גלוי. **לאבטחה אמיתית** הפעילו את `netlify/functions/verify-token.js` (חתימת HMAC בצד שרת עם סוד שלא נחשף).
+- ⚠️ הדפים משתמשים ב-`crypto.subtle` — עובד רק על **HTTPS** (או `localhost`). בפרודקשן (`guide.multibrawn.co.il`) זה תקין; לבדיקה מקומית פִּתחו דרך שרת מקומי ולא כקובץ `file://`.
+
+### יצירת ה-token ב-Make (3 מודולי "Set variable")
+| שלב | שם משתנה | ערך |
+|---|---|---|
+| 1 | `payload` | `{{substring(lower(sha256(concat(email; "|"; formatDate(now; "x")))); 0; 12)}}` |
+| 2 | `token`   | `MB-{{payload}}-{{substring(lower(sha256(concat("MB-"; payload))); 0; 8)}}` |
+
+אחר כך בונים את הקישור: `https://guide.multibrawn.co.il/Guide.html?token={{token}}` (וכן `games.html?token={{token}}`).
+> ב-N8N זה כבר מובנה ב-node "Generate Access Token" (אותו אלגוריתם בדיוק).
 
 ## שלב 8 — העלאה (GitHub + Netlify)
 1. מזגו את ה-PR הזה ל-`main`.

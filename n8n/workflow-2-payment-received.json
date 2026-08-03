@@ -35,7 +35,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Generate an access token that matches the validator inside Guide.html\n// Format: MB-<base36 payload>-<2-char base36 checksum>\nfunction checksum(s){let sum=0;for(let i=0;i<s.length;i++){sum=(sum*31+s.charCodeAt(i))>>>0;}return (sum%1296).toString(36).padStart(2,'0');}\nconst payload=(Date.now().toString(36)+Math.random().toString(36).slice(2,8)).toLowerCase().replace(/[^0-9a-z]/g,'');\nconst base='MB-'+payload;\nconst token=base+'-'+checksum(base);\nconst item=$input.first().json;\nreturn [{ json: { ...item, token, guideLink: 'https://guide.multibrawn.co.il/Guide.html?token='+token, gamesLink: 'https://guide.multibrawn.co.il/games.html?token='+token } }];"
+        "jsCode": "// Generate an access token that matches the validator inside Guide.html / games.html\n// Format: MB-<hex payload>-<first 8 hex of SHA-256('MB-'+payload)>  (same as Make's sha256())\nconst crypto=require('crypto');\nconst item=$input.first().json;\nconst payload=crypto.createHash('sha256').update((item.email||'')+'|'+Date.now()).digest('hex').slice(0,12);\nconst base='MB-'+payload;\nconst check=crypto.createHash('sha256').update(base).digest('hex').slice(0,8);\nconst token=base+'-'+check;\nreturn [{ json: { ...item, token, guideLink: 'https://guide.multibrawn.co.il/Guide.html?token='+token, gamesLink: 'https://guide.multibrawn.co.il/games.html?token='+token } }];"
       },
       "id": "gen-token",
       "name": "Generate Access Token",
