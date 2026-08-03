@@ -8,11 +8,11 @@
 
 ## הזרימה
 ```
-index.html → טופס Tally → thank-you-lead.html
-                ↓ webhook
-           N8N #1 (ליד חדש) → מייל + WAHA + Google Sheet
+index.html (טופס Netlify) → thank-you-lead.html
+                ↓ ההרשמה נשמרת ב-Netlify (ואופציונלי webhook → Make/N8N)
+           [אוטומציה אופציונלית: מייל + WAHA + Google Sheet]
                 ↓ הלקוח משלם
-           תשלום Grow → webhook → N8N #2 (תשלום) → token + מייל + WAHA
+           תשלום Grow → הפניה ל-thank-you.html  (+ אופציונלי webhook → token + מייל + WAHA)
                 ↓
            thank-you.html → Guide.html?token=…  (+ games.html?token=…)
 ```
@@ -21,15 +21,17 @@ index.html → טופס Tally → thank-you-lead.html
 המטרה: הלקוח משלם ב-Grow ומקבל את המדריך. אפשר להשיק בלי שום אוטומציה, ב-4 חיבורים:
 
 ```
-index.html → טופס Tally → Grow (תשלום 99₪) → thank-you.html → המדריך נפתח
+index.html (טופס Netlify) → thank-you-lead.html → Grow (תשלום 99₪) → thank-you.html → המדריך נפתח
 ```
 
-1. **Tally:** בונים את הטופס (שלב 2 למטה). ב-**After submit → Redirect** מפנים **ישירות ללינק התשלום של Grow**:
-   `https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA`
-   (כך אתם גם אוספים ליד וגם שולחים לתשלום. תשובות הטופס נשמרות ב-Tally.)
-2. **index.html:** מציבים ב-`TALLY_URL` את כתובת הטופס. זהו — ה-CTA שולח לטופס.
+**טופס ההרשמה כבר בנוי בתוך `index.html`** בעזרת **Netlify Forms** — חינם, בלי Tally, בלי כלי חיצוני. הליד נשמר אצלכם ב-Netlify ומקבלים מייל על כל הרשמה. אין מה להחליף בקוד.
+
+1. **Netlify:** מעלים את הריפו (שלב 8). Netlify מזהה אוטומטית את הטופס (`data-netlify="true"`). ב-**Site → Forms → Notifications** מוסיפים **Email notification** ל-`multibrawn@gmail.com`.
+2. הטופס מפנה אחרי שליחה ל-`thank-you-lead.html` שבו כפתור **תשלום Grow** גדול (הלינק כבר מוטמע).
 3. **Grow:** בהגדרות העסקה, **URL הצלחה / הפניה לאחר תשלום** → `https://guide.multibrawn.co.il/thank-you.html`.
-4. **Netlify:** מעלים את הריפו (שלב 8). `thank-you.html` מעניק גישה אוטומטית וה-CTA "פתח את המדריך" עובד.
+4. `thank-you.html` מעניק גישה אוטומטית — המדריך נפתח מיד. ✅
+
+> **חינם:** Netlify Forms מאפשר 100 הרשמות בחודש בחינם. מעבר לזה יש חבילות, או שמחברים את הטופס ל-Google Sheet דרך webhook (ראו "אוטומציה" למטה).
 
 > **חשוב לדעת:** במסלול הזה כל מי שמגיע ל-`thank-you.html` מקבל גישה (הדף לא מאומת מול תשלום אמיתי). לכן **אל תפרסמו** את הכתובת — היא רק יעד ההפניה של Grow. זה tradeoff סביר להשקה של מוצר ב-99₪; מתי שרוצים אוטומציה + וואטסאפ + מייל אישי → מוסיפים את Make/N8N (למטה) וזה משדרג בלי לשבור כלום.
 
@@ -38,10 +40,10 @@ index.html → טופס Tally → Grow (תשלום 99₪) → thank-you.html →
 ## מה כבר מוכן בריפו
 | קובץ | תפקיד |
 |------|-------|
-| `index.html` | דף נחיתה שיווקי. ה-CTA מפנה לטופס Tally. |
+| `index.html` | דף נחיתה שיווקי + **טופס הרשמה מובנה (Netlify Forms, חינם)**. ה-CTA גולל לטופס. |
 | `Guide.html` | המדריך — מוגן ב-`?token=`. |
 | `games.html` | 7 משחקי חיבור (מתנה) — מוגן ב-`?token=`. |
-| `thank-you-lead.html` | דף תודה אחרי **מילוי הטופס** (לפני תשלום) — Tally מפנה אליו. |
+| `thank-you-lead.html` | דף תודה אחרי **מילוי הטופס** (לפני תשלום) — הטופס מפנה אליו, ובו כפתור תשלום Grow. |
 | `thank-you.html` | דף תודה אחרי **תשלום**. |
 | `emails/welcome.html` | תבנית מייל #1 (ליד חדש). |
 | `emails/payment-received.html` | תבנית מייל #2 (תשלום התקבל). |
@@ -61,19 +63,17 @@ index.html → טופס Tally → Grow (תשלום 99₪) → thank-you.html →
 
 ---
 
-## שלב 1 — `index.html` (כבר בנוי)
-פתחו את `index.html`, בראש בלוק ה-`<script>` בתחתית יש:
-```js
-const TALLY_URL = "https://tally.so/r/YOUR_FORM_ID";
-```
-החליפו ב-URL האמיתי של טופס Tally (שלב 2). זה כל מה שצריך.
+## שלב 1 — `index.html` + טופס Netlify (כבר בנוי)
+הטופס כבר בתוך `index.html` (שדות: שם\*, מייל\*, טלפון\*, סוג אירוע) עם `data-netlify="true"`.
+**אין מה לערוך בקוד.** מה שצריך זה רק להעלות ל-Netlify (שלב 8), ואז:
+1. **Site → Forms** → תראו את הטופס `lead` וכל ההרשמות נשמרות שם.
+2. **Forms → Form notifications → Add notification → Email** → `multibrawn@gmail.com` (מייל על כל ליד חדש).
+3. הטופס מפנה אוטומטית ל-`/thank-you-lead.html` אחרי שליחה (מוגדר ב-`action`).
 
-## שלב 2 — טופס Tally
-1. צרו חשבון חינמי ב-[tally.so](https://tally.so).
-2. בנו טופס עם השדות: **שם מלא\*, מייל\*, טלפון\*, סוג אירוע** (שבת חתן / בר מצוה / חתונה / אחר), מועד משוער (אופציונלי), מספר אורחים (אופציונלי).
-3. **Integrations → Webhooks** → הדביקו את כתובת ה-Webhook של N8N #1 (שלב 4).
-4. **After submit → Redirect** → לכתובת `https://guide.multibrawn.co.il/thank-you-lead.html`.
-5. העתיקו את ה-Share URL של הטופס → הדביקו ב-`TALLY_URL`.
+> אין צורך ב-Tally. אם בכל זאת תרצו webhook לאוטומציה (Make/N8N) — Netlify שולח את הטופס גם ל-**Outgoing webhook** (Forms → Notifications → Outgoing webhook), וזה מזין את שלב 4 בדיוק כמו Tally.
+
+## שלב 2 — (בוטל) Tally כבר לא נדרש
+דילגו ישר לשלב 3. הטופס החינמי של Netlify מחליף את Tally לגמרי.
 
 ## שלב 3 — Google Sheet
 צרו גיליון בשם **"Multi Brawn - Leads"**, לשונית `Leads`, עם הכותרות (שורה 1):
@@ -88,7 +88,7 @@ const TALLY_URL = "https://tally.so/r/YOUR_FORM_ID";
    - `YOUR_GOOGLE_SHEET_ID` → ה-ID משלב 3.
    - `YOUR_SHEETS_CRED` / `YOUR_GMAIL_CRED` → בחרו את ה-credentials שלכם בכל node (Google Sheets, Gmail).
    - WhatsApp: credential `YOUR_WAHA_CRED` (שלב 6) — ה-URL כבר מוגדר ל-WAHA שלכם.
-3. פתחו את ה-Webhook node → העתיקו את **Production URL** → הדביקו ב-Tally (שלב 2.3).
+3. פתחו את ה-Webhook node → העתיקו את **Production URL** → הדביקו ב-Netlify (Forms → Outgoing webhook) או ב-Make.
 4. שמרו והפעילו (Active).
 
 > הקובץ כבר ממפה את שדות Tally בגמישות (לפי תווית השדה בעברית/אנגלית), שולח מייל ללקוח, מייל ל-multibrawn@gmail.com, והודעת WhatsApp עם לינק Grow.
@@ -138,10 +138,10 @@ https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA
 1. מזגו את ה-PR הזה ל-`main`.
 2. ב-Netlify חברו את הריפו; Publish directory = שורש הריפו (אתר סטטי, אין build).
 3. הצביעו את הדומיין `guide.multibrawn.co.il` ל-Netlify.
-4. ודאו: `index.html` נטען, ה-CTA פותח את Tally, `Guide.html` ללא token מפנה ל-`index.html`, ועם token תקין נפתח.
+4. ודאו: `index.html` נטען, ה-CTA גולל לטופס, `Guide.html` ללא token מפנה ל-`index.html`, ועם token תקין נפתח.
 
 ## בדיקת End-to-End ✅
-- [ ] מילוי טופס Tally → הפניה ל-`thank-you-lead.html` + מייל welcome + WAHA + שורה ב-Sheet (סטטוס "ליד חדש").
+- [ ] מילוי טופס Netlify → הפניה ל-`thank-you-lead.html` + ההרשמה מופיעה ב-Netlify → Forms + מייל התראה.
 - [ ] תשלום בדיקה ב-Grow → מגיע מייל "המדריך מוכן" עם לינק token + עדכון Sheet ל"שילם".
 - [ ] לחיצה על הלינק → `Guide.html` נפתח, ה-token נשמר ל-localStorage.
 - [ ] `games.html?token=…` נפתח; וגם דרך הקישור הפנימי מהמדריך (token מ-localStorage).

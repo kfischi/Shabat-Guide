@@ -166,6 +166,19 @@ section{padding:78px 0}
 .faq-a div{padding:0 22px 20px}
 .faq-item.open .faq-a{max-height:300px}
 
+/* ============ SIGNUP FORM ============ */
+.signup{background:linear-gradient(180deg,#fff,#fdf5fb);scroll-margin-top:70px}
+.signup-card{max-width:520px;margin:34px auto 0;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lg);padding:34px 28px}
+.signup-card .lead{color:var(--muted);text-align:center;margin-bottom:22px;font-size:15.5px}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:700;font-size:14px;margin-bottom:7px;color:var(--ink)}
+.field label .req{color:var(--fuchsia)}
+.field input,.field select{width:100%;font-family:'Heebo';font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--fuchsia);box-shadow:0 0 0 3px rgba(255,0,144,.12)}
+.signup-card .btn{width:100%;justify-content:center;margin-top:8px}
+.signup-card .note{text-align:center;color:var(--muted);font-size:13px;margin-top:16px}
+.signup-card .note b{color:var(--purple)}
+
 /* ============ FINAL CTA ============ */
 .final{background:linear-gradient(160deg,#2a0833,#7b2d8b 50%,#1a0020);color:#fff;text-align:center}
 .final .sec-title{color:#fff}
@@ -345,6 +358,46 @@ footer .links a:hover{color:var(--fuchsia)}
   </div>
 </section>
 
+<!-- ============ SIGNUP FORM (Netlify Forms — free, no Tally) ============ -->
+<section class="signup" id="signup">
+  <div class="wrap reveal">
+    <div class="kicker">כמעט שם</div>
+    <h2 class="sec-title h-serif">השאירו פרטים ועברו לתשלום</h2>
+    <div class="signup-card">
+      <p class="lead">אחרי מילוי הפרטים תועברו לתשלום מאובטח ב-Grow (99 ₪). המדריך נפתח מיד לאחר התשלום.</p>
+      <!-- Netlify Forms: submissions saved free in the Netlify dashboard + email notification.
+           On success Netlify redirects to /thank-you-lead.html (which has the Grow pay button). -->
+      <form name="lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you-lead.html">
+        <input type="hidden" name="form-name" value="lead">
+        <p hidden><label>אל תמלאו: <input name="bot-field"></label></p>
+        <div class="field">
+          <label>שם מלא <span class="req">*</span></label>
+          <input type="text" name="name" required autocomplete="name" placeholder="ישראל ישראלי">
+        </div>
+        <div class="field">
+          <label>כתובת מייל <span class="req">*</span></label>
+          <input type="email" name="email" required autocomplete="email" placeholder="you@email.com">
+        </div>
+        <div class="field">
+          <label>מספר טלפון <span class="req">*</span></label>
+          <input type="tel" name="phone" required autocomplete="tel" inputmode="tel" placeholder="050-0000000">
+        </div>
+        <div class="field">
+          <label>סוג האירוע</label>
+          <select name="event_type">
+            <option>שבת חתן</option>
+            <option>שבת בר מצוה</option>
+            <option>חתונה</option>
+            <option>אחר</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">מעבר לתשלום — 99 ₪ <span class="ar">←</span></button>
+        <p class="note">🔒 תשלום מאובטח דרך <b>Grow</b> · חשבונית אוטומטית · גישה מיידית</p>
+      </form>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FAQ ============ -->
 <section>
   <div class="wrap reveal">
@@ -388,12 +441,15 @@ footer .links a:hover{color:var(--fuchsia)}
 </a>
 
 <script>
-/* ====== CONFIG — swap this with your real Tally form URL ====== */
-const TALLY_URL = "https://tally.so/r/YOUR_FORM_ID";
-
-/* CTA buttons → Tally signup form */
+/* CTA buttons → scroll to the on-page signup form (Netlify Forms, no Tally) */
 document.querySelectorAll('[data-cta]').forEach(b=>{
-  b.addEventListener('click', e=>{ e.preventDefault(); window.location.href = TALLY_URL; });
+  b.addEventListener('click', e=>{
+    e.preventDefault();
+    const form = document.getElementById('signup');
+    form.scrollIntoView({behavior:'smooth', block:'start'});
+    const first = form.querySelector('input[name="name"]');
+    if(first) setTimeout(()=>first.focus({preventScroll:true}), 500);
+  });
 });
 
 /* FAQ accordion */
