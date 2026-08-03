@@ -182,10 +182,13 @@ footer .logo span{color:var(--fuchsia)}
 <nav class="toc">
   <div class="toc-in" id="toc">
     <a href="#tools">הכלים</a>
+    <a href="#countdown">ספירה לאחור</a>
     <a href="#food">כמויות אוכל</a>
     <a href="#timeline">לוח זמנים</a>
     <a href="#budget">תקציב</a>
+    <a href="#rooms">חלוקת חדרים</a>
     <a href="#vendors">ספקים</a>
+    <a href="#invite">הזמנה לאורחים</a>
     <a href="#deep">המדריך המלא</a>
     <a href="#templates">תבניות</a>
     <a href="#crisis">משברים</a>
@@ -210,6 +213,19 @@ footer .logo span{color:var(--fuchsia)}
     <div class="eyebrow">מה שהופך את זה לפרימיום</div>
     <h2>הכלים שחוסכים לכם ימי עבודה</h2>
     <p class="lead">כל אחד מהכלים כאן מחליף גיליון אקסל, חיפוש בגוגל, או שיחת טלפון מלחיצה. הזינו את הנתונים שלכם — והכל מחושב בשבילכם, ונשמר במכשיר.</p>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="block reveal" id="countdown" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico">📅</span> ספירה לאחור לשבת</h3>
+      <p class="hint">הזינו את תאריך השבת — ונגיד לכם כמה זמן נשאר, ובעיקר <b>על מה להתמקד עכשיו</b> בדיוק לפי השלב.</p>
+      <div class="row">
+        <div class="inp"><label>תאריך השבת (יום שישי)</label><input type="date" id="cd-date"></div>
+        <button class="btn" onclick="calcCountdown()">חשב</button>
+      </div>
+      <div class="out" id="cd-out"></div>
+    </div>
   </section>
 
   <!-- FOOD CALCULATOR -->
@@ -256,6 +272,28 @@ footer .logo span{color:var(--fuchsia)}
     </div>
   </section>
 
+  <!-- ROOMS -->
+  <section class="block reveal" id="rooms" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico">🛏️</span> מתכנן חלוקת חדרים</h3>
+      <p class="hint">הזינו כל משפחה/קבוצה — ונמליץ על סוג החדר המתאים לפי הכללים (סבא־סבתא בקומת קרקע, זוג עם תינוק בחדר גדול, בחורים/בנות בנפרד). נשמר במכשיר.</p>
+      <div class="row">
+        <div class="inp"><label>שם המשפחה/קבוצה</label><input type="text" id="r-name" placeholder="משפחת כהן"></div>
+        <div class="inp"><label>סוג</label><select id="r-type">
+          <option value="elder">סבא / סבתא</option>
+          <option value="baby">זוג עם תינוק</option>
+          <option value="couple">זוג</option>
+          <option value="boys">בחורים</option>
+          <option value="girls">בנות</option>
+          <option value="family">משפחה עם ילדים</option>
+        </select></div>
+        <div class="inp"><label>נפשות</label><input type="number" id="r-size" min="1" value="2" inputmode="numeric"></div>
+        <button class="btn" onclick="addRoom()">הוסף</button>
+      </div>
+      <div class="out"><table class="grid" id="r-table"><thead><tr><th>קבוצה</th><th>נפשות</th><th>המלצת חדר</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
   <!-- VENDORS -->
   <section class="block reveal" id="vendors" style="padding-top:12px">
     <div class="tool">
@@ -268,6 +306,24 @@ footer .logo span{color:var(--fuchsia)}
         <button class="btn" onclick="addVendor()">הוסף</button>
       </div>
       <div class="out"><table class="grid" id="v-table"><thead><tr><th>ספק</th><th>שעה</th><th>איש קשר</th><th>אישור</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- WHATSAPP INVITE GENERATOR -->
+  <section class="block reveal" id="invite" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico">💬</span> מחולל הזמנה לאורחים</h3>
+      <p class="hint">מלאו את הפרטים — ותקבלו הודעת הזמנה מנוסחת, מוכנה להעתקה ולשליחה בוואטסאפ.</p>
+      <div class="row">
+        <div class="inp"><label>שם הזוג / החתן</label><input type="text" id="i-name" placeholder="דוד ושרה"></div>
+        <div class="inp"><label>תאריך</label><input type="text" id="i-date" placeholder="פרשת… / 12.7"></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="inp"><label>מקום / כתובת</label><input type="text" id="i-place" placeholder="מלון… / מתחם…"></div>
+        <div class="inp"><label>הדלקת נרות</label><input type="time" id="i-candle" value="17:30"></div>
+        <button class="btn" onclick="genInvite()">צור הזמנה</button>
+      </div>
+      <div class="out" id="i-out"></div>
     </div>
   </section>
 
@@ -449,7 +505,7 @@ const STORE='mb_premium_v1';
 function load(){try{return JSON.parse(localStorage.getItem(STORE))||{}}catch(e){return {}}}
 function save(){try{localStorage.setItem(STORE,JSON.stringify(DB))}catch(e){}}
 let DB=load();
-DB.budget=DB.budget||{};DB.vendors=DB.vendors||[];DB.checks=DB.checks||{};
+DB.budget=DB.budget||{};DB.vendors=DB.vendors||[];DB.checks=DB.checks||{};DB.rooms=DB.rooms||[];
 
 /* ---- FOOD CALCULATOR ---- */
 function calcFood(){
@@ -587,6 +643,64 @@ function renderCk(){
   });
 }
 
+/* ---- COUNTDOWN ---- */
+function calcCountdown(){
+  const v=document.getElementById('cd-date').value;
+  const out=document.getElementById('cd-out');
+  if(!v){out.innerHTML='<div class="callout">בחרו תאריך למעלה.</div>';return;}
+  const today=new Date();today.setHours(0,0,0,0);
+  const target=new Date(v+'T00:00:00');
+  const days=Math.round((target-today)/86400000);
+  let focus,phase;
+  if(days<0){out.innerHTML='<div class="callout">🌸 השבת כבר עברה — מקווים שהיתה מושלמת!</div>';return;}
+  if(days>30){phase='יש זמן — אבל סוגרים את הגדול';focus=['לחתום על המתחם/מלון','לשלוח תעודת כשרות לרב','לבנות נוסחת חדרים (מתכנן החדרים למטה)'];}
+  else if(days>7){phase='מתקדמים לתיאום';focus=['לתאם ולסגור ספקים','להזמין מזכרות ופרחים','לחשב כמויות אוכל (מחשבון למעלה)'];}
+  else if(days>1){phase='השבוע האחרון — לאשר הכל';focus=['לאשר כל ספק בכתב','לבנות ולהדפיס לוח זמנים','להכין פתקים אישיים ומיכל קרח גיבוי'];}
+  else {phase='כמעט שבת!';focus=['לתלות רשימת חדרים ולוח זמנים','להניח פתקים בחדרים','לוודא מיחם ראשי + גיבוי ופלטות'];}
+  let h=`<div class="result-grid"><div class="rc"><b>${days}</b><span>ימים לשבת</span></div></div>`;
+  h+=`<div class="callout" style="margin-top:12px"><b>${phase}.</b> להתמקד עכשיו ב:<ul style="margin:8px 18px 0 0">${focus.map(f=>'<li>'+f+'</li>').join('')}</ul></div>`;
+  out.innerHTML=h;
+}
+
+/* ---- ROOMS ---- */
+const ROOM_REC={elder:'קומת קרקע, קרוב לשירותים',baby:'חדר גדול + מקום לעריסה, קרוב אליכם',couple:'חדר זוגי סטנדרטי',boys:'אגף/חדר נפרד לבחורים',girls:'אגף/חדר נפרד לבנות',family:'חדר משפחתי / מחובר'};
+const ROOM_LBL={elder:'סבא/סבתא',baby:'זוג עם תינוק',couple:'זוג',boys:'בחורים',girls:'בנות',family:'משפחה עם ילדים'};
+function renderRooms(){
+  const tb=document.querySelector('#r-table tbody');tb.innerHTML='';
+  if(!DB.rooms.length){tb.innerHTML='<tr><td colspan="4" style="color:var(--muted)">עדיין לא הוספתם קבוצות.</td></tr>';return;}
+  DB.rooms.forEach((r,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><b>${esc(r.name)}</b><br><span style="color:var(--muted);font-size:12px">${ROOM_LBL[r.type]}</span></td><td>${r.size}</td><td>${ROOM_REC[r.type]}</td>`+
+      `<td><button onclick="delRoom(${i})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+function addRoom(){
+  const name=document.getElementById('r-name').value.trim();if(!name)return;
+  DB.rooms.push({name,type:document.getElementById('r-type').value,size:+document.getElementById('r-size').value||1});
+  save();renderRooms();document.getElementById('r-name').value='';
+}
+function delRoom(i){DB.rooms.splice(i,1);save();renderRooms();}
+
+/* ---- INVITE GENERATOR ---- */
+function genInvite(){
+  const name=document.getElementById('i-name').value.trim()||'[שם]';
+  const date=document.getElementById('i-date').value.trim()||'[תאריך]';
+  const place=document.getElementById('i-place').value.trim()||'[מקום]';
+  const candle=document.getElementById('i-candle').value||'[שעה]';
+  const msg=`שלום לכולם 🌸\nמתרגשים לארח אתכם בשבת חתן של ${name}!\n\n🗓️ ${date}\n📍 ${place}\n🕯️ הדלקת נרות: ${candle}\n🛎️ כניסה לחדרים: יום שישי מ-14:00\n\nלכל שאלה אנחנו כאן. מחכים לכם! 🤍`;
+  const enc=encodeURIComponent(msg);
+  document.getElementById('i-out').innerHTML=
+    `<div class="tpl" style="margin-top:4px"><div class="top"><b>ההזמנה שלכם</b>`+
+    `<button class="copy" onclick="copyInvite(this)">העתק</button></div>`+
+    `<pre id="i-msg">${esc(msg)}</pre>`+
+    `<a class="btn" style="display:inline-block;margin-top:12px;text-decoration:none" href="https://wa.me/?text=${enc}" target="_blank" rel="noopener">שליחה בוואטסאפ ←</a></div>`;
+}
+function copyInvite(btn){
+  const txt=document.getElementById('i-msg').innerText;
+  navigator.clipboard?.writeText(txt).then(()=>{const o=btn.textContent;btn.textContent='הועתק ✓';setTimeout(()=>btn.textContent=o,1500);});
+}
+
 /* ---- SCROLL: progress + toc active + reveal ---- */
 const bar=document.getElementById('bar');
 addEventListener('scroll',()=>{
@@ -600,7 +714,7 @@ const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links
 secs.forEach(s=>io2.observe(s));
 
 /* init */
-calcFood();calcTimeline();renderBudget();renderVendors();renderCk();
+calcFood();calcTimeline();renderBudget();renderVendors();renderRooms();renderCk();
 document.getElementById('b-guests').addEventListener('input',sumBudget);
 </script>
 </body>
