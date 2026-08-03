@@ -5,8 +5,17 @@
 //  קריאה שרת-לשרת → בלי CORS. אם Make לא מוגדר — נופלים ללינק GROW קבוע.
 // ============================================================
 
-const SITE = (process.env.SITE_URL || 'https://guide.multibrawn.co.il').replace(/\/+$/, '');
-const GROW_FALLBACK = process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA';
+function site() {
+  return (process.env.SITE_URL || 'https://guide.multibrawn.co.il').replace(/\/+$/, '');
+}
+
+// המסלול הפשוט (בלי Make): לינק GROW קבוע לפי הסכום. נקרא בזמן ריצה כדי לכבד env.
+function fixedLinkFor(amount) {
+  const fallback = process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA';
+  const l50 = process.env.GROW_LINK_50 || fallback; // מדרגת כניסה
+  const l99 = process.env.GROW_LINK_99 || fallback; // מדרגת פרימיום
+  return amount >= 99 ? l99 : l50;
+}
 
 function json(statusCode, obj) {
   return { statusCode, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, body: JSON.stringify(obj) };
@@ -31,14 +40,14 @@ exports.handler = async (event) => {
   try { body = JSON.parse(event.body || '{}'); } catch (e) { body = {}; }
   const amount = Math.max(0, Math.round(Number(body.amount) || 0));
   const product = body.product === 'premium' ? 'premium' : '';
-  const successUrl = `${SITE}/thank-you.html?amount=${amount}${product ? '&product=' + product : ''}`;
-  const cancelUrl = `${SITE}/`;
+  const base = site();
+  const successUrl = `${base}/thank-you.html?amount=${amount}${product ? '&product=' + product : ''}`;
+  const cancelUrl = `${base}/`;
 
   const hook = process.env.MAKE_PAYMENT_WEBHOOK;
   if (!hook) {
-    // Make עדיין לא חובר — מחזירים לינק GROW קבוע כדי שהמכירה לא תיתקע
-    console.warn('[create-payment] MAKE_PAYMENT_WEBHOOK חסר — משתמשים בלינק GROW קבוע.');
-    return json(200, { url: GROW_FALLBACK, fallback: true });
+    // אין Make — המסלול הפשוט: לינק GROW קבוע לפי הסכום (GROW מגדיר את הפניית ההצלחה בעצמו)
+    return json(200, { url: fixedLinkFor(amount), fallback: true });
   }
 
   try {
@@ -51,9 +60,9 @@ exports.handler = async (event) => {
     const url = extractUrl(raw);
     if (url) return json(200, { url });
     console.error('[create-payment] Make לא החזיר URL:', res.status, raw.slice(0, 300));
-    return json(200, { url: GROW_FALLBACK, fallback: true });
+    return json(200, { url: fixedLinkFor(amount), fallback: true });
   } catch (e) {
     console.error('[create-payment]', String(e && e.message));
-    return json(200, { url: GROW_FALLBACK, fallback: true });
+    return json(200, { url: fixedLinkFor(amount), fallback: true });
   }
 };

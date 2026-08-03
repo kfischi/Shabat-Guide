@@ -7,7 +7,7 @@
 // ============================================================
 const fs = require('fs');
 const path = require('path');
-const { verifyToken } = require('./lib/token');
+const { verifyToken, selfTokenValid } = require('./lib/token');
 const sheets = require('./lib/sheets');
 
 const PAGES = { guide: 'guide.html', games: 'games.html', premium: 'premium-guide.html' };
@@ -49,13 +49,19 @@ exports.handler = async (event) => {
 
   if (!id) return denied();
 
-  // מסלול 1 — אימות טוקן
+  // מסלול 1 — טוקן HMAC חתום (קישורים מהמייל / Make / N8N)
   let authorized = false;
   if (t) {
     authorized = verifyToken(id, t, process.env.TOKEN_SECRET);
   }
 
-  // מסלול 2 — אימות מול הגיליון (בלי טוקן, או אם הטוקן לא תאם)
+  // מסלול 2 — טוקן שמאמת את עצמו (דף התודה מנפיק אחרי תשלום; מאפשר את המסלול הפשוט
+  // בלי backend). כיבוי: ALLOW_SELF_TOKEN=false
+  if (!authorized && t && process.env.ALLOW_SELF_TOKEN !== 'false') {
+    authorized = selfTokenValid(t);
+  }
+
+  // מסלול 3 — אימות מול הגיליון (עסקה קיימת)
   if (!authorized) {
     try {
       authorized = await sheets.hasTransaction(id);

@@ -65,6 +65,8 @@ const guide = require('../netlify/functions/guide');
 const ai = require('../netlify/functions/ai');
 const cpay = require('../netlify/functions/create-payment');
 process.env.ANTHROPIC_API_KEY = 'sk-ant-test';
+process.env.GROW_LINK_50 = 'https://pay.grow.link/L50';
+process.env.GROW_LINK_99 = 'https://pay.grow.link/L99';
 
 function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
   const body = JSON.stringify(bodyObj);
@@ -200,6 +202,16 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.ok(!res.body.includes('__GAMES_URL__'));
   });
 
+  await testAsync('6f. self-validating token -> 200 (thank-you grant, no backend)', async () => {
+    reset();
+    const payload = crypto.createHash('sha256').update('mb|test').digest('hex').slice(0, 12);
+    const t = 'MB-' + payload + '-' + crypto.createHash('sha256').update('MB-' + payload).digest('hex').slice(0, 8);
+    const res = await guide.handler({ queryStringParameters: { id: 'buyer', t } });
+    assert.strictEqual(res.statusCode, 200);
+    const res2 = await guide.handler({ queryStringParameters: { id: 'buyer', t: t.slice(0, -1) + 'x' } }); // tampered
+    assert.strictEqual(res2.statusCode, 403);
+  });
+
   console.log('PRODUCT ROUTING (§ two-tier)');
   await testAsync('99₪ payment -> premium link; 50₪ -> free guide link', async () => {
     reset();
@@ -259,11 +271,13 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.ok(b.url && b.fallback === true);
     state.makeFail = false;
   });
-  await testAsync('no Make webhook -> fallback link (sale never stuck)', async () => {
+  await testAsync('no Make -> fixed GROW link routed by amount (50 vs 99)', async () => {
     delete process.env.MAKE_PAYMENT_WEBHOOK;
-    const res = await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 50 }) });
-    const b = JSON.parse(res.body);
-    assert.ok(b.url && b.fallback === true);
+    const r50 = JSON.parse((await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 50 }) })).body);
+    const r99 = JSON.parse((await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 99 }) })).body);
+    assert.strictEqual(r50.url, 'https://pay.grow.link/L50');
+    assert.strictEqual(r99.url, 'https://pay.grow.link/L99');
+    assert.ok(r50.fallback && r99.fallback);
   });
 
   console.log('MAILER reasons');

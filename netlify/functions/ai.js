@@ -3,7 +3,7 @@
 //  נגיש רק לקונים (אותו אימות כמו guide.js: טוקן או גיליון).
 //  המפתח ANTHROPIC_API_KEY חי בצד שרת ולעולם לא נשלח לדפדפן.
 // ============================================================
-const { verifyToken } = require('./lib/token');
+const { verifyToken, selfTokenValid } = require('./lib/token');
 const sheets = require('./lib/sheets');
 
 // ברירת מחדל: המודל המתקדם. ניתן לשנות דרך משתנה סביבה ANTHROPIC_MODEL.
@@ -20,6 +20,7 @@ const SYSTEM = [
 async function authorized(id, t) {
   if (!id) return false;
   if (t && verifyToken(id, t, process.env.TOKEN_SECRET)) return true;
+  if (t && process.env.ALLOW_SELF_TOKEN !== 'false' && selfTokenValid(t)) return true;
   try { return await sheets.hasTransaction(id); } catch (e) { return false; }
 }
 

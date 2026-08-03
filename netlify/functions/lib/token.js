@@ -28,4 +28,16 @@ function verifyToken(transactionId, token, secret) {
   return crypto.timingSafeEqual(a, b);
 }
 
-module.exports = { makeToken, verifyToken };
+// Self-validating token (no server secret) — used by the "thank-you grants access"
+// flow so the simple no-backend launch works. Format: MB-<hex>-<first 8 hex of
+// SHA-256("MB-"+payload)>. Deters casual link-sharing (a random /guide URL 403s);
+// for full security, turn it off with ALLOW_SELF_TOKEN=false and use HMAC/sheet.
+function selfTokenValid(t) {
+  if (!t || typeof t !== 'string') return false;
+  const m = t.match(/^MB-([0-9a-f]+)-([0-9a-f]{8})$/i);
+  if (!m) return false;
+  const h = crypto.createHash('sha256').update('MB-' + m[1].toLowerCase()).digest('hex');
+  return h.slice(0, 8) === m[2].toLowerCase();
+}
+
+module.exports = { makeToken, verifyToken, selfTokenValid };

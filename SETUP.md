@@ -52,6 +52,8 @@
 | `MAKE_PAYMENT_WEBHOOK` | ה-webhook של **Make** שיוצר עסקת GROW (GROW חינמי דרך Make). בלעדיו — נופלים ללינק GROW קבוע כדי שהמכירה לא תיתקע |
 | `SITE_URL` | אופציונלי — כתובת האתר (ברירת מחדל `https://guide.multibrawn.co.il`). משמשת לבניית `successUrl`/`cancelUrl` |
 | `GROW_FALLBACK_LINK` | אופציונלי — לינק GROW קבוע לגיבוי אם Make לא זמין |
+| `GROW_LINK_50` / `GROW_LINK_99` | **המסלול הפשוט** — לינק GROW קבוע לכל מדרגה (50/99). ראו `GO-LIVE.md` |
+| `ALLOW_SELF_TOKEN` | אופציונלי — `false` מכבה את הטוקן-שמאמת-את-עצמו (דף התודה) ומשאיר רק HMAC/גיליון (הקשחת אבטחה) |
 
 ### תשלום דרך Make (GROW חינמי)
 כשלוחצים "תשלום", האתר קורא ל-`/create-payment` (פונקציית שרת — בלי CORS), שמעבירה ל-Make:
