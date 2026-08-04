@@ -1,0 +1,38 @@
+# Netlify — אתר סטטי (public/) + פונקציות (netlify/functions).
+# תוכן המדריך יושב בתוך netlify/functions/private ולכן אינו נגיש ישירות מהדפדפן;
+# הוא מוגש רק דרך הפונקציה guide לאחר אימות.
+
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # לוודא שתוכן ה-private נארז יחד עם הפונקציה guide
+  included_files = ["netlify/functions/private/**"]
+
+# קישורים "יפים" -> פונקציות (משמרים query string אוטומטית)
+[[redirects]]
+  from = "/guide"
+  to = "/.netlify/functions/guide"
+  status = 200
+
+[[redirects]]
+  from = "/grow-webhook"
+  to = "/.netlify/functions/grow-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/ai"
+  to = "/.netlify/functions/ai"
+  status = 200
+
+[[redirects]]
+  from = "/create-payment"
+  to = "/.netlify/functions/create-payment"
+  status = 200
+
+[[redirects]]
+  from = "/thank-you"
+  to = "/thank-you.html"
+  status = 200

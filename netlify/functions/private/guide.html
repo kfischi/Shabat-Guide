@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF0090">
+<meta name="description" content="המדריך המלא לשבת חתן — 30 שלבים מעשיים לשבת מושלמת, מאת Multi Brawn.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
+<title>מדריך שבת חתן · Multi Brawn</title>
+<!-- מוגש רק דרך netlify/functions/guide.js אחרי אימות. אין שער בצד לקוח. -->
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --fuchsia:#FF0090;
+  --purple:#7b2d8b;
+  --white:#ffffff;
+  --bg:#ffffff;
+  --ink:#1a0020;
+  --muted:#7a6880;
+  --line:#f0e6f0;
+  --shadow:0 10px 40px rgba(123,45,139,.12);
+  --shadow-lg:0 24px 70px rgba(123,45,139,.20);
+  --radius:22px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Heebo',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ============ PROGRESS BAR (sticky) ============ */
+#progress-wrap{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:6px;background:rgba(123,45,139,.10);
+}
+#progress-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--purple),var(--fuchsia));
+  transition:width .5s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 0 14px rgba(255,0,144,.6);
+}
+#progress-pill{
+  position:fixed;top:16px;left:16px;z-index:1001;
+  background:rgba(26,0,32,.78);backdrop-filter:blur(10px);
+  color:#fff;font-weight:700;font-size:13px;
+  padding:7px 14px;border-radius:999px;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+  opacity:0;transform:translateY(-8px);transition:.4s;pointer-events:none;
+}
+#progress-pill.show{opacity:1;transform:translateY(0)}
+#progress-pill b{color:var(--fuchsia)}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 26px 56px;
+  color:#fff;overflow:hidden;
+  background:
+    radial-gradient(1200px 700px at 80% -10%, rgba(255,0,144,.55), transparent 60%),
+    radial-gradient(900px 600px at 0% 30%, rgba(123,45,139,.85), transparent 55%),
+    linear-gradient(160deg,#2a0833 0%,#7b2d8b 48%,#1a0020 100%);
+}
+.hero::before{ /* texture / sparkle */
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
+  background-size:24px 24px;opacity:.4;mix-blend-mode:overlay;
+}
+.hero::after{ /* bottom black gradient */
+  content:"";position:absolute;left:0;right:0;bottom:0;height:60%;
+  background:linear-gradient(to top,rgba(8,0,12,.92),transparent);
+}
+.hero-img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.55;z-index:0;
+}
+.hero-inner{position:relative;z-index:2;max-width:760px}
+.brand{
+  display:inline-flex;align-items:center;gap:9px;
+  font-weight:900;letter-spacing:.5px;font-size:15px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  padding:8px 16px;border-radius:999px;margin-bottom:26px;
+  backdrop-filter:blur(8px);
+}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--fuchsia);box-shadow:0 0 12px var(--fuchsia)}
+.hero h1{
+  font-family:'Frank Ruhl Libre',serif;font-weight:900;
+  font-size:clamp(40px,11vw,82px);line-height:1.02;
+  margin-bottom:18px;text-shadow:0 6px 30px rgba(0,0,0,.4);
+}
+.hero h1 .glow{color:var(--fuchsia);text-shadow:0 0 30px rgba(255,0,144,.7)}
+.hero .tagline{
+  font-family:'Dancing Script',cursive;font-weight:500;
+  font-size:clamp(24px,6vw,38px);color:#ffd9ef;margin-bottom:14px;
+}
+.hero p.sub{font-size:clamp(16px,4.4vw,20px);color:rgba(255,255,255,.9);max-width:560px;font-weight:400}
+.hero-stats{display:flex;gap:26px;margin-top:30px;flex-wrap:wrap}
+.hero-stats .s{display:flex;flex-direction:column}
+.hero-stats .s b{font-family:'Frank Ruhl Libre',serif;font-size:34px;font-weight:900;color:#fff;line-height:1}
+.hero-stats .s span{font-size:13px;color:rgba(255,255,255,.75);font-weight:500;margin-top:4px}
+.scroll-cue{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;
+  color:rgba(255,255,255,.7);font-size:12px;text-align:center;animation:bob 2s ease-in-out infinite;
+}
+.scroll-cue svg{margin:0 auto;display:block}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ============ INTRO STRIP ============ */
+.intro{max-width:820px;margin:0 auto;padding:64px 26px 10px;text-align:center}
+.intro .kicker{color:var(--fuchsia);font-weight:900;letter-spacing:2px;font-size:13px;text-transform:uppercase;margin-bottom:14px}
+.intro h2{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(26px,7vw,40px);line-height:1.15;margin-bottom:16px}
+.intro p{color:var(--muted);font-size:17px;max-width:600px;margin:0 auto}
+
+/* ============ CATEGORY ============ */
+.category{max-width:880px;margin:0 auto;padding:54px 22px 0}
+.cat-head{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  min-height:190px;display:flex;align-items:flex-end;
+  padding:24px;color:#fff;box-shadow:var(--shadow);margin-bottom:30px;
+}
+.cat-head img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.85}
+.cat-head::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,0,16,.85),rgba(123,45,139,.25));z-index:1}
+.cat-head .cat-inner{position:relative;z-index:2}
+.cat-head .cat-num{font-family:'Dancing Script',cursive;font-size:30px;color:#ffd9ef;line-height:1}
+.cat-head h3{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(26px,6.5vw,38px);line-height:1.1;margin-top:4px}
+.cat-head .cat-sub{font-size:14px;color:rgba(255,255,255,.85);margin-top:6px;font-weight:500}
+
+/* gradient fallbacks per category (used when no photo) */
+.g1{background:linear-gradient(135deg,#7b2d8b,#ff0090)}
+.g2{background:linear-gradient(135deg,#1a0020,#7b2d8b)}
+.g3{background:linear-gradient(135deg,#b3146e,#ff0090)}
+.g4{background:linear-gradient(135deg,#3a0d52,#9b3fa8)}
+.g5{background:linear-gradient(135deg,#7b2d8b,#ff5fb0)}
+.g6{background:linear-gradient(135deg,#2a0833,#ff0090)}
+.g7{background:linear-gradient(135deg,#1a0020,#b3146e)}
+
+/* ============ STEP CARD ============ */
+.step{
+  position:relative;background:#fff;border:1px solid var(--line);
+  border-right:5px solid var(--fuchsia);
+  border-radius:18px;padding:22px 22px 22px 20px;margin-bottom:18px;
+  box-shadow:0 6px 22px rgba(123,45,139,.07);
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+  display:flex;gap:16px;align-items:flex-start;
+}
+.step:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.step.done{border-right-color:#1fae4d;background:#fbfff9}
+.step .check{
+  flex:0 0 auto;width:34px;height:34px;border-radius:50%;
+  border:2px solid var(--fuchsia);background:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:.25s;margin-top:3px;
+}
+.step .check svg{width:18px;height:18px;opacity:0;transform:scale(.4);transition:.25s;color:#fff}
+.step.done .check{background:#1fae4d;border-color:#1fae4d}
+.step.done .check svg{opacity:1;transform:scale(1)}
+.step .body{flex:1;min-width:0}
+.step .num{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Frank Ruhl Libre',serif;font-weight:900;
+  color:var(--fuchsia);font-size:13px;letter-spacing:.5px;margin-bottom:5px;
+}
+.step .num .badge{background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;border-radius:8px;padding:2px 9px;font-size:12px}
+.step h4{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:20px;line-height:1.25;margin-bottom:8px}
+.step.done h4{text-decoration:line-through;text-decoration-color:rgba(31,174,77,.5);color:var(--muted)}
+.step p{color:#3a2a40;font-size:15.5px}
+.step .tip{color:var(--muted);font-size:14px}
+
+/* schedule list (step 3) */
+.timeline{margin-top:12px;border-right:2px dashed var(--line);padding-right:14px}
+.timeline .row{display:flex;gap:12px;padding:6px 0;font-size:14.5px;align-items:baseline}
+.timeline .row .t{flex:0 0 96px;font-weight:700;color:var(--purple);font-feature-settings:"tnum"}
+.timeline .row .e{color:#3a2a40}
+.timeline .row.day{margin-top:8px}
+.timeline .row.day .t{color:var(--fuchsia);font-weight:900}
+
+/* numbered checklist inside a step (step 30) */
+.qlist{margin-top:12px;display:grid;gap:8px}
+.qlist .q{display:flex;gap:11px;align-items:flex-start;font-size:15px}
+.qlist .q i{flex:0 0 auto;width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;font-style:normal;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+
+/* ============ CELEBRATION ============ */
+.celebrate{
+  max-width:880px;margin:50px auto 0;padding:0 22px;
+}
+.celebrate-inner{
+  position:relative;overflow:hidden;border-radius:26px;color:#fff;text-align:center;
+  padding:54px 28px;box-shadow:var(--shadow-lg);
+  background:
+    radial-gradient(700px 400px at 50% -10%,rgba(255,0,144,.6),transparent 60%),
+    linear-gradient(140deg,#7b2d8b,#1a0020);
+}
+.celebrate-inner.locked{filter:grayscale(.5) brightness(.7)}
+.celebrate-inner h3{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(30px,8vw,48px);margin-bottom:12px}
+.celebrate-inner p{font-size:17px;color:rgba(255,255,255,.9);max-width:480px;margin:0 auto 8px}
+.celebrate-inner .big{font-family:'Dancing Script',cursive;font-size:46px;color:#ffd9ef;margin-bottom:6px}
+.celebrate-inner .lock-note{font-size:14px;color:rgba(255,255,255,.7);margin-top:14px}
+
+/* ============ GAMES CTA ============ */
+.games-cta{max-width:880px;margin:26px auto 0;padding:0 22px}
+.games-cta a{
+  display:flex;align-items:center;gap:18px;
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 24px;
+  box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;
+}
+.games-cta a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.games-cta .ico{flex:0 0 auto;width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:28px}
+.games-cta .txt{flex:1}
+.games-cta .txt b{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:20px;display:block}
+.games-cta .txt span{color:var(--muted);font-size:14.5px}
+.games-cta .arrow{color:var(--fuchsia);font-size:26px;font-weight:900}
+
+/* ============ FOOTER ============ */
+footer{text-align:center;padding:60px 26px 120px;color:var(--muted);font-size:14px}
+footer .logo{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:24px;color:var(--ink);margin-bottom:8px}
+footer .logo span{color:var(--fuchsia)}
+footer a.tel{color:var(--purple);font-weight:700}
+
+/* reset button */
+.reset-btn{display:inline-block;margin-top:18px;background:none;border:1px solid var(--line);color:var(--muted);font-family:'Heebo';font-size:13px;padding:8px 18px;border-radius:999px;cursor:pointer;transition:.2s}
+.reset-btn:hover{border-color:var(--fuchsia);color:var(--fuchsia)}
+
+/* ============ WHATSAPP FLOAT ============ */
+.wa{
+  position:fixed;bottom:22px;right:18px;z-index:1002;
+  width:60px;height:60px;border-radius:50%;
+  background:#25D366;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(37,211,102,.45);
+  animation:wapulse 2.4s infinite;
+}
+.wa svg{width:32px;height:32px;fill:#fff}
+@keyframes wapulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+
+/* ============ reveal on scroll ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* confetti */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:1003}
+
+@media (max-width:480px){
+  .step{padding:18px 16px}
+  .timeline .row .t{flex:0 0 84px}
+  .hero{padding:0 20px 46px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+<!-- pwa -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icon.svg">
+<style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
+<script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+</head>
+<body>
+
+<!-- PROGRESS -->
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+<div id="progress-pill"><span>הושלמו <b id="pill-num">0</b>/30</span></div>
+
+<!-- HERO -->
+<header class="hero">
+  <img class="hero-img" src="images/hero.jpg" alt="" onerror="this.remove()">
+  <div class="hero-inner">
+    <span class="brand"><span class="dot"></span> MULTI BRAWN · מדריך פרימיום</span>
+    <div class="tagline">שבת שמתחילה בלב, נזכרת לתמיד</div>
+    <h1>מדריך <span class="glow">שבת חתן</span></h1>
+    <p class="sub">30 שלבים מעשיים שהופכים שבת אחת לחוויה שכל המשפחה תזכור — מהחזון ועד הפרידה.</p>
+    <div class="hero-stats">
+      <div class="s"><b>30</b><span>שלבים מעשיים</span></div>
+      <div class="s"><b>7</b><span>קטגוריות</span></div>
+      <div class="s"><b>1</b><span>שבת מושלמת</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    גללו למטה
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="intro reveal">
+  <div class="kicker">המדריך המלא</div>
+  <h2>הכל מסומן. שום דבר לא נשכח.</h2>
+  <p>סמנו כל שלב שסיימתם — ההתקדמות נשמרת אוטומטית במכשיר שלכם. כשתסיימו את כל 30 השלבים, השבת שלכם תהיה מוכנה לחלוטין.</p>
+</section>
+
+<!-- AI TEASER -->
+<section class="category reveal">
+  <div style="max-width:880px;margin:0 auto;background:linear-gradient(160deg,#fff,#fff5fb);border:1px solid var(--line);border-right:5px solid var(--fuchsia);border-radius:18px;box-shadow:var(--shadow);padding:24px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+      <span style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 auto">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l1.4 4.1L14.5 8.5 10.4 9.9 9 14l-1.4-4.1L3.5 8.5l4.1-1.4z"/><path d="M18 12.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg>
+      </span>
+      <h3 style="font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:20px;margin:0">יועץ AI — שאלה חינם ✨</h3>
+    </div>
+    <p style="color:var(--muted);font-size:14.5px;margin:0 0 14px">חדש: שאלו את היועץ החכם שלנו שאלה על תכנון השבת וקבלו תשובה מיידית. (טעימה — במהדורת הפרימיום היועץ זמין ללא הגבלה.)</p>
+    <div id="ait-chat" style="display:none;flex-direction:column;gap:8px;margin-bottom:12px"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+      <input type="text" id="ait-input" placeholder="לדוגמה: כמה מיחמים צריך ל-60 איש?" autocomplete="off"
+        style="flex:1;min-width:160px;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;font-size:16px;font-family:'Heebo'">
+      <button id="ait-send" style="cursor:pointer;border:none;font-family:'Heebo';font-weight:900;font-size:15px;color:#fff;background:linear-gradient(135deg,var(--purple),var(--fuchsia));padding:13px 24px;border-radius:11px">שאל/י</button>
+    </div>
+    <div id="ait-upsell" style="display:none;margin-top:14px;padding:14px 16px;background:#fff0f7;border-radius:12px;text-align:center">
+      <b style="color:var(--fuchsia)">רוצים יועץ AI ללא הגבלה + כלים חכמים?</b>
+      <a href="/upsell.html" style="display:inline-block;margin-top:8px;background:linear-gradient(135deg,#2a0d3f,#7b2d8b);color:#fff;font-weight:900;text-decoration:none;padding:11px 24px;border-radius:999px">לשדרוג למהדורת הפרימיום ←</a>
+    </div>
+  </div>
+</section>
+
+<main id="guide"></main>
+
+<!-- CELEBRATION -->
+<section class="celebrate reveal">
+  <div class="celebrate-inner locked" id="celebrate">
+    <div class="big">כל הכבוד!</div>
+    <h3 id="celebrate-title">סיימתם את כל 30 השלבים 🎉</h3>
+    <p id="celebrate-text">השבת שלכם מתוכננת מהבסיס ועד הפרטים הקטנים. עכשיו נשאר רק ליהנות מכל רגע.</p>
+    <p class="lock-note" id="celebrate-lock">סמנו את כל השלבים כדי לפתוח את ההפתעה ✨</p>
+  </div>
+</section>
+
+<!-- UPSELL TO PREMIUM -->
+<section class="games-cta reveal">
+  <a href="/upsell.html" style="background:linear-gradient(135deg,#2a0d3f,#7b2d8b);border:none;color:#fff">
+    <div class="ico" style="background:rgba(231,179,74,.2)">👑</div>
+    <div class="txt">
+      <b style="color:#fff">רוצים לתכנן כמו מפיק מקצועי?</b>
+      <span style="color:rgba(255,255,255,.85)">מהדורת הפרימיום: מחשבון כמויות, בונה לוח זמנים, תקציב, ספקים ופלייבוק משברים.</span>
+    </div>
+    <div class="arrow" style="color:#ffd9ef">‹</div>
+  </a>
+</section>
+
+<!-- GAMES CTA -->
+<section class="games-cta reveal">
+  <a href="__GAMES_URL__">
+    <div class="ico">🎲</div>
+    <div class="txt">
+      <b>משחקי חיבור לשבת</b>
+      <span>שתי משפחות, שבת ארוכה — אוסף משחקים ופעילויות שמחממים את האווירה.</span>
+    </div>
+    <div class="arrow">‹</div>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="reveal">
+  <div class="logo">Multi <span>Brawn</span></div>
+  <p>מדריך שבת חתן · נבנה באהבה כדי שהשבת שלכם תהיה מושלמת.</p>
+  <p style="margin-top:6px">ייעוץ ושאלות: <a class="tel" href="https://wa.me/972523983394" target="_blank" rel="noopener">052-398-3394</a></p>
+  <button class="reset-btn" id="reset">איפוס הצ'קליסט</button>
+</footer>
+
+<!-- WHATSAPP -->
+<a class="wa" href="https://wa.me/972523983394" target="_blank" rel="noopener" aria-label="וואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.673-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg>
+</a>
+
+<canvas id="confetti"></canvas>
+
+<script>
+/* ============================================================
+   DATA — 7 categories, 30 steps
+   ============================================================ */
+const DATA = [
+  {
+    g:"g1", num:"קטגוריה א׳", title:"תכנון ואסטרטגיה", sub:"מתחילים מהחזון", img:"images/cat-1.jpg",
+    steps:[
+      {n:1,t:"חזון האירוח",h:`<p>מה הכי חשוב לכם? קרוב לבית? בית כנסת? גינה לילדים? שבת שהולכת לטוב מתחילה בשאלה הזו.</p>`},
+      {n:2,t:"נוסחת חדרים",h:`<p>לא כל המשפחה צריכה אותו גודל חדר. סבא/סבתא — קרוב לשירותים וקומת קרקע. זוג עם תינוק — חדר גדול עם מקום לעריסה. בחורים/בנות — בנפרד.</p>`},
+      {n:3,t:'לוח זמנים מדויק — שישי · שבת · מוצ"ש',h:`
+        <p class="tip">זה החלק שכולם מחפשים ולא מוצאים:</p>
+        <div class="timeline">
+          <div class="row day"><span class="t">שישי</span><span class="e"></span></div>
+          <div class="row"><span class="t">14:00</span><span class="e">כניסה לחדרים</span></div>
+          <div class="row"><span class="t">17:30</span><span class="e">הדלקת נרות</span></div>
+          <div class="row"><span class="t">19:00</span><span class="e">קבלת שבת + ערבית</span></div>
+          <div class="row"><span class="t">20:00</span><span class="e">ארוחת ליל שבת</span></div>
+          <div class="row day"><span class="t">שבת</span><span class="e"></span></div>
+          <div class="row"><span class="t">09:00</span><span class="e">שחרית</span></div>
+          <div class="row"><span class="t">10:30</span><span class="e">עליית החתן לתורה + קידוש</span></div>
+          <div class="row"><span class="t">12:00</span><span class="e">ארוחת צהריים</span></div>
+          <div class="row"><span class="t">16:30</span><span class="e">מנחה</span></div>
+          <div class="row"><span class="t">17:30</span><span class="e">סעודה שלישית</span></div>
+          <div class="row day"><span class="t">מוצ"ש</span><span class="e">הבדלה + ארוחת מוצ"ש</span></div>
+        </div>`},
+    ]
+  },
+  {
+    g:"g2", num:"קטגוריה ב׳", title:"תפעול ותשתיות", sub:"שהכל יעבוד בלי דאגות", img:"images/cat-2.jpg",
+    steps:[
+      {n:4,t:"פלטות ומיחם שבת",h:`<p>מיחם אחד לא מספיק לקבוצה גדולה. חובה: מיחם ראשי + מיחם גיבוי. פלטות עם תו תקן הלכתי על משטח יציב.</p>`},
+      {n:5,t:"גיבוי קרח וקירור",h:`<p>Plan B למקרר שמתקלקל ביום שישי. תמיד מיכל קרח + מספר ספק חירום זמין.</p>`},
+      {n:6,t:"תיאום ספקים",h:`<p>גיליון אחד: שם ספק + שעת הגעה + איש קשר + אישור כתוב. <b>ספק בלי אישור כתוב = לא נסגר.</b></p>`},
+      {n:7,t:"ניקיון ותחזוקה",h:`<p>מי מנקה שירותים כל שעה? בלי הגדרה ברורה = אף אחד. לוח זמנים ניקיון: <b>9, 12, 15, 18, 21</b>.</p>`},
+    ]
+  },
+  {
+    g:"g3", num:"קטגוריה ג׳", title:"אוכל ואווירה", sub:"הטעם שזוכרים", img:"images/cat-3.jpg",
+    steps:[
+      {n:8,t:"תפריט חסין פלטה",h:`<p>מה נשאר טעים אחרי 12 שעות? חמין, קוגל, מאכלים יציבים. לא סלטים עדינים ולא דגים מטוגנים. תמיד 15% גיבוי.</p>`},
+      {n:9,t:"היפוך ארוחות",h:`<p>ארוחת הבוקר בשבת היא חלבית — אבל אם הייתה ארוחת בשר בלילה, צריך להמתין. בדקו עם הרב כמה שעות בין בשרי לחלבי לפי מנהג המשפחה.</p>`},
+      {n:10,t:"עמדת מיחם וקפה",h:`<p>סוד שאורחים מדברים עליו: מיחם זמין 24/6 עם קפה, תה, חלב וממתקים. יוצר תחושת בית.</p>`},
+      {n:11,t:"אווירה",h:`<p>נרות ריחניים עדינים + מוזיקת שבת ברקע + פרחים בכניסה. ריח אחד עקבי לכל האירוע = זיכרון.</p>`},
+    ]
+  },
+  {
+    g:"g4", num:"קטגוריה ד׳", title:"מרחב ואורחים", sub:"שכולם ירגישו בבית", img:"images/cat-4.jpg",
+    steps:[
+      {n:12,t:"תאורת שבת",h:`<p>דימרים לפני קידוש. נרות על כל שולחן. אפס LED לבן קר בזמן ארוחות.</p>`},
+      {n:13,t:"אקוסטיקה",h:`<p>60 איש + תקרה גבוהה + אבן = אי אפשר לשמוע. שטיחים + וילונות = פתרון.</p>`},
+      {n:14,t:"מרחב נשימה",h:`<p>2 פינות ישיבה שקטות בחוץ. בשביל אמהות עם תינוקות ומבוגרים.</p>`},
+      {n:15,t:"נתיבי הליכה",h:`<p>לכו פיזית את כל המסלולים לפני השבת. תאירו שבילים לבית הכנסת. סמנו מדרגות.</p>`},
+    ]
+  },
+  {
+    g:"g5", num:"קטגוריה ה׳", title:"ילדים ויחס אישי", sub:"הפרטים שעושים את ההבדל", img:"images/cat-5.jpg",
+    steps:[
+      {n:16,t:"בטיחות ילדים",h:`<p>גדרו בריכה. הגדירו אחראי ילדים. שמרו טלפוני הורים. בקשו ביטוח כתוב מהמקום.</p>`},
+      {n:17,t:"פינת ילדים",h:`<p>יצירה + משחקי קופסה + מדריכ/ה = הורים שמחים. 500 ₪ שמחזירים את עצמם.</p>`},
+      {n:18,t:"קבלת חדרים",h:`<p>רשימת חדרים + מפתחות מוכנים. נציג בכניסה. פתק "ברוכים הבאים" בכל חדר.</p>`},
+      {n:19,t:"יחס אישי",h:`<p>פתק כתוב יד + פרח + ספר תהילים. עלות: 20 ₪ לחדר. ערך: בלתי נשכח.</p>`},
+    ]
+  },
+  {
+    g:"g6", num:"קטגוריה ו׳", title:"חוויה וסגירה", sub:"שהזיכרון יישאר", img:"images/cat-6.jpg",
+    steps:[
+      {n:20,t:"משחקי חיבור",h:`<p>2 משפחות + שבת ארוכה = צריך מנחה ומשחקים. ראו קובץ <a href="__GAMES_URL__" style="color:var(--fuchsia);font-weight:700">משחקי החיבור</a>.</p>`},
+      {n:21,t:"מזכרות",h:`<p>ריבה ביתית / נר ריחני / ספר קטן — עם תווית ושם הזוג. אריזה יפה = חוויה שלמה.</p>`},
+      {n:22,t:"ניהול משברים",h:`<p>תוכנית גיבוי לכל ספק קריטי. רשימת טלפוני חירום. מי מחליט בשבת?</p>`},
+      {n:23,t:"פרידה חלקה",h:`<p>תזכורת ביציאה + שקיות לשאריות. הרגע האחרון = הזיכרון האחרון.</p>`},
+      {n:24,t:"שימור קשר",h:`<p>הודעת תודה בוואטסאפ עד שעה אחרי הבדלה. גלריה משותפת. בקשת המלצה בטון חם.</p>`},
+    ]
+  },
+  {
+    g:"g7", num:"קטגוריה ז׳", title:"מלון לעומת מתחם", sub:"לבחור נכון, לחתום בלי הפתעות", img:"images/cat-7.jpg",
+    steps:[
+      {n:25,t:"מלון או מתחם — מה מתאים?",h:`<p>מלון = שירות + כשרות מובנית + פחות גמישות. מתחם = חופש + אחריות עליכם. שאלו: כמה חדרים פנויים בפועל?</p>`},
+      {n:26,t:"כשרות — מה לבדוק",h:`<p>שלחו תעודת כשרות לרב המשפחה לפני חתימה. בדקו: חלק או בשרי? הפרדה מלאה? מכירים קהל חרדי?</p>`},
+      {n:27,t:"רמת המלון",h:`<p>גיל המלון ושיפוץ אחרון. גודל חדרים אמיתי. האם החדרים שלכם באותו אגף? חדר אוכל פרטי?</p>`},
+      {n:28,t:"הזמנה קבוצתית",h:`<p>מ-10 חדרים מתחיל מחיר קבוצתי. תמיד שאלו "מה ההטבה לקבוצות?" — ולא רק את המחיר.</p>`},
+      {n:29,t:"בעיות הלכתיות במלון",h:`<p>דלתות אלקטרוניות → מפתח רגיל. חיישני תנועה → בקשו לבטל. גלאי עשן → היכן מדליקים נרות? מעלית שבת → באיזו קומה?</p>`},
+      {n:30,t:"10 שאלות לשאול לפני חתימה",h:`
+        <p class="tip">רשימת השאלות שחובה לשאול כל מקום לפני שחותמים:</p>
+        <div class="qlist">
+          <div class="q"><i>1</i><span>כמה חדרים פנויים בפועל לתאריך שלי?</span></div>
+          <div class="q"><i>2</i><span>מה גיל המלון/מתחם ומתי שופץ לאחרונה?</span></div>
+          <div class="q"><i>3</i><span>האם יש מעלית שבת?</span></div>
+          <div class="q"><i>4</i><span>האם ניתן לקבל מפתחות רגילים?</span></div>
+          <div class="q"><i>5</i><span>היכן מותר להדליק נרות שבת?</span></div>
+          <div class="q"><i>6</i><span>האם יש בית כנסת פרטי לקבוצה?</span></div>
+          <div class="q"><i>7</i><span>מה הנוסח בבית הכנסת?</span></div>
+          <div class="q"><i>8</i><span>האם יש חיישני תנועה בחדרים?</span></div>
+          <div class="q"><i>9</i><span>האם החדרים שלנו יהיו באותו אגף?</span></div>
+          <div class="q"><i>10</i><span>האם יש חדר אוכל פרטי לקבוצה?</span></div>
+        </div>`},
+    ]
+  },
+];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const TOTAL = 30;
+const STORE = "mb_shabbat_guide_v1";
+const guideEl = document.getElementById('guide');
+
+function loadState(){
+  try{ return JSON.parse(localStorage.getItem(STORE)) || {}; }catch(e){ return {}; }
+}
+function saveState(s){ try{ localStorage.setItem(STORE, JSON.stringify(s)); }catch(e){} }
+let state = loadState();
+
+const checkSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+DATA.forEach(cat=>{
+  const section = document.createElement('section');
+  section.className = 'category reveal';
+  let stepsHTML = '';
+  cat.steps.forEach(st=>{
+    const done = state[st.n] ? 'done' : '';
+    stepsHTML += `
+      <article class="step ${done}" data-n="${st.n}">
+        <div class="check" role="checkbox" aria-checked="${done?'true':'false'}" tabindex="0" aria-label="סמן שלב ${st.n}">${checkSVG}</div>
+        <div class="body">
+          <div class="num"><span class="badge">שלב ${st.n}</span></div>
+          <h4>${st.t}</h4>
+          ${st.h}
+        </div>
+      </article>`;
+  });
+  section.innerHTML = `
+    <div class="cat-head ${cat.g}">
+      <img src="${cat.img}" alt="" onerror="this.remove()">
+      <div class="cat-inner">
+        <div class="cat-num">${cat.num}</div>
+        <h3>${cat.title}</h3>
+        <div class="cat-sub">${cat.sub}</div>
+      </div>
+    </div>
+    ${stepsHTML}`;
+  guideEl.appendChild(section);
+});
+
+/* ============================================================
+   INTERACTION
+   ============================================================ */
+function toggle(n, el){
+  if(state[n]){ delete state[n]; el.classList.remove('done'); }
+  else { state[n] = true; el.classList.add('done'); }
+  el.querySelector('.check').setAttribute('aria-checked', state[n]?'true':'false');
+  saveState(state);
+  updateProgress();
+}
+
+document.querySelectorAll('.step').forEach(step=>{
+  const n = +step.dataset.n;
+  const check = step.querySelector('.check');
+  check.addEventListener('click', e=>{ e.stopPropagation(); toggle(n, step); });
+  check.addEventListener('keydown', e=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); toggle(n, step);} });
+  step.addEventListener('click', e=>{ if(e.target.closest('a')) return; toggle(n, step); });
+});
+
+/* ============================================================
+   PROGRESS + CELEBRATION
+   ============================================================ */
+const bar = document.getElementById('progress-bar');
+const pill = document.getElementById('progress-pill');
+const pillNum = document.getElementById('pill-num');
+const celebrate = document.getElementById('celebrate');
+const celebrateLock = document.getElementById('celebrate-lock');
+let wasComplete = false;
+
+function countDone(){ return Object.keys(state).filter(k=>state[k]).length; }
+
+function updateProgress(){
+  const done = countDone();
+  const pct = Math.round(done/TOTAL*100);
+  bar.style.width = pct + '%';
+  pillNum.textContent = done;
+
+  const complete = done >= TOTAL;
+  celebrate.classList.toggle('locked', !complete);
+  celebrateLock.style.display = complete ? 'none' : 'block';
+
+  if(complete && !wasComplete){ fireConfetti(); }
+  wasComplete = complete;
+}
+
+/* show pill after scrolling past hero */
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > window.innerHeight*0.6) pill.classList.add('show');
+  else pill.classList.remove('show');
+}, {passive:true});
+
+/* reset */
+document.getElementById('reset').addEventListener('click', ()=>{
+  if(confirm('לאפס את כל הסימונים?')){
+    state = {}; saveState(state);
+    document.querySelectorAll('.step.done').forEach(s=>{
+      s.classList.remove('done');
+      s.querySelector('.check').setAttribute('aria-checked','false');
+    });
+    updateProgress();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+});
+
+/* ============================================================
+   REVEAL ON SCROLL
+   ============================================================ */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ============================================================
+   CONFETTI
+   ============================================================ */
+function fireConfetti(){
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = innerWidth; canvas.height = innerHeight;
+  const colors = ['#FF0090','#7b2d8b','#ffd9ef','#ffffff','#ff5fb0'];
+  const pieces = Array.from({length:140},()=>({
+    x:Math.random()*canvas.width, y:-20-Math.random()*canvas.height*0.4,
+    r:5+Math.random()*7, c:colors[Math.floor(Math.random()*colors.length)],
+    vy:2+Math.random()*4, vx:-2+Math.random()*4, rot:Math.random()*6.28, vr:-0.2+Math.random()*0.4
+  }));
+  let frames = 0;
+  (function anim(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.fillStyle=p.c; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6); ctx.restore();
+    });
+    frames++;
+    if(frames<260) requestAnimationFrame(anim);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  })();
+}
+
+/* ---- AI TEASER (free guide): a couple of questions, then upsell ---- */
+(function(){
+  var p=new URLSearchParams(location.search), ID=p.get('id')||'', T=p.get('t')||'';
+  var chat=document.getElementById('ait-chat'), input=document.getElementById('ait-input'),
+      btn=document.getElementById('ait-send'), up=document.getElementById('ait-upsell');
+  if(!btn) return;
+  var asked=0, MAX=2;
+  function bubble(role,text,muted){
+    chat.style.display='flex';
+    var el=document.createElement('div'); var me=role==='user';
+    el.style.cssText='max-width:88%;padding:10px 14px;border-radius:14px;font-size:15px;white-space:pre-wrap;'+
+      (me?'align-self:flex-start;background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff':
+          'align-self:flex-end;background:#fff;border:1px solid var(--line)')+(muted?';opacity:.6':'');
+    el.textContent=text; chat.appendChild(el); return el;
+  }
+  async function ask(){
+    var q=(input.value||'').trim(); if(!q||asked>=MAX) return;
+    asked++; input.value=''; btn.disabled=true; bubble('user',q);
+    var typing=bubble('assistant','חושב…',true);
+    try{
+      var r=await fetch('/ai',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({id:ID,t:T,question:q})});
+      var d=await r.json();
+      typing.textContent=(r.status===403)?'הגישה ליועץ פתוחה לרוכשים. אם רכשתם ולא נכנסתם — דברו איתנו בוואטסאפ.':((d&&d.reply)||'תקלה. נסו שוב.');
+      typing.style.opacity=1;
+    }catch(e){ typing.textContent='תקלה בחיבור. נסו שוב.'; typing.style.opacity=1; }
+    btn.disabled=false;
+    if(asked>=MAX){ input.disabled=true; btn.disabled=true; input.placeholder='זו הייתה הטעימה 🙂'; up.style.display='block'; }
+  }
+  btn.addEventListener('click',ask);
+  input.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); ask(); }});
+})();
+
+/* init */
+updateProgress();
+</script>
+</body>
+</html>

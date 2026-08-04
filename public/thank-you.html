@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF0090">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
+<title>תודה! · Multibrawn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF8FF;--bg2:#F3ECFD;--ink:#1A0B2E;--muted:#66557E;--purple:#A06BFF;--fuchsia:#FF0090}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--ink);min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px 22px}
+.card{max-width:520px}
+.badge{width:88px;height:88px;border-radius:50%;background:#1fae4d;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 14px 34px rgba(31,174,77,.35)}
+.badge svg{width:44px;height:44px;color:#fff}
+h1{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(30px,8vw,46px);line-height:1.08;margin-bottom:14px}
+p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:900;font-size:20px;color:#fff;background:var(--fuchsia);padding:18px 40px;border-radius:12px;text-decoration:none;box-shadow:0 12px 30px rgba(255,0,144,.35);transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.note{margin-top:22px;font-size:15px;color:var(--muted)}
+.sub{margin-top:10px;font-size:14px;color:var(--muted)}
+.sub a{color:var(--purple);font-weight:700;text-decoration:none}
+.fallback{background:var(--bg2);border-radius:16px;padding:24px;margin-top:6px}
+</style>
+<!-- pwa -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icon.svg">
+<style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
+<script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+  <h1>תודה! התשלום התקבל</h1>
+  <p class="lead">המדריך התפעולי לשבת חתן מוכן ומחכה לך.</p>
+  <a class="btn" id="guide-link" href="#">פתיחת המדריך ←</a>
+  <p class="note">שלחנו לך את הקישור גם במייל — כדי שיישמר אצלך.</p>
+  <p class="sub">בעיה בכניסה? <a href="https://wa.me/972523983394" target="_blank" rel="noopener">דברו איתנו בוואטסאפ</a></p>
+</div>
+
+<script>
+/* GROW מפנה לכאן אחרי תשלום מוצלח. הגעה לכאן = הוכחת רכישה במסלול הפשוט,
+   ולכן מנפיקים כאן טוקן שמאמת את עצמו (SHA-256) והמדריך פותח מיד — בלי backend.
+   אם יש id/token אמיתי מ-GROW (או מזרימת המייל) נשתמש בו. */
+(async function(){
+  var q = new URLSearchParams(location.search);
+  var idKeys = ['id','transactionId','transaction_id','asmachta','dealId','transactionToken','paymentId'];
+  var id = ''; for (var i=0;i<idKeys.length;i++){ var v=q.get(idKeys[i]); if(v){ id=v; break; } }
+  var urlToken = q.get('t') || q.get('token') || '';
+
+  var amount = parseFloat((q.get('amount') || q.get('sum') || '').replace(/[^\d.]/g, '')) || 0;
+  var premium = amount >= 99 || /premium/i.test(q.get('product') || '');
+  var pageParam = premium ? '&page=premium' : '';
+
+  async function sha256hex(s){
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  }
+  async function mintToken(){
+    var payload = (await sha256hex('mb|'+Date.now()+'|'+Math.random())).slice(0,12);
+    var check = (await sha256hex('MB-'+payload)).slice(0,8);
+    return 'MB-'+payload+'-'+check;
+  }
+
+  var token = urlToken;
+  try { if (!token) token = await mintToken(); } catch(e) {}
+  if (!id) id = token || 'buyer';
+
+  var link = document.getElementById('guide-link');
+  link.href = '/guide?id=' + encodeURIComponent(id) + (token ? '&t=' + encodeURIComponent(token) : '') + pageParam;
+})();
+</script>
+</body>
+</html>

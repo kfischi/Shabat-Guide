@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FF0090">
+<meta name="description" content="המדריך הדיגיטלי לשבת חתן מושלמת — 30 שלבים מוכחים מהשטח. צ'קליסט אינטראקטיבי + 7 משחקי חיבור במתנה.">
+<meta property="og:title" content="מדריך שבת חתן · Multi Brawn">
+<meta property="og:description" content="30 שלבים מוכחים שיהפכו את השבת שלכם לבלתי נשכחת.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://guide.multibrawn.co.il/images/hero.jpg">
+<meta property="og:url" content="https://guide.multibrawn.co.il">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
+<title>שבת חתן מושלמת מתחילה כאן · Multi Brawn</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --fuchsia:#FF0090; --purple:#7b2d8b; --white:#fff; --bg:#fff;
+  --ink:#1a0020; --muted:#7a6880; --line:#f0e6f0;
+  --shadow:0 10px 40px rgba(123,45,139,.12); --shadow-lg:0 24px 70px rgba(123,45,139,.22);
+  --radius:22px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+.h-serif{font-family:'Frank Ruhl Libre',serif;font-weight:900}
+
+/* CTA buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;
+  font-family:'Heebo';font-weight:900;font-size:clamp(17px,4.5vw,20px);
+  color:#fff;background:linear-gradient(135deg,var(--purple),var(--fuchsia));
+  padding:18px 34px;border-radius:999px;box-shadow:0 14px 34px rgba(255,0,144,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 20px 46px rgba(255,0,144,.5)}
+.btn .ar{font-size:22px;transition:transform .2s}
+.btn:hover .ar{transform:translateX(-5px)}
+.btn-ghost{background:#fff;color:var(--fuchsia);border:2px solid var(--fuchsia);box-shadow:none}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  text-align:center;color:#fff;padding:90px 22px 60px;overflow:hidden;
+  background:
+    radial-gradient(1100px 700px at 80% -10%,rgba(255,0,144,.55),transparent 60%),
+    radial-gradient(900px 600px at 0% 30%,rgba(123,45,139,.85),transparent 55%),
+    linear-gradient(160deg,#2a0833,#7b2d8b 48%,#1a0020);
+}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.4;mix-blend-mode:overlay}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;z-index:0}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:50%;background:linear-gradient(to top,rgba(8,0,12,.85),transparent)}
+.hero-logo{position:absolute;top:20px;right:22px;z-index:3;font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:.5px}
+.hero-logo span{color:var(--fuchsia)}
+.hero-inner{position:relative;z-index:2;max-width:780px;margin:0 auto}
+.brand{display:inline-flex;align-items:center;gap:9px;font-weight:900;letter-spacing:.5px;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 16px;border-radius:999px;margin-bottom:26px;backdrop-filter:blur(8px)}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--fuchsia);box-shadow:0 0 12px var(--fuchsia)}
+.hero .tagline{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(24px,6vw,40px);color:#ffd9ef;margin-bottom:10px}
+.hero h1{font-size:clamp(38px,10vw,76px);line-height:1.04;margin-bottom:18px;text-shadow:0 6px 30px rgba(0,0,0,.4)}
+.hero h1 .glow{color:var(--fuchsia);text-shadow:0 0 30px rgba(255,0,144,.7)}
+.hero .sub{font-size:clamp(17px,4.6vw,22px);color:rgba(255,255,255,.92);max-width:560px;margin:0 auto 32px;font-weight:400}
+.trust{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:30px;color:rgba(255,255,255,.8);font-size:14px;font-weight:500}
+.trust span{display:inline-flex;align-items:center;gap:7px}
+.trust b{color:#ffd9ef}
+
+/* ============ SECTION TITLES ============ */
+section{padding:78px 0}
+.kicker{color:var(--fuchsia);font-weight:900;letter-spacing:2px;font-size:13px;text-transform:uppercase;margin-bottom:12px;text-align:center}
+.sec-title{font-size:clamp(28px,7vw,44px);line-height:1.15;text-align:center;margin-bottom:14px}
+.sec-lead{color:var(--muted);font-size:17px;text-align:center;max-width:620px;margin:0 auto 44px}
+
+/* ============ PAIN (dark) ============ */
+.pain{
+  background:linear-gradient(160deg,#1a0020,#2a0833);color:#fff;
+}
+.pain .kicker{color:#ff5fb0}
+.pain .sec-title{color:#fff}
+.pain .sec-lead{color:rgba(255,255,255,.7)}
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:10px}
+.pain-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:28px 24px;text-align:center}
+.pain-card .emo{font-size:38px;margin-bottom:12px}
+.pain-card h3{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:21px;margin-bottom:8px;color:#fff}
+.pain-card p{color:rgba(255,255,255,.72);font-size:15px}
+
+/* ============ SOLUTION ============ */
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.sol-card{background:#fff;border:1px solid var(--line);border-right:4px solid var(--fuchsia);border-radius:16px;padding:24px;box-shadow:0 6px 22px rgba(123,45,139,.07);transition:transform .25s,box-shadow .25s}
+.sol-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.sol-card .emo{font-size:32px;margin-bottom:10px}
+.sol-card h3{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:19px;margin-bottom:6px}
+.sol-card p{color:var(--muted);font-size:14.5px}
+
+/* ============ PREVIEW ============ */
+.preview{background:linear-gradient(180deg,#fff,#fdf5fb)}
+.prev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px}
+.prev-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+.prev-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.prev-card .ph{position:relative;height:170px;display:flex;align-items:flex-end;padding:18px;color:#fff;overflow:hidden}
+.prev-card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.9}
+.prev-card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,0,16,.8),transparent);z-index:1}
+.prev-card .ph .tag{position:relative;z-index:2;background:var(--fuchsia);font-weight:900;font-size:12px;padding:5px 12px;border-radius:999px}
+.prev-card .pb{padding:22px}
+.prev-card .pb h3{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:20px;margin-bottom:8px}
+.prev-card .pb p{color:var(--muted);font-size:14.5px}
+.pg1{background:linear-gradient(135deg,#7b2d8b,#ff0090)}
+.pg2{background:linear-gradient(135deg,#1a0020,#b3146e)}
+.pg3{background:linear-gradient(135deg,#3a0d52,#9b3fa8)}
+
+/* ============ AUDIENCE ============ */
+.aud-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.aud-card{text-align:center;padding:34px 24px;border-radius:20px;border:1px solid var(--line);background:#fff;box-shadow:0 6px 22px rgba(123,45,139,.06)}
+.aud-card .emo{font-size:42px;margin-bottom:14px}
+.aud-card h3{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:21px;margin-bottom:8px}
+.aud-card p{color:var(--muted);font-size:15px}
+
+/* ============ TESTIMONIALS ============ */
+.testi{background:linear-gradient(160deg,#7b2d8b,#1a0020);color:#fff}
+.testi .kicker{color:#ff5fb0}
+.testi .sec-title{color:#fff}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:10px}
+.testi-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px 24px}
+.testi-card .stars{color:#ffd23f;font-size:16px;margin-bottom:12px;letter-spacing:2px}
+.testi-card p{font-size:16px;color:rgba(255,255,255,.92);font-style:italic;margin-bottom:16px}
+.testi-card .who{display:flex;align-items:center;gap:12px}
+.testi-card .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--fuchsia),#ffd9ef);display:flex;align-items:center;justify-content:center;font-weight:900;color:#1a0020}
+.testi-card .who b{display:block;font-size:15px}
+.testi-card .who span{font-size:13px;color:rgba(255,255,255,.65)}
+
+/* ============ INCLUDES ============ */
+.incl-box{max-width:560px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.incl-box .row{display:flex;align-items:center;gap:14px;padding:18px 24px;border-bottom:1px solid var(--line);font-size:16px;font-weight:500}
+.incl-box .row:last-child{border-bottom:none}
+.incl-box .row .ck{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#eafff0;color:#1fae4d;display:flex;align-items:center;justify-content:center}
+.incl-box .row .ck svg{width:16px;height:16px}
+
+/* ============ PRICE ============ */
+.price-sec{background:linear-gradient(180deg,#fdf5fb,#fff);text-align:center}
+.price-card{
+  max-width:440px;margin:0 auto;background:#fff;border-radius:26px;
+  box-shadow:var(--shadow-lg);overflow:hidden;border:2px solid var(--fuchsia);
+}
+.price-card .top{background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;padding:14px;font-weight:900;font-size:14px;letter-spacing:1px}
+.price-card .body{padding:38px 30px 34px}
+.price-card .old{color:var(--muted);text-decoration:line-through;font-size:20px}
+.price-card .amount{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:72px;line-height:1;color:var(--ink)}
+.price-card .amount span{font-size:30px;color:var(--fuchsia)}
+.price-card .once{color:var(--muted);font-size:15px;margin-top:6px}
+.urgency{display:inline-flex;align-items:center;gap:8px;background:#fff0f7;color:var(--fuchsia);font-weight:700;font-size:14px;padding:8px 18px;border-radius:999px;margin:22px auto 0;border:1px dashed var(--fuchsia)}
+.guarantee{color:var(--muted);font-size:14px;margin-top:18px}
+
+/* ============ FAQ ============ */
+.faq-list{max-width:680px;margin:0 auto}
+.faq-item{border:1px solid var(--line);border-radius:16px;margin-bottom:14px;overflow:hidden;background:#fff}
+.faq-q{width:100%;text-align:right;background:none;border:none;cursor:pointer;font-family:'Heebo';font-weight:700;font-size:17px;color:var(--ink);padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q .ic{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:#fff0f7;color:var(--fuchsia);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;transition:transform .3s}
+.faq-item.open .faq-q .ic{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;color:var(--muted);font-size:15.5px}
+.faq-a div{padding:0 22px 20px}
+.faq-item.open .faq-a{max-height:300px}
+
+/* ============ SIGNUP FORM ============ */
+.signup{background:linear-gradient(180deg,#fff,#fdf5fb);scroll-margin-top:70px}
+.signup-card{max-width:520px;margin:34px auto 0;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lg);padding:34px 28px}
+.signup-card .lead{color:var(--muted);text-align:center;margin-bottom:22px;font-size:15.5px}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:700;font-size:14px;margin-bottom:7px;color:var(--ink)}
+.field label .req{color:var(--fuchsia)}
+.field input,.field select{width:100%;font-family:'Heebo';font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--fuchsia);box-shadow:0 0 0 3px rgba(255,0,144,.12)}
+.signup-card .btn{width:100%;justify-content:center;margin-top:8px}
+.signup-card .note{text-align:center;color:var(--muted);font-size:13px;margin-top:16px}
+.signup-card .note b{color:var(--purple)}
+
+/* ============ FINAL CTA ============ */
+.final{background:linear-gradient(160deg,#2a0833,#7b2d8b 50%,#1a0020);color:#fff;text-align:center}
+.final .sec-title{color:#fff}
+.final p{color:rgba(255,255,255,.85);max-width:520px;margin:0 auto 30px;font-size:17px}
+
+/* ============ FOOTER ============ */
+footer{text-align:center;padding:50px 22px 110px;color:var(--muted);font-size:14px;background:#fff}
+footer .logo{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:24px;color:var(--ink);margin-bottom:8px}
+footer .logo span{color:var(--fuchsia)}
+footer a.tel{color:var(--purple);font-weight:700}
+footer .links{margin:14px 0;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+footer .links a{color:var(--muted)}
+footer .links a:hover{color:var(--fuchsia)}
+
+/* sticky scroll CTA bar */
+.sticky-cta{position:fixed;top:0;left:0;right:0;z-index:1001;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);box-shadow:0 6px 22px rgba(123,45,139,.14);transform:translateY(-100%);transition:transform .35s cubic-bezier(.2,.8,.2,1);border-bottom:1px solid var(--line)}
+.sticky-cta.show{transform:none}
+.sticky-cta .in{max-width:1040px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
+.sticky-cta .logo{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:19px;color:var(--ink)}
+.sticky-cta .logo span{color:var(--fuchsia)}
+.sticky-cta .price{margin-right:auto;font-weight:900;color:var(--purple);font-size:15px}
+.sticky-cta .price s{color:var(--muted);font-weight:400;font-size:13px}
+.sticky-cta .btn{padding:11px 22px;font-size:15px;box-shadow:0 8px 20px rgba(255,0,144,.35)}
+@media(max-width:520px){.sticky-cta .logo,.sticky-cta .price{display:none}.sticky-cta .btn{width:100%;justify-content:center}}
+
+/* Shabbat candles motif */
+.candles{position:relative;z-index:2;display:flex;justify-content:center;gap:30px;margin-bottom:24px}
+.candle{position:relative;width:14px;height:54px;border-radius:4px 4px 2px 2px;background:linear-gradient(#fff0f7,#ffd9ef);box-shadow:0 0 18px rgba(255,217,239,.4)}
+.candle::before{content:"";position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:10px;height:20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#fff,#ffd23f 45%,#ff8a00 80%);box-shadow:0 0 22px 6px rgba(255,180,40,.6);animation:flame 1.8s ease-in-out infinite alternate}
+.candle:nth-child(2)::before{animation-delay:.4s}
+@keyframes flame{0%{transform:translateX(-50%) scale(1) rotate(-2deg)}100%{transform:translateX(-50%) scale(1.12) rotate(2deg)}}
+
+/* WhatsApp float */
+.wa{position:fixed;bottom:22px;right:18px;z-index:1002;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(37,211,102,.45);animation:wapulse 2.4s infinite}
+.wa svg{width:32px;height:32px;fill:#fff}
+@keyframes wapulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+<!-- pwa -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icon.svg">
+<style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
+<script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+</head>
+<body>
+
+<!-- sticky scroll CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="in">
+    <span class="logo">Multi <span>Brawn</span></span>
+    <span class="price"><s>99</s> 50 ₪</span>
+    <button class="btn" data-cta>אני רוצה את המדריך <span class="ar">←</span></button>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-logo">MB<span>.</span></div>
+  <img class="hero-img" src="images/hero.jpg" alt="" onerror="this.remove()">
+  <div class="hero-inner">
+    <div class="candles"><div class="candle"></div><div class="candle"></div></div>
+    <span class="brand"><span class="dot"></span> MULTI BRAWN · מדריך פרימיום</span>
+    <div class="tagline">השבת שכולם יזכרו</div>
+    <h1>שבת חתן מושלמת <span class="glow">מתחילה כאן</span></h1>
+    <p class="sub">30 שלבים מוכחים מהשטח — מהחזון ועד הפרידה. בלי בלגן, בלי הפתעות, בלי לשכוח כלום.</p>
+    <button class="btn" data-cta>אני רוצה את המדריך <span class="ar">←</span></button>
+    <div class="trust">
+      <span>✓ גישה <b>מיידית</b></span>
+      <span>✓ <b>יועץ AI</b> חכם</span>
+      <span>✓ <b>7 משחקים</b> במתנה</span>
+    </div>
+    <button id="installApp" style="display:none;margin-top:22px;align-items:center;gap:8px;cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-family:'Heebo';font-weight:700;font-size:14px;padding:11px 20px;border-radius:999px;backdrop-filter:blur(8px)">📲 התקנת האפליקציה</button>
+  </div>
+</header>
+
+<!-- ============ PAIN ============ -->
+<section class="pain">
+  <div class="wrap reveal">
+    <div class="kicker">בואו נדבר בכנות</div>
+    <h2 class="sec-title h-serif">תכנון שבת חתן זה סיוט.</h2>
+    <p class="sec-lead">חודשים של דאגה, עשרות ספקים, מאות פרטים — ומספיק טעות אחת כדי שכל השבת תיפול.</p>
+    <div class="pain-grid">
+      <div class="pain-card"><div class="emo">🤯</div><h3>לבד מול הכל</h3><p>50 אורחים, אינסוף פרטים — ואתם מתכננים את הכל לבד.</p></div>
+      <div class="pain-card"><div class="emo">😰</div><h3>ספקים וחדרים</h3><p>ספקים שלא מגיעים, חדרים לא מוכנים, ואוכל שלא מספיק.</p></div>
+      <div class="pain-card"><div class="emo">😞</div><h3>בזבוז כסף</h3><p>מבזבזים אלפי שקלים על דברים מיותרים שאפשר היה לחסוך.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUTION ============ -->
+<section>
+  <div class="wrap reveal">
+    <div class="kicker">הפתרון</div>
+    <h2 class="sec-title h-serif">30 שלבים מוכחים שיהפכו את השבת שלכם לבלתי נשכחת</h2>
+    <p class="sec-lead">כל מה שמפיק אירועים מנוסה יודע — מרוכז במדריך אחד, צעד אחר צעד.</p>
+    <div class="sol-grid">
+      <div class="sol-card"><div class="emo">📋</div><h3>30 שלבים מסודרים</h3><p>צעד אחר צעד, מהחזון ועד הפרידה — בלי לשכוח כלום.</p></div>
+      <div class="sol-card"><div class="emo">⏰</div><h3>לוח זמנים שישי–מוצ"ש</h3><p>שעה־שעה, מהדלקת נרות ועד הבדלה.</p></div>
+      <div class="sol-card"><div class="emo">💰</div><h3>איך לחסוך אלפי שקלים</h3><p>על מה באמת שווה לשלם — ועל מה לא.</p></div>
+      <div class="sol-card"><div class="emo">🏨</div><h3>מלון או מתחם — מה עדיף</h3><p>היתרונות, החסרונות והשאלות הנכונות.</p></div>
+      <div class="sol-card"><div class="emo">✡️</div><h3>בעיות הלכתיות שחובה לדעת</h3><p>מעלית שבת, נרות, חיישנים ודלתות.</p></div>
+      <div class="sol-card"><div class="emo">🎲</div><h3>7 משחקי חיבור במתנה</h3><p>שמחברים בין שתי המשפחות לאורך השבת.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREVIEW ============ -->
+<section class="preview">
+  <div class="wrap reveal">
+    <div class="kicker">הצצה פנימה</div>
+    <h2 class="sec-title h-serif">שלושה דברים שלא תמצאו בשום מקום אחר</h2>
+    <p class="sec-lead">אלה בדיוק הפרטים שמפילים שבתות — ואצלנו הם מסודרים לכם מראש.</p>
+    <div class="prev-grid">
+      <div class="prev-card"><div class="ph pg1"><img src="images/preview-1.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 30</span></div><div class="pb"><h3>10 שאלות שחובה לשאול לפני חתימה</h3><p>הרשימה שתחסוך לכם אלפי שקלים ואינסוף הפתעות.</p></div></div>
+      <div class="prev-card"><div class="ph pg2"><img src="images/preview-2.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 9</span></div><div class="pb"><h3>היפוך ארוחות — למה זה קריטי</h3><p>בשרי מול חלבי, כמה שעות להמתין, ואיך לא ליפול על זה מול האורחים.</p></div></div>
+      <div class="prev-card"><div class="ph pg3"><img src="images/preview-3.jpg" alt="" onerror="this.remove()"><span class="tag">שלב 29</span></div><div class="pb"><h3>בעיות הלכתיות במלון — המדריך המלא</h3><p>דלתות אלקטרוניות, חיישני תנועה, מעלית שבת ועוד.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUDIENCE ============ -->
+<section>
+  <div class="wrap reveal">
+    <div class="kicker">למי זה מתאים</div>
+    <h2 class="sec-title h-serif">נבנה בדיוק בשבילכם</h2>
+    <div class="aud-grid" style="margin-top:30px">
+      <div class="aud-card"><div class="emo">👨‍👩‍👧‍👦</div><h3>משפחות</h3><p>שמתכננות שבת חתן או בר מצוה ורוצות שיהיה מושלם בלי להשתגע.</p></div>
+      <div class="aud-card"><div class="emo">🎯</div><h3>מפיקי אירועים</h3><p>שרוצים צ'קליסט מקצועי שלא מפספס אף פרט מול הלקוח.</p></div>
+      <div class="aud-card"><div class="emo">🏨</div><h3>בעלי מתחמים</h3><p>שרוצים לתת ללקוחות חוויה שתחזיר אותם שוב ושוב.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testi">
+  <div class="wrap reveal">
+    <div class="kicker">מה אומרים</div>
+    <h2 class="sec-title h-serif">משפחות שכבר עשו את זה איתנו</h2>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="stars">★★★★★</div><p>"השתמשנו במדריך לשבת חתן של הבן שלנו. הלוח זמנים לבדו שווה את כל המחיר. הכל זרם בלי לחץ."</p><div class="who"><div class="av">ר</div><div><b>משפחת רוזנברג</b><span>שבת חתן · ירושלים</span></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><p>"אני מפיקה אירועים והמדריך הזה הפך לכלי העבודה שלי. 10 השאלות לפני חתימה חסכו ללקוח שלי המון כסף."</p><div class="who"><div class="av">מ</div><div><b>מיכל א.</b><span>מפיקת אירועים</span></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><p>"החלק על בעיות הלכתיות במלון פתח לנו את העיניים. שאלנו את כל השאלות הנכונות מראש."</p><div class="who"><div class="av">ש</div><div><b>משפחת שטרן</b><span>שבת בר מצוה · בני ברק</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INCLUDES ============ -->
+<section>
+  <div class="wrap reveal">
+    <div class="kicker">מה מקבלים</div>
+    <h2 class="sec-title h-serif">הכל כלול. גישה מיידית.</h2>
+    <div class="incl-box" style="margin-top:34px">
+      <div class="row"><span class="ck">✓</span> מדריך מלא של 30 שלבים מעשיים</div>
+      <div class="row"><span class="ck">✓</span> צ'קליסט אינטראקטיבי ששומר התקדמות</div>
+      <div class="row"><span class="ck">✓</span> 🤖 יועץ AI חכם — שאלה חינם על תכנון השבת</div>
+      <div class="row"><span class="ck">✓</span> 7 משחקי חיבור לשבת — במתנה</div>
+      <div class="row"><span class="ck">✓</span> לוח זמנים מלא שישי–שבת–מוצ"ש</div>
+      <div class="row"><span class="ck">✓</span> גישה מיידית מכל מכשיר</div>
+      <div class="row"><span class="ck">✓</span> עדכונים תמידיים ללא תוספת תשלום</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICE ============ -->
+<section class="price-sec">
+  <div class="wrap reveal">
+    <div class="kicker">מחיר השקה</div>
+    <h2 class="sec-title h-serif">השקעה קטנה. שבת בלתי נשכחת.</h2>
+    <div class="price-card" style="margin-top:30px">
+      <div class="top">🌸 גישה מלאה לכל החיים</div>
+      <div class="body">
+        <div class="old">99 ₪</div>
+        <div class="amount">50<span> ₪</span></div>
+        <div class="once">תשלום חד־פעמי · חשבונית אוטומטית</div>
+        <div style="margin-top:26px"><button class="btn" data-cta>אני רוצה את המדריך <span class="ar">←</span></button></div>
+        <div class="urgency">⏳ מחיר השקה נגמר בעוד <b id="countdown" style="font-feature-settings:'tnum';margin-inline-start:4px">48:00:00</b></div>
+        <div class="guarantee">🔒 תשלום מאובטח דרך Grow · גישה מיידית לאחר התשלום</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIGNUP FORM (Netlify Forms — free, no Tally) ============ -->
+<section class="signup" id="signup">
+  <div class="wrap reveal">
+    <div class="kicker">כמעט שם</div>
+    <h2 class="sec-title h-serif">השאירו פרטים ועברו לתשלום</h2>
+    <div class="signup-card">
+      <p class="lead">אחרי מילוי הפרטים תועברו לתשלום מאובטח ב-Grow (50 ₪). המדריך נפתח מיד לאחר התשלום.</p>
+      <!-- Netlify Forms: submissions saved free in the Netlify dashboard + email notification.
+           On success Netlify redirects to /thank-you-lead.html (which has the Grow pay button). -->
+      <form name="lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you-lead.html">
+        <input type="hidden" name="form-name" value="lead">
+        <p hidden><label>אל תמלאו: <input name="bot-field"></label></p>
+        <div class="field">
+          <label>שם מלא <span class="req">*</span></label>
+          <input type="text" name="name" required autocomplete="name" placeholder="ישראל ישראלי">
+        </div>
+        <div class="field">
+          <label>כתובת מייל <span class="req">*</span></label>
+          <input type="email" name="email" required autocomplete="email" placeholder="you@email.com">
+        </div>
+        <div class="field">
+          <label>מספר טלפון <span class="req">*</span></label>
+          <input type="tel" name="phone" required autocomplete="tel" inputmode="tel" placeholder="050-0000000">
+        </div>
+        <div class="field">
+          <label>סוג האירוע</label>
+          <select name="event_type">
+            <option>שבת חתן</option>
+            <option>שבת בר מצוה</option>
+            <option>חתונה</option>
+            <option>אחר</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">מעבר לתשלום — 50 ₪ <span class="ar">←</span></button>
+        <p class="note">🔒 תשלום מאובטח דרך <b>Grow</b> · חשבונית אוטומטית · גישה מיידית</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section>
+  <div class="wrap reveal">
+    <div class="kicker">שאלות נפוצות</div>
+    <h2 class="sec-title h-serif">כל מה שרציתם לדעת</h2>
+    <div class="faq-list" style="margin-top:34px">
+      <div class="faq-item"><button class="faq-q">איך מקבלים את המדריך אחרי התשלום? <span class="ic">+</span></button><div class="faq-a"><div>מיד לאחר התשלום נשלח אליכם מייל והודעת וואטסאפ עם קישור אישי למדריך. הגישה מיידית.</div></div></div>
+      <div class="faq-item"><button class="faq-q">המדריך מתאים גם לבר מצוה או חתונה? <span class="ic">+</span></button><div class="faq-a"><div>בהחלט. רוב העקרונות — חדרים, ספקים, אוכל, כשרות ולוח זמנים — נכונים לכל שבת מאורגנת. בטופס תבחרו את סוג האירוע.</div></div></div>
+      <div class="faq-item"><button class="faq-q">האם הגישה היא לכל החיים? <span class="ic">+</span></button><div class="faq-a"><div>כן. תשלום חד־פעמי של 50 ₪ ותקבלו את המדריך מיד. בהמשך תוכלו לשדרג למדריך הפרימיום המורחב.</div></div></div>
+      <div class="faq-item"><button class="faq-q">אפשר לפתוח מהנייד? <span class="ic">+</span></button><div class="faq-a"><div>בוודאי. המדריך בנוי קודם כל למובייל — נוח לקריאה ולסימון תוך כדי תנועה.</div></div></div>
+      <div class="faq-item"><button class="faq-q">יש לי שאלה לפני שאני רוכש <span class="ic">+</span></button><div class="faq-a"><div>נשמח לעזור! שלחו לנו הודעת וואטסאפ ל-052-398-3394 ונחזור אליכם מהר.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final">
+  <div class="wrap reveal">
+    <div class="tagline" style="font-family:'Dancing Script',cursive;color:#ffd9ef;font-size:32px;margin-bottom:8px">מוכנים?</div>
+    <h2 class="sec-title h-serif">השבת המושלמת שלכם — במרחק לחיצה</h2>
+    <p>הצטרפו למשפחות שכבר הפכו את שבת השמחה שלהן לחוויה שכולם מדברים עליה.</p>
+    <button class="btn btn-ghost" data-cta style="background:#fff">אני רוצה את המדריך <span class="ar">←</span></button>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="logo">Multi <span>Brawn</span></div>
+  <p>מדריך שבת חתן · נבנה באהבה כדי שהשבת שלכם תהיה מושלמת.</p>
+  <div class="links">
+    <a href="https://wa.me/972523983394" target="_blank" rel="noopener">וואטסאפ</a>
+    <a href="mailto:multibrawn@gmail.com">מייל</a>
+    <a href="#" data-cta>הרשמה</a>
+  </div>
+  <p>ייעוץ ושאלות: <a class="tel" href="https://wa.me/972523983394" target="_blank" rel="noopener">052-398-3394</a></p>
+  <p style="margin-top:10px;font-size:12px;opacity:.7">© Multi Brawn · כל הזכויות שמורות</p>
+</footer>
+
+<a class="wa" href="https://wa.me/972523983394" target="_blank" rel="noopener" aria-label="וואטסאפ">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.673-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg>
+</a>
+
+<script>
+/* CTA buttons → scroll to the on-page signup form (Netlify Forms, no Tally) */
+document.querySelectorAll('[data-cta]').forEach(b=>{
+  b.addEventListener('click', e=>{
+    e.preventDefault();
+    const form = document.getElementById('signup');
+    form.scrollIntoView({behavior:'smooth', block:'start'});
+    const first = form.querySelector('input[name="name"]');
+    if(first) setTimeout(()=>first.focus({preventScroll:true}), 500);
+  });
+});
+
+/* FAQ accordion */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click', ()=> q.closest('.faq-item').classList.toggle('open'));
+});
+
+/* reveal on scroll */
+const io = new IntersectionObserver((en)=>{en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* PWA install prompt — show the install button only when the browser offers it */
+let mbDeferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); mbDeferredPrompt = e;
+  const b = document.getElementById('installApp'); if (b) b.style.display = 'inline-flex';
+});
+const installBtn = document.getElementById('installApp');
+if (installBtn) installBtn.addEventListener('click', async () => {
+  if (!mbDeferredPrompt) return;
+  mbDeferredPrompt.prompt(); await mbDeferredPrompt.userChoice; mbDeferredPrompt = null;
+  installBtn.style.display = 'none';
+});
+
+/* sticky CTA appears after scrolling past the hero */
+const sticky = document.getElementById('stickyCta');
+window.addEventListener('scroll', ()=>{
+  sticky.classList.toggle('show', window.scrollY > window.innerHeight*0.85);
+}, {passive:true});
+
+/* evergreen launch-price countdown — 48h per visitor, persisted */
+(function(){
+  const el = document.getElementById('countdown');
+  if(!el) return;
+  const KEY='mb_launch_deadline', WIN=48*60*60*1000;
+  let deadline = parseInt(localStorage.getItem(KEY)||'0',10);
+  if(!deadline || deadline < Date.now()){ deadline = Date.now()+WIN; localStorage.setItem(KEY, deadline); }
+  const p = n => String(n).padStart(2,'0');
+  function tick(){
+    let d = Math.max(0, deadline - Date.now());
+    const h = Math.floor(d/3600000), m = Math.floor(d%3600000/60000), s = Math.floor(d%60000/1000);
+    el.textContent = `${p(h)}:${p(m)}:${p(s)}`;
+  }
+  tick(); setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
