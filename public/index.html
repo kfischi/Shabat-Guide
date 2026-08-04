@@ -360,7 +360,7 @@ document.getElementById('pay').addEventListener('click', async function(){
   const btn=this, orig=btn.innerHTML; btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
   sendLead(data);
   try{
-    const r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:50})});
+    const r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:50,name:data.contact_name||'',email:data.email||'',phone:data.phone||''})});
     const d = await r.json();
     if(d && d.url){ location.href=d.url; return; }
   }catch(e){}
