@@ -225,6 +225,25 @@ a{color:inherit;text-decoration:none}
 .games-cta .txt span{color:var(--muted);font-size:14.5px}
 .games-cta .arrow{color:var(--fuchsia);font-size:26px;font-weight:900}
 
+/* ============ PREMIUM FINALE (הובלה למדריך בתשלום) ============ */
+.premium-final{max-width:880px;margin:34px auto 0;padding:0 22px}
+.premium-final .pf-card{position:relative;overflow:hidden;background:linear-gradient(165deg,#2a0d3f,#1A0B2E);border:1px solid rgba(231,179,74,.35);border-radius:26px;padding:40px 28px;text-align:center;color:#fff;box-shadow:var(--shadow-lg)}
+.premium-final .pf-card::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% -20%,rgba(255,0,144,.35),transparent 60%);pointer-events:none}
+.premium-final .pf-in{position:relative;z-index:2}
+.premium-final .pf-crown{font-size:40px;margin-bottom:8px}
+.premium-final .pf-kick{color:#E7B34A;font-weight:900;letter-spacing:2px;font-size:12px;text-transform:uppercase;margin-bottom:10px}
+.premium-final h3{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(24px,6vw,34px);line-height:1.15;margin-bottom:12px;color:#fff}
+.premium-final .pf-lead{color:rgba(255,255,255,.82);font-size:16px;line-height:1.7;max-width:520px;margin:0 auto 22px}
+.premium-final ul{list-style:none;padding:0;margin:0 auto 26px;text-align:right;display:inline-block}
+.premium-final li{position:relative;padding-right:28px;font-size:15px;color:rgba(255,255,255,.92);margin-bottom:10px}
+.premium-final li::before{content:"✦";position:absolute;right:0;color:#E7B34A}
+.premium-final .pf-price{margin-bottom:20px}
+.premium-final .pf-price .was{color:rgba(255,255,255,.55);text-decoration:line-through;font-size:18px;margin-left:8px}
+.premium-final .pf-price .now{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:34px;color:#fff}
+.premium-final .pf-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Heebo';font-weight:900;font-size:18px;color:#1A0B2E;background:linear-gradient(135deg,#F4CE6E,#E7B34A);padding:16px 34px;border-radius:14px;box-shadow:0 14px 34px rgba(231,179,74,.4);transition:transform .2s}
+.premium-final .pf-btn:hover{transform:translateY(-2px)}
+.premium-final .pf-fine{color:rgba(255,255,255,.6);font-size:12.5px;margin-top:14px}
+
 /* ============ FOOTER ============ */
 footer{text-align:center;padding:60px 26px 120px;color:var(--muted);font-size:14px}
 footer .logo{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:24px;color:var(--ink);margin-bottom:8px}
@@ -340,16 +359,26 @@ footer a.tel{color:var(--purple);font-weight:700}
   </div>
 </section>
 
-<!-- UPSELL TO PREMIUM -->
-<section class="games-cta reveal">
-  <a href="/upsell.html" style="background:linear-gradient(135deg,#2a0d3f,#7b2d8b);border:none;color:#fff">
-    <div class="ico" style="background:rgba(231,179,74,.2)">👑</div>
-    <div class="txt">
-      <b style="color:#fff">רוצים לתכנן כמו מפיק מקצועי?</b>
-      <span style="color:rgba(255,255,255,.85)">מהדורת הפרימיום: מחשבון כמויות, בונה לוח זמנים, תקציב, ספקים ופלייבוק משברים.</span>
+<!-- PREMIUM FINALE · הובלה למדריך בתשלום -->
+<section class="premium-final reveal">
+  <div class="pf-card">
+    <div class="pf-in">
+      <div class="pf-crown">👑</div>
+      <div class="pf-kick">רוצים לתכנן כמו מפיק מקצועי?</div>
+      <h3>המדריך הזה נתן לכם את השלבים.<br>הפרימיום נותן לכם את הכלים.</h3>
+      <p class="pf-lead">כל מה שקראתם כאן — ועכשיו שכבה שלמה של כלים חכמים שמחשבים, מתזמנים ומנהלים בשבילכם. פחות ניחושים, יותר שקט.</p>
+      <ul>
+        <li>מחשבון כמויות אוכל — לפי מספר האורחים</li>
+        <li>בונה לוח זמנים אוטומטי לשישי, שבת ומוצ״ש</li>
+        <li>מחשבון תקציב ומעקב ספקים</li>
+        <li>יועץ AI אישי — ללא הגבלה</li>
+        <li>תבניות מוכנות + פלייבוק משברים</li>
+      </ul>
+      <div class="pf-price"><span class="was">₪830</span><span class="now">99 ₪</span></div>
+      <a href="/upsell.html" class="pf-btn">שדרוג למהדורת הפרימיום <span>←</span></a>
+      <p class="pf-fine">תשלום חד־פעמי · גישה מיידית · חשבונית אוטומטית</p>
     </div>
-    <div class="arrow" style="color:#ffd9ef">‹</div>
-  </a>
+  </div>
 </section>
 
 <!-- GAMES CTA -->
