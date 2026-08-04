@@ -25,6 +25,21 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 .sub{margin-top:10px;font-size:14px;color:var(--muted)}
 .sub a{color:var(--purple);font-weight:700;text-decoration:none}
 .fallback{background:var(--bg2);border-radius:16px;padding:24px;margin-top:6px}
+.divider{width:52px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--purple),var(--fuchsia));margin:34px auto}
+.upsell{background:linear-gradient(165deg,#2a0d3f,#1A0B2E);color:#fff;border:1px solid rgba(231,179,74,.35);border-radius:22px;padding:30px 26px;text-align:center;box-shadow:0 18px 44px rgba(26,11,46,.35)}
+.upsell .crown{font-size:34px;margin-bottom:8px}
+.upsell .u-kick{color:#E7B34A;font-weight:700;letter-spacing:2px;font-size:11.5px;text-transform:uppercase;margin-bottom:8px}
+.upsell h2{font-family:'Rubik',sans-serif;font-weight:700;font-size:23px;line-height:1.2;margin-bottom:12px}
+.upsell .u-lead{color:rgba(255,255,255,.82);font-size:15px;line-height:1.65;margin-bottom:18px}
+.upsell ul{list-style:none;padding:0;margin:0 0 22px;text-align:right;display:inline-block}
+.upsell li{position:relative;padding-right:26px;font-size:14.5px;color:rgba(255,255,255,.92);margin-bottom:9px}
+.upsell li::before{content:"✦";position:absolute;right:0;color:#E7B34A}
+.u-btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:none;font-family:'Assistant';font-weight:800;font-size:18px;color:#1A0B2E;background:linear-gradient(135deg,#F4CE6E,#E7B34A);padding:16px 30px;border-radius:12px;box-shadow:0 12px 28px rgba(231,179,74,.4);transition:transform .2s;width:100%;max-width:360px}
+.u-btn:hover{transform:translateY(-2px)}
+.u-btn:disabled{opacity:.7;cursor:default;transform:none}
+.u-fine{color:rgba(255,255,255,.6);font-size:12.5px;margin-top:12px}
+.skip{display:block;margin-top:16px;color:var(--muted);font-size:13.5px;text-decoration:none}
+.skip:hover{text-decoration:underline}
 </style>
 <!-- pwa -->
 <link rel="manifest" href="/manifest.webmanifest">
@@ -43,6 +58,24 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
   <a class="btn" id="guide-link" href="#">פתיחת המדריך החינם ←</a>
   <p class="note">שלחנו לכם את הקישור גם במייל — כדי שיישמר אצלכם.</p>
   <p class="sub">בעיה בכניסה? <a href="https://wa.me/972523983394" target="_blank" rel="noopener">דברו איתנו בוואטסאפ</a></p>
+
+  <div class="divider"></div>
+
+  <div class="upsell">
+    <div class="crown">👑</div>
+    <div class="u-kick">שדרוג אופציונלי</div>
+    <h2>רוצים לצלול לעומק? מדריך הפרימיום</h2>
+    <p class="u-lead">כל מה שיש במדריך החינם — ועוד שכבה שלמה של כלים שמנהלים לכם את השבת מא׳ עד ת׳.</p>
+    <ul>
+      <li>מחשבון תקציב ורשימות מוכנות</li>
+      <li>תבניות מוכנות: סדר יום, חלוקת חדרים, מול ספקים</li>
+      <li>יועץ AI אישי לכל שאלה בתכנון</li>
+      <li>פלייבוק מלא + כלים אינטראקטיביים</li>
+    </ul>
+    <button type="button" class="u-btn" id="upgrade">שדרוג למדריך הפרימיום — 99 ₪ <span>←</span></button>
+    <p class="u-fine" id="u-err">תשלום חד־פעמי · גישה מיידית</p>
+    <a href="#" class="skip" id="skip">לא עכשיו, תודה — אמשיך עם המדריך החינם</a>
+  </div>
 </div>
 
 <script>
@@ -76,6 +109,25 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
   var link = document.getElementById('guide-link');
   link.href = '/guide?id=' + encodeURIComponent(id) + (token ? '&t=' + encodeURIComponent(token) : '') + pageParam;
 })();
+
+/* שדרוג לפרימיום — מפעיל תשלום 99₪ (דרך create-payment) ומחזיר ישר לפרימיום */
+document.getElementById('upgrade').addEventListener('click', async function(){
+  var btn=this, orig=btn.innerHTML, err=document.getElementById('u-err');
+  btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
+  try{
+    var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:99,product:'premium'})});
+    var d = await r.json();
+    if(d && d.url){ location.href=d.url; return; }
+  }catch(e){}
+  btn.disabled=false; btn.innerHTML=orig;
+  err.textContent='תקלה ביצירת התשלום. נסו שוב, או דברו איתנו בוואטסאפ.';
+});
+
+/* "לא עכשיו" — פותח את המדריך החינם */
+document.getElementById('skip').addEventListener('click', function(e){
+  e.preventDefault();
+  location.href = document.getElementById('guide-link').href;
+});
 </script>
 </body>
 </html>
