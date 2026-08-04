@@ -64,6 +64,7 @@ const webhook = require('../netlify/functions/grow-webhook');
 const guide = require('../netlify/functions/guide');
 const ai = require('../netlify/functions/ai');
 const cpay = require('../netlify/functions/create-payment');
+const lead = require('../netlify/functions/lead');
 process.env.ANTHROPIC_API_KEY = 'sk-ant-test';
 process.env.GROW_LINK_50 = 'https://pay.grow.link/L50';
 process.env.GROW_LINK_99 = 'https://pay.grow.link/L99';
@@ -278,6 +279,25 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.strictEqual(r50.url, 'https://pay.grow.link/L50');
     assert.strictEqual(r99.url, 'https://pay.grow.link/L99');
     assert.ok(r50.fallback && r99.fallback);
+  });
+
+  console.log('LEAD (Sheet + Ardit WhatsApp)');
+  await testAsync('lead -> writes Sheet row + emails Ardit with normalized phone', async () => {
+    reset();
+    const res = await lead.handler({ httpMethod: 'POST', body: JSON.stringify({ name: 'דנה', email: 'd@x.com', phone: '0501234567', event_type: 'שבת חתן' }) });
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(JSON.parse(res.body).ok);
+    assert.strictEqual(state.appended.length, 1);
+    assert.strictEqual(state.appended[0][2], 'דנה');       // name
+    assert.strictEqual(state.appended[0][4], '972501234567'); // normalized phone
+    assert.strictEqual(state.emails.length, 1);            // Ardit notified
+  });
+  await testAsync('lead empty -> ok:false, nothing written/sent', async () => {
+    reset();
+    const res = await lead.handler({ httpMethod: 'POST', body: '{}' });
+    assert.strictEqual(JSON.parse(res.body).ok, false);
+    assert.strictEqual(state.appended.length, 0);
+    assert.strictEqual(state.emails.length, 0);
   });
 
   console.log('MAILER reasons');

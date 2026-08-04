@@ -451,6 +451,25 @@ footer .links a:hover{color:var(--fuchsia)}
 </a>
 
 <script>
+/* On signup: also send the lead to our function (Google Sheets + Ardit's WhatsApp).
+   sendBeacon fires during navigation, so it doesn't block Netlify's native submit. */
+(function(){
+  var leadForm = document.querySelector('form[name="lead"]');
+  if (!leadForm) return;
+  leadForm.addEventListener('submit', function(){
+    try {
+      var fd = new FormData(leadForm);
+      var payload = JSON.stringify({
+        name: fd.get('name') || '', email: fd.get('email') || '',
+        phone: fd.get('phone') || '', event: fd.get('event_type') || ''
+      });
+      if (navigator.sendBeacon) navigator.sendBeacon('/lead', new Blob([payload], {type:'application/json'}));
+      else fetch('/lead', {method:'POST', headers:{'Content-Type':'application/json'}, body:payload, keepalive:true}).catch(function(){});
+    } catch(e){}
+    /* no preventDefault — Netlify Forms captures the native POST and redirects */
+  });
+})();
+
 /* CTA buttons → scroll to the on-page signup form (Netlify Forms, no Tally) */
 document.querySelectorAll('[data-cta]').forEach(b=>{
   b.addEventListener('click', e=>{
