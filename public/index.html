@@ -98,6 +98,30 @@ form{max-width:640px;margin:34px auto 0}
 footer{text-align:center;padding:30px 20px 90px;color:var(--muted);font-size:13.5px}
 footer b{font-family:'Frank Ruhl Libre',serif;color:var(--ink)}
 footer b span{color:var(--fuchsia)}
+
+/* hero CTA + intro/steps/why */
+.hero-cta{display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:800;font-size:16px;text-decoration:none;padding:13px 28px;border-radius:999px;backdrop-filter:blur(8px);transition:.2s}
+.hero-cta:hover{background:rgba(255,255,255,.24)}
+.intro-sec{max-width:720px;margin:0 auto;padding:52px 18px 8px;text-align:center}
+.kick{color:var(--fuchsia);font-weight:900;letter-spacing:2px;font-size:12px;text-transform:uppercase;margin-bottom:10px}
+.intro-sec h2{font-size:clamp(24px,6vw,36px);line-height:1.15;margin-bottom:12px}
+.intro-sec .lead{color:var(--muted);font-size:16.5px;max-width:580px;margin:0 auto 32px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+@media(max-width:640px){.steps{grid-template-columns:1fr}}
+.stp{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 18px;box-shadow:0 6px 22px rgba(123,45,139,.06);text-align:right}
+.stp .n{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;margin-bottom:10px}
+.stp b{font-family:'Frank Ruhl Libre',serif;font-size:17px;display:block;margin-bottom:4px}
+.stp p{color:var(--muted);font-size:14px}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+@media(max-width:640px){.why{grid-template-columns:1fr}}
+.why .w{background:var(--bg2);border-radius:14px;padding:16px;text-align:right}
+.why .w b{color:var(--purple-d);display:block;font-size:15px}
+.why .w span{color:var(--muted);font-size:13px}
+.start-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;font-weight:900;font-size:18px;text-decoration:none;padding:16px 34px;border-radius:14px;box-shadow:0 14px 34px rgba(255,0,144,.32);transition:transform .2s}
+.start-btn:hover{transform:translateY(-2px)}
+.form-lead{max-width:640px;margin:0 auto;text-align:center;padding:22px 18px 0;scroll-margin-top:12px}
+.form-lead h2{font-size:clamp(22px,5.5vw,30px);margin-bottom:8px}
+.form-lead p{color:var(--muted);font-size:15px;max-width:520px;margin:0 auto}
 </style>
 <!-- pwa -->
 <link rel="manifest" href="/manifest.webmanifest">
@@ -116,6 +140,7 @@ footer b span{color:var(--fuchsia)}
     <div class="script">שבת חתן חוגגים פעם בחיים</div>
     <h1>נמצא לכם את המתחם המושלם</h1>
     <p>כמה תשובות קצרות — ונחזור אליכם עם הצעות מדויקות, לא רשימות אקראיות.</p>
+    <a href="#start" class="hero-cta">בואו נתחיל ←</a>
   </div>
 </header>
 
@@ -127,6 +152,30 @@ footer b span{color:var(--fuchsia)}
       <p>לא מכירים אותנו עדיין? קבלו את המדריך — מה באמת עולה, מה שוכחים להזמין, ואיפה מפסידים כסף. נשלח אליכם בוואטסאפ יחד עם ההצעה.</p>
     </div>
   </div>
+</div>
+
+<!-- INTRO · המסר: איך זה עובד ולמה -->
+<section class="intro-sec">
+  <div class="kick">איך זה עובד</div>
+  <h2>אתם חולמים — אנחנו מוצאים ומתמקחים</h2>
+  <p class="lead">תכנון שבת חתן זה עשרות מתחמים, מאות פרטים והרבה מקום לטעות. במקום לרדוף אחרי הצעות — אתם עונים על כמה שאלות, ואנחנו חוזרים עם מתחמים שמתאימים בדיוק לכם, אחרי שבדקנו זמינות והתמקחנו על המחיר.</p>
+  <div class="steps">
+    <div class="stp"><div class="n">1</div><b>ממלאים אפיון קצר</b><p>כמה שאלות על הזוג, השבת והדרישות — בערך 3 דקות.</p></div>
+    <div class="stp"><div class="n">2</div><b>אנחנו עושים את העבודה</b><p>מאתרים מתחמים שמתאימים, בודקים זמינות, ומנהלים מו״מ על המחיר.</p></div>
+    <div class="stp"><div class="n">3</div><b>מקבלים הצעות מדויקות</b><p>חוזרים אליכם עד 5 ימי עסקים — הצעות אמיתיות, לא רשימות אקראיות.</p></div>
+  </div>
+  <div class="why">
+    <div class="w"><b>0 ₪ עמלה מכם</b><span>העמלה נגבית מהמתחם — המחיר שתקבלו הוא המחיר.</span></div>
+    <div class="w"><b>חוסכים לכם שעות</b><span>אנחנו מכירים את המתחמים והספקים, ומדברים בשמכם.</span></div>
+    <div class="w"><b>מדריך חינם</b><span>מה עולה, מה שוכחים, ואיפה מפסידים כסף — נשלח בוואטסאפ.</span></div>
+  </div>
+  <a href="#start" class="start-btn">בואו נתחיל — מילוי אפיון ←</a>
+</section>
+
+<div id="start"></div>
+<div class="form-lead">
+  <h2>ממלאים אפיון — ויוצאים לדרך</h2>
+  <p>ככל שתפרטו יותר, ההצעות שנחזור איתן יהיו מדויקות יותר. חובה רק שם וטלפון — השאר לפי מה שכבר ידוע לכם.</p>
 </div>
 
 <!-- Netlify Forms registration (also fires /lead + payment via JS) -->
