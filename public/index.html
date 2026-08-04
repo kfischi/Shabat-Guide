@@ -90,10 +90,11 @@ form{max-width:640px;margin:34px auto 0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border:none;font-family:'Assistant';font-weight:700;font-size:19px;color:#fff;padding:18px 28px;border-radius:14px;transition:transform .2s,box-shadow .2s;width:100%}
 .btn-pay{background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));box-shadow:0 14px 34px rgba(255,0,144,.35)}
 .btn-pay:hover{transform:translateY(-2px)}
-.btn-wa{background:var(--wa);box-shadow:0 12px 28px rgba(37,211,102,.3)}
-.btn-wa:hover{transform:translateY(-2px)}
 .btn:disabled{opacity:.6;cursor:default;transform:none}
 .err{color:#c01a72;font-size:13.5px;text-align:center;min-height:18px}
+.wa-help{text-align:center;color:var(--muted);font-size:14px;margin-top:2px}
+.wa-help a{color:var(--wa);font-weight:700;text-decoration:none;white-space:nowrap}
+.wa-help a:hover{text-decoration:underline}
 
 footer{text-align:center;padding:30px 20px 90px;color:var(--muted);font-size:13.5px}
 footer b{font-family:'Rubik',sans-serif;color:var(--ink)}
@@ -298,7 +299,7 @@ footer b span{color:var(--fuchsia)}
   <div class="cta-wrap">
     <div class="err" id="err"></div>
     <button type="button" class="btn btn-pay" id="pay">לתשלום דמי רצינות ושליחת הבקשה — 50 ₪ <span>←</span></button>
-    <button type="button" class="btn btn-wa" id="wa">או שליחה בוואטסאפ ←</button>
+    <p class="wa-help">יש שאלה לפני שמתחילים? <a href="https://wa.me/972523983394" id="wa">דברו איתנו בוואטסאפ ←</a></p>
   </div>
 </form>
 
@@ -366,11 +367,12 @@ document.getElementById('pay').addEventListener('click', async function(){
   btn.disabled=false; btn.innerHTML=orig; err.textContent='תקלה ביצירת התשלום. נסו שוב, או שלחו לנו בוואטסאפ.';
 });
 
-/* שליחה בוואטסאפ — הפרטים נפתחים בוואטסאפ של ערדית + נרשמים ב-Sheets */
-document.getElementById('wa').addEventListener('click', function(){
-  const data = validate(); if(!data) return;
-  sendLead(data);
-  location.href = 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(waText(data));
+/* וואטסאפ = ערוץ שאלות בלבד (לא חלופה לתשלום). פותח צ'אט עם הודעת פתיחה קצרה. */
+document.getElementById('wa').addEventListener('click', function(e){
+  e.preventDefault();
+  const name=(form.contact_name.value||'').trim();
+  const hi = 'שלום Multibrawn 🌸 ' + (name ? '('+name+') ' : '') + 'יש לי שאלה על שבת חתן לפני שאני ממלא/ת אפיון.';
+  location.href = 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(hi);
 });
 </script>
 </body>
