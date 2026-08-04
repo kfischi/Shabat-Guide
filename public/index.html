@@ -12,7 +12,7 @@
 <title>Multibrawn · אפיון שבת חתן</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#FBF8FF; --bg2:#F3ECFD; --card:#fff; --ink:#1A0B2E; --muted:#66557E; --line:#EBE2F7;
@@ -21,8 +21,8 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:'Frank Ruhl Libre',serif}
+body{font-family:'Assistant',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Rubik',sans-serif}
 a{color:inherit}
 .wrap{max-width:720px;margin:0 auto;padding:0 18px}
 
@@ -31,16 +31,16 @@ a{color:inherit}
   background:radial-gradient(900px 600px at 80% -10%,rgba(255,0,144,.5),transparent 60%),linear-gradient(160deg,#2a0d3f,#7b2d8b 55%,#1A0B2E)}
 .top::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.4;mix-blend-mode:overlay}
 .top-in{position:relative;z-index:2}
-.brand{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:22px;letter-spacing:.5px;margin-bottom:16px}
+.brand{font-family:'Rubik',sans-serif;font-weight:700;font-size:22px;letter-spacing:.5px;margin-bottom:16px}
 .brand span{color:var(--fuchsia)}
-.top h1{font-weight:900;font-size:clamp(30px,8vw,50px);line-height:1.06;margin-bottom:12px;text-shadow:0 6px 30px rgba(0,0,0,.4)}
-.top .script{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(22px,6vw,34px);color:#ffd9ef;margin-bottom:14px}
+.top h1{font-weight:700;font-size:clamp(30px,8vw,50px);line-height:1.08;margin-bottom:12px;text-shadow:0 6px 30px rgba(0,0,0,.4)}
+.top .script{font-family:'Rubik',sans-serif;font-weight:500;font-size:clamp(19px,5vw,28px);letter-spacing:.5px;color:#ffd9ef;margin-bottom:14px}
 .top p{font-size:clamp(15px,4vw,18px);color:rgba(255,255,255,.9);max-width:520px;margin:0 auto}
 
 /* free guide callout */
 .guide-note{max-width:640px;margin:-28px auto 0;position:relative;z-index:3;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:22px 22px;display:flex;gap:16px;align-items:flex-start}
 .guide-note .ico{flex:0 0 auto;width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:24px}
-.guide-note b{font-family:'Frank Ruhl Libre',serif;font-size:18px}
+.guide-note b{font-family:'Rubik',sans-serif;font-size:18px}
 .guide-note .free{color:var(--wa);font-weight:900}
 .guide-note p{color:var(--muted);font-size:14.5px;margin-top:4px}
 
@@ -48,8 +48,8 @@ a{color:inherit}
 form{max-width:640px;margin:34px auto 0}
 .section{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 6px 22px rgba(123,45,139,.06);padding:24px;margin-bottom:20px}
 .section > .head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
-.section .num{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px}
-.section h2{font-size:20px;font-weight:900}
+.section .num{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.section h2{font-size:20px;font-weight:700}
 .section .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px 46px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:520px){.grid{grid-template-columns:1fr}}
@@ -57,7 +57,7 @@ form{max-width:640px;margin:34px auto 0}
 .f.full{grid-column:1 / -1}
 .f label{font-weight:700;font-size:13.5px;margin-bottom:6px}
 .f label .opt{color:var(--muted);font-weight:400}
-.f input,.f select,.f textarea{font-family:'Heebo';font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;transition:.2s;width:100%}
+.f input,.f select,.f textarea{font-family:'Assistant';font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;transition:.2s;width:100%}
 .f textarea{min-height:70px;resize:vertical}
 .f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(160,107,255,.14)}
 .note{background:var(--bg2);border-radius:11px;padding:11px 14px;font-size:13px;color:#4a3a58;margin-top:4px}
@@ -65,19 +65,19 @@ form{max-width:640px;margin:34px auto 0}
 
 /* MultiGive box */
 .gift{margin-top:16px;border:1px dashed var(--gold);border-radius:14px;padding:16px;background:linear-gradient(160deg,#fff,#fffaf0)}
-.gift .gh{display:flex;align-items:center;gap:8px;font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:16px;color:#a9791a}
+.gift .gh{display:flex;align-items:center;gap:8px;font-family:'Rubik',sans-serif;font-weight:600;font-size:16px;color:#a9791a}
 .gift p{color:var(--muted);font-size:13px;margin:2px 0 12px}
 
 /* commitment */
 .commit{background:linear-gradient(160deg,#fff,var(--bg2));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:26px;margin-bottom:20px}
 .fee{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.fee .amt{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:40px;color:var(--fuchsia);line-height:1}
+.fee .amt{font-family:'Rubik',sans-serif;font-weight:800;font-size:40px;color:var(--fuchsia);line-height:1}
 .fee .amt small{font-size:20px}
 .fee .txt b{display:block;font-size:15px}
 .fee .txt span{color:var(--muted);font-size:13px}
 .fine{color:var(--muted);font-size:12.5px;line-height:1.7;border-top:1px solid var(--line);padding-top:14px;margin-top:6px}
 .terms{margin-top:14px}
-.terms .th{display:flex;align-items:center;gap:8px;font-weight:900;color:var(--purple-d);font-size:14px;margin-bottom:8px}
+.terms .th{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--purple-d);font-size:14px;margin-bottom:8px}
 .terms ul{list-style:none;padding:0;margin:0}
 .terms li{position:relative;padding-right:20px;font-size:13px;color:#4a3a58;margin-bottom:8px}
 .terms li::before{content:"•";position:absolute;right:0;color:var(--fuchsia);font-weight:900}
@@ -87,7 +87,7 @@ form{max-width:640px;margin:34px auto 0}
 
 /* CTAs */
 .cta-wrap{max-width:640px;margin:0 auto 20px;display:flex;flex-direction:column;gap:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border:none;font-family:'Heebo';font-weight:900;font-size:19px;color:#fff;padding:18px 28px;border-radius:14px;transition:transform .2s,box-shadow .2s;width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border:none;font-family:'Assistant';font-weight:700;font-size:19px;color:#fff;padding:18px 28px;border-radius:14px;transition:transform .2s,box-shadow .2s;width:100%}
 .btn-pay{background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));box-shadow:0 14px 34px rgba(255,0,144,.35)}
 .btn-pay:hover{transform:translateY(-2px)}
 .btn-wa{background:var(--wa);box-shadow:0 12px 28px rgba(37,211,102,.3)}
@@ -96,28 +96,28 @@ form{max-width:640px;margin:34px auto 0}
 .err{color:#c01a72;font-size:13.5px;text-align:center;min-height:18px}
 
 footer{text-align:center;padding:30px 20px 90px;color:var(--muted);font-size:13.5px}
-footer b{font-family:'Frank Ruhl Libre',serif;color:var(--ink)}
+footer b{font-family:'Rubik',sans-serif;color:var(--ink)}
 footer b span{color:var(--fuchsia)}
 
 /* hero CTA + intro/steps/why */
 .hero-cta{display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:800;font-size:16px;text-decoration:none;padding:13px 28px;border-radius:999px;backdrop-filter:blur(8px);transition:.2s}
 .hero-cta:hover{background:rgba(255,255,255,.24)}
 .intro-sec{max-width:720px;margin:0 auto;padding:52px 18px 8px;text-align:center}
-.kick{color:var(--fuchsia);font-weight:900;letter-spacing:2px;font-size:12px;text-transform:uppercase;margin-bottom:10px}
+.kick{color:var(--fuchsia);font-weight:700;letter-spacing:2px;font-size:12px;text-transform:uppercase;margin-bottom:10px}
 .intro-sec h2{font-size:clamp(24px,6vw,36px);line-height:1.15;margin-bottom:12px}
 .intro-sec .lead{color:var(--muted);font-size:16.5px;max-width:580px;margin:0 auto 32px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
 @media(max-width:640px){.steps{grid-template-columns:1fr}}
 .stp{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 18px;box-shadow:0 6px 22px rgba(123,45,139,.06);text-align:right}
-.stp .n{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;margin-bottom:10px}
-.stp b{font-family:'Frank Ruhl Libre',serif;font-size:17px;display:block;margin-bottom:4px}
+.stp .n{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px}
+.stp b{font-family:'Rubik',sans-serif;font-size:17px;display:block;margin-bottom:4px}
 .stp p{color:var(--muted);font-size:14px}
 .why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
 @media(max-width:640px){.why{grid-template-columns:1fr}}
 .why .w{background:var(--bg2);border-radius:14px;padding:16px;text-align:right}
 .why .w b{color:var(--purple-d);display:block;font-size:15px}
 .why .w span{color:var(--muted);font-size:13px}
-.start-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;font-weight:900;font-size:18px;text-decoration:none;padding:16px 34px;border-radius:14px;box-shadow:0 14px 34px rgba(255,0,144,.32);transition:transform .2s}
+.start-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;font-weight:700;font-size:18px;text-decoration:none;padding:16px 34px;border-radius:14px;box-shadow:0 14px 34px rgba(255,0,144,.32);transition:transform .2s}
 .start-btn:hover{transform:translateY(-2px)}
 .form-lead{max-width:640px;margin:0 auto;text-align:center;padding:22px 18px 0;scroll-margin-top:12px}
 .form-lead h2{font-size:clamp(22px,5.5vw,30px);margin-bottom:8px}
