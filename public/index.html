@@ -335,6 +335,8 @@ function validate(){
   return collect();
 }
 function sendLead(data){
+  // 0) שמירת פרטי הקונה למכשיר — כדי שגם תשלום הפרימיום (בדף התודה) יוכל להעביר שם+טלפון ל-GROW
+  try{ localStorage.setItem('mb_buyer', JSON.stringify({ name:data.contact_name||'', phone:data.phone||'', email:data.email||'' })); }catch(e){}
   // 1) הפונקציה שלנו — Google Sheets + מייל/וואטסאפ לערדית (פועל עם משתני הסביבה)
   try{
     const payload = JSON.stringify(Object.assign({ source:'intake' }, data));

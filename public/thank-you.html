@@ -114,8 +114,9 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 document.getElementById('upgrade').addEventListener('click', async function(){
   var btn=this, orig=btn.innerHTML, err=document.getElementById('u-err');
   btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
+  var buyer={}; try{ buyer=JSON.parse(localStorage.getItem('mb_buyer')||'{}'); }catch(e){}
   try{
-    var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:99,product:'premium'})});
+    var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:99,product:'premium',name:buyer.name||'',phone:buyer.phone||'',email:buyer.email||''})});
     var d = await r.json();
     if(d && d.url){ location.href=d.url; return; }
   }catch(e){}

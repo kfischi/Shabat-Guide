@@ -273,9 +273,10 @@ const PREMIUM_PRICE = 99;
 /* יצירת עסקת GROW דרך Make (create-payment) ומעבר לתשלום */
 async function buyPremium(btn){
   var orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'רגע, יוצרים תשלום…';
+  var buyer={}; try{ buyer=JSON.parse(localStorage.getItem('mb_buyer')||'{}'); }catch(e){}
   try{
     var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({amount:PREMIUM_PRICE, product:'premium'})});
+      body:JSON.stringify({amount:PREMIUM_PRICE, product:'premium', name:buyer.name||'', phone:buyer.phone||'', email:buyer.email||''})});
     var d = await r.json();
     if(d && d.url){ location.href = d.url; return; }
   }catch(e){}
