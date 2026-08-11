@@ -49,7 +49,9 @@
 | `SHEET_ID` | מזהה הגיליון (מה-URL: `/spreadsheets/d/<ID>/edit`) |
 | `ANTHROPIC_API_KEY` | מפתח Anthropic — מפעיל את **היועץ החכם (AI)** במדריך הפרימיום. בלעדיו היועץ פשוט לא זמין (הכלים האחרים עובדים). מקבלים ב-[console.anthropic.com](https://console.anthropic.com) |
 | `ANTHROPIC_MODEL` | אופציונלי — ברירת מחדל `claude-opus-5`. אפשר לשנות למודל חסכוני יותר (למשל `claude-haiku-4-5`) כדי להוזיל עלות לכל שאלה |
-| `MAKE_PAYMENT_WEBHOOK` | ה-webhook של **Make** שיוצר עסקת GROW (GROW חינמי דרך Make). בלעדיו — נופלים ללינק GROW קבוע כדי שהמכירה לא תיתקע |
+| `GROW_USER_ID` / `GROW_PAGE_CODE` / `GROW_API_KEY` | **המסלול המומלץ** — חיבור ישיר ל-GROW Light API (`createPaymentProcess`). מעתיקים מהגדרות ה-API ב-GROW. עם אלה, האתר יוצר עסקאות 50/99 ₪ לבד (מחיר דינמי, שם+טלפון מוזנים), בלי Make ובלי לינקים קבועים |
+| `GROW_MODE` | אופציונלי — `sandbox` לעבודה מול סביבת הבדיקות של GROW. ברירת מחדל: production |
+| `MAKE_PAYMENT_WEBHOOK` | חלופה ל-API הישיר — webhook של **Make** שיוצר עסקת GROW. בלעדיו (ובלי GROW API) — נופלים ללינק GROW קבוע כדי שהמכירה לא תיתקע |
 | `SITE_URL` | אופציונלי — כתובת האתר (ברירת מחדל `https://guide.multibrawn.co.il`). משמשת לבניית `successUrl`/`cancelUrl` |
 | `GROW_FALLBACK_LINK` | אופציונלי — לינק GROW קבוע לגיבוי אם Make לא זמין |
 | `GROW_LINK_50` / `GROW_LINK_99` | **המסלול הפשוט** — לינק GROW קבוע לכל מדרגה (50/99). ראו `GO-LIVE.md` |

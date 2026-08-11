@@ -39,6 +39,11 @@ global.fetch = async (url, opts) => {
     if (state.makeFail) return textRes(500, 'err');
     return jsonRes({ url: 'https://pay.grow.link/DYNAMIC-123' });
   }
+  if (url.includes('meshulam.co.il')) {
+    state.growReq = { url, body: opts && opts.body, ctype: opts && opts.headers && opts.headers['Content-Type'] };
+    if (state.growFail) return jsonRes({ status: 0, err: { message: 'invalid' } });
+    return jsonRes({ status: 1, data: { url: 'https://meshulam.co.il/pay/PROC-777', processToken: 'tok' } });
+  }
   if (url.includes('api.anthropic.com')) {
     if (state.anthropicFail) return textRes(500, 'overloaded');
     state.anthropicCalls = (state.anthropicCalls || 0) + 1;
@@ -279,6 +284,29 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.strictEqual(r50.url, 'https://pay.grow.link/L50');
     assert.strictEqual(r99.url, 'https://pay.grow.link/L99');
     assert.ok(r50.fallback && r99.fallback);
+  });
+  await testAsync('GROW API configured -> uses createPaymentProcess (multipart) and returns data.url', async () => {
+    process.env.GROW_USER_ID = 'u123';
+    process.env.GROW_PAGE_CODE = 'pc456';
+    process.env.GROW_API_KEY = 'key789';
+    process.env.MAKE_PAYMENT_WEBHOOK = 'https://hook.make.test/abc'; // גם עם Make — ה-API מנצח
+    state.growReq = null;
+    const res = await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 50, name: 'דנה כהן', phone: '0501234567', email: 'd@x.com' }) });
+    const b = JSON.parse(res.body);
+    assert.strictEqual(b.url, 'https://meshulam.co.il/pay/PROC-777');
+    assert.ok(!b.fallback);
+    assert.ok(/multipart\/form-data/.test(state.growReq.ctype), 'content-type multipart');
+    assert.ok(state.growReq.body.includes('pc456') && state.growReq.body.includes('u123') && state.growReq.body.includes('0501234567'));
+    delete process.env.MAKE_PAYMENT_WEBHOOK;
+  });
+  await testAsync('GROW API error -> falls back to fixed link (sale never stuck)', async () => {
+    state.growFail = true;
+    const res = await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 50, name: 'דנה', phone: '0501234567' }) });
+    const b = JSON.parse(res.body);
+    assert.strictEqual(b.url, 'https://pay.grow.link/L50');
+    assert.ok(b.fallback);
+    state.growFail = false;
+    delete process.env.GROW_USER_ID; delete process.env.GROW_PAGE_CODE; delete process.env.GROW_API_KEY;
   });
 
   console.log('LEAD (Sheet + Ardit WhatsApp)');

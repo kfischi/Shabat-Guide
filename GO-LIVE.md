@@ -19,30 +19,46 @@
 
 ---
 
-## ✅ הצעדים (מסלול פשוט — 0 שירותים חיצוניים)
+## ✅ הצעדים
 
-### 1. GROW — לינק תשלום אחד ל-50 ₪
+יש **שתי דרכים** לחבר את התשלום. הדרך המומלצת היא ה-API (מחיר דינמי, שם+טלפון מוזנים אוטומטית, בלי לינקים נפרדים). מתחת יש גם דרך "לינק קבוע" למי שרוצה את הפשוט ביותר.
+
+### דרך א׳ (מומלצת) — חיבור API אוטומטי
+בחשבון GROW → **הגדרות → API / Light API** (או "מפתחות API"). משם מעתיקים **3 ערכים**:
+- **userId** — מזהה העסק
+- **pageCode** — קוד עמוד ה-API
+- **apiKey** — מפתח ה-API
+
+Netlify → הפרויקט `shabat-guide` → Site configuration → **Environment variables** → הוסיפו:
+| שם | ערך |
+|---|---|
+| `GROW_USER_ID` | ה-userId |
+| `GROW_PAGE_CODE` | ה-pageCode |
+| `GROW_API_KEY` | ה-apiKey |
+| `SITE_URL` | `https://guide.multibrawn.co.il` (או `https://shabat-guide.netlify.app` עד שהדומיין מחובר) |
+
+זהו — האתר יוצר עסקאות 50 ₪ ו-99 ₪ לבד, מזין שם+טלפון, ומגדיר את כתובת החזרה לדף התודה אוטומטית.
+> לבדיקות: אפשר להוסיף `GROW_MODE=sandbox` כדי לעבוד מול סביבת הבדיקות של GROW, ואז להסיר.
+
+### דרך ב׳ (פשוטה) — לינק תשלום קבוע
 בחשבון GROW צרו **עמוד/קישור תשלום** (Static Payment Page):
-- סכום: **50 ₪**
-- כותרת: **דמי רצינות — שבת חתן**
-- בהגדרות → **הפניה אחרי תשלום מוצלח (Success URL)** → `https://guide.multibrawn.co.il/thank-you.html?amount=50`
-  > אם GROW לא נותן להוסיף כתובת חזרה עם פרמטרים — פשוט `https://guide.multibrawn.co.il/thank-you.html`. המדריך החינם ייפתח בכל מקרה.
+- סכום: **50 ₪** · כותרת: **דמי רצינות — שבת חתן**
+- **הפניה אחרי תשלום מוצלח (Success URL)** → `https://guide.multibrawn.co.il/thank-you.html?amount=50`
+  > אם GROW לא מאפשר פרמטרים — פשוט `…/thank-you.html`. המדריך החינם ייפתח בכל מקרה.
 
-העתיקו את הלינק.
-
-### 2. Netlify — משתנה סביבה אחד
-Netlify → הפרויקט `shabat-guide` → Site settings → **Environment variables** → הוסיפו:
+Netlify → **Environment variables** → הוסיפו:
 | שם | ערך |
 |---|---|
 | `GROW_LINK_50` | הלינק שהעתקת מ-GROW |
 
-### 3. Netlify — התראה על כל ליד
+> אפשר להגדיר את שתי הדרכים יחד — ה-API מנצח, והלינק הקבוע נשאר כרשת ביטחון אם ה-API נכשל.
+
+### התראה על כל ליד
 Netlify → **Forms → Notifications → Add notification → Email** → `multibrawn@gmail.com`.
 כך ערדית מקבלת מייל על כל מי שמילא אפיון (עם הטלפון — ללחיצת וואטסאפ), גם לפני שסיים לשלם.
 
-### 4. הדומיין + פרסום
-- מזגו את **PR #3** ל-`main` (אני יכול לעשות זאת בשבילך).
-- ודאו שהדומיין `guide.multibrawn.co.il` מפנה ל-**פרויקט `shabat-guide`** ב-Netlify (כרגע הוא עדיין על האתר הישן). עד שזה יקרה — אפשר לבדוק הכול בכתובת `https://shabat-guide.netlify.app`.
+### הדומיין
+ודאו שהדומיין `guide.multibrawn.co.il` מפנה ל-**פרויקט `shabat-guide`** ב-Netlify (כרגע הוא עדיין על האתר הישן). עד שזה יקרה — אפשר לבדוק הכול בכתובת `https://shabat-guide.netlify.app` (ואז להגדיר `SITE_URL` לאותה כתובת).
 
 ---
 
