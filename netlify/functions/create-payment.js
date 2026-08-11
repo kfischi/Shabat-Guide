@@ -14,10 +14,10 @@ function site() {
 
 // המסלול הפשוט (בלי API/Make): לינק GROW קבוע לפי הסכום. נקרא בזמן ריצה כדי לכבד env.
 function fixedLinkFor(amount) {
-  const fallback = process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA';
-  const l50 = process.env.GROW_LINK_50 || fallback; // מדרגת כניסה
-  const l99 = process.env.GROW_LINK_99 || fallback; // מדרגת פרימיום
-  return amount >= 99 ? l99 : l50;
+  // לינקי GROW קבועים (עמודי סליקה ציבוריים — לא סוד). ניתן לעקוף עם משתני סביבה.
+  const L50 = process.env.GROW_LINK_50 || process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/MTAxNDc1~6e3a5a0ac617763f08f9ba396aa13e42-MzgyODM2Mw'; // דמי רצינות 50₪
+  const L99 = process.env.GROW_LINK_99 || 'https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA'; // מדריך פרימיום 99₪
+  return amount >= 99 ? L99 : L50;
 }
 
 function json(statusCode, obj) {

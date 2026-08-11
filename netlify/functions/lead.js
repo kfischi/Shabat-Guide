@@ -50,7 +50,7 @@ exports.handler = async (event) => {
   }
 
   // 2) מייל לערדית עם כל הפרטים + כפתור וואטסאפ מוכן
-  const GROW = process.env.GROW_LINK_50 || process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA';
+  const GROW = process.env.GROW_LINK_50 || process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/MTAxNDc1~6e3a5a0ac617763f08f9ba396aa13e42-MzgyODM2Mw';
   const waMsg = `שלום ${name || ''}, מדברים מ-Multibrawn 🌸\nקיבלנו את בקשת האפיון שלך לשבת חתן ונחזור עם הצעות. לפתיחת התהליך (דמי רצינות 50₪, מקוזזים מהעסקה):\n${GROW}`;
   const waUrl = norm ? `https://wa.me/${norm}?text=${encodeURIComponent(waMsg)}` : '';
   const waBtn = waUrl
