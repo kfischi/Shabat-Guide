@@ -8,7 +8,8 @@ const { normalizePhone } = require('./lib/phone');
 const { sendEmail, hebrewReason } = require('./lib/mailer');
 const sheets = require('./lib/sheets');
 
-const SITE = 'https://guide.multibrawn.co.il';
+// כתובת האתר לבניית קישורים אישיים. env קודם (כשמחברים דומיין), אחרת ברירת מחדל שעובדת עכשיו.
+const SITE = (process.env.SITE_URL || 'https://shabat-guide.netlify.app').replace(/\/+$/, '');
 
 // מיפוי שדות מה-payload של GROW. מבנה ה-payload אינו ידוע בוודאות —
 // בריצה הראשונה ה-payload הגולמי נרשם ללוג (ראו §5.1) כדי להתאים את הרשימות.
