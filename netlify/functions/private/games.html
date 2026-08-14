@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#FF0090">
+<meta name="theme-color" content="#D946EF">
 <meta name="description" content="7 משחקי חיבור לשבת — פעילויות שמחממות את האווירה בין שתי משפחות. מתנה מ-Multi Brawn.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
 <meta name="robots" content="noindex">
@@ -11,20 +11,20 @@
 <!-- מוגש רק דרך netlify/functions/guide.js אחרי אימות. אין שער בצד לקוח. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;800&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--fuchsia:#FF0090;--purple:#7b2d8b;--ink:#1a0020;--muted:#7a6880;--line:#f0e6f0;--shadow:0 10px 40px rgba(123,45,139,.12);--shadow-lg:0 24px 70px rgba(123,45,139,.2)}
+:root{--fuchsia:#D946EF;--purple:#7C3AED;--ink:#2C1A3D;--muted:#715B85;--line:#D7B8E6;--shadow:0 10px 40px rgba(123,45,139,.12);--shadow-lg:0 24px 70px rgba(123,45,139,.2)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{font-family:'Assistant',sans-serif;background:#fff;color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Heebo',sans-serif;background:#fff;color:var(--ink);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 .hero{position:relative;text-align:center;color:#fff;padding:80px 22px 70px;overflow:hidden;
-  background:radial-gradient(900px 600px at 80% -10%,rgba(255,0,144,.55),transparent 60%),linear-gradient(160deg,#2a0833,#7b2d8b 50%,#1a0020)}
+  background:radial-gradient(900px 600px at 80% -10%,rgba(255,0,144,.55),transparent 60%),linear-gradient(160deg,#2a0833,#7C3AED 50%,#2C1A3D)}
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.4;mix-blend-mode:overlay}
 .hero-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
 .gift{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 16px;border-radius:999px;font-weight:800;font-size:13px;margin-bottom:22px}
-.tagline{font-family:'Rubik',sans-serif;font-weight:700;font-size:clamp(24px,6vw,38px);color:#ffd9ef;margin-bottom:8px}
-.hero h1{font-family:'Rubik',sans-serif;font-weight:800;font-size:clamp(34px,9vw,60px);line-height:1.05;margin-bottom:14px}
+.tagline{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:clamp(24px,6vw,38px);color:#ffd9ef;margin-bottom:8px}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:clamp(34px,9vw,60px);line-height:1.05;margin-bottom:14px}
 .hero h1 .glow{color:var(--fuchsia)}
 .hero p{font-size:clamp(16px,4.4vw,20px);color:rgba(255,255,255,.9)}
 .back{display:inline-block;margin-top:24px;color:#ffd9ef;font-weight:700;font-size:15px;border-bottom:1px solid rgba(255,217,239,.4)}
@@ -35,18 +35,18 @@ main{max-width:860px;margin:0 auto;padding:60px 22px 40px}
 .game .b{flex:1;min-width:0}
 .game .meta{display:inline-flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .game .meta span{background:#fff0f7;color:var(--fuchsia);font-weight:700;font-size:12px;padding:3px 10px;border-radius:999px}
-.game h3{font-family:'Rubik',sans-serif;font-weight:700;font-size:21px;margin-bottom:7px}
+.game h3{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:21px;margin-bottom:7px}
 .game p{color:#3a2a40;font-size:15.5px}
 .game .how{color:var(--muted);font-size:14.5px;margin-top:8px}
 .foot-cta{max-width:860px;margin:10px auto 0;padding:0 22px}
 .foot-cta a{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
 .foot-cta a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
 .foot-cta .ico{flex:0 0 auto;width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:26px}
-.foot-cta .t b{font-family:'Rubik',sans-serif;font-weight:800;font-size:19px;display:block}
+.foot-cta .t b{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:19px;display:block}
 .foot-cta .t span{color:var(--muted);font-size:14px}
 .foot-cta .ar{margin-right:auto;color:var(--fuchsia);font-size:26px;font-weight:800}
 footer{text-align:center;padding:50px 22px 110px;color:var(--muted);font-size:14px}
-footer .logo{font-family:'Rubik',sans-serif;font-weight:800;font-size:22px;color:var(--ink);margin-bottom:6px}
+footer .logo{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:22px;color:var(--ink);margin-bottom:6px}
 footer .logo span{color:var(--fuchsia)}
 .wa{position:fixed;bottom:22px;right:18px;z-index:1002;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(37,211,102,.45)}
 .wa svg{width:32px;height:32px;fill:#fff}
