@@ -9,7 +9,7 @@
 // ============================================================
 
 function site() {
-  return (process.env.SITE_URL || 'https://guide.multibrawn.co.il').replace(/\/+$/, '');
+  return (process.env.SITE_URL || 'https://shabat-guide.netlify.app').replace(/\/+$/, '');
 }
 
 // המסלול הפשוט (בלי API/Make): לינק GROW קבוע לפי הסכום. נקרא בזמן ריצה כדי לכבד env.
