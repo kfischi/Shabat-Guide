@@ -358,6 +358,8 @@ function waText(data){
 
 /* תשלום דמי רצינות 50₪ (דרך create-payment) + שליחת הפרטים ל-Sheets/וואטסאפ של ערדית */
 document.getElementById('pay').addEventListener('click', async function(){
+  // מצב טסט (?test=1) — מדלג על התשלום ועובר ישר לדף התודה כדי לראות את כל המשפך
+  if(new URLSearchParams(location.search).has('test')){ location.href='/thank-you.html?amount=50&test=1'; return; }
   const data = validate(); if(!data) return;
   const btn=this, orig=btn.innerHTML; btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
   sendLead(data);
@@ -377,5 +379,6 @@ document.getElementById('wa').addEventListener('click', function(e){
   location.href = 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(hi);
 });
 </script>
+<script>if(new URLSearchParams(location.search).has('test')){var b=document.createElement('div');b.textContent='🧪 מצב טסט — ללא תשלום';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#E7B34A;color:#1A0B2E;text-align:center;font-family:sans-serif;font-weight:800;font-size:13px;padding:6px 10px';document.body.appendChild(b);}</script>
 </body>
 </html>
