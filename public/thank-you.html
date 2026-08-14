@@ -117,6 +117,15 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 
   var link = document.getElementById('guide-link');
   link.href = '/guide?id=' + encodeURIComponent(id) + (token ? '&t=' + encodeURIComponent(token) : '') + pageParam;
+
+  // דף התודה מודע לפרימיום: אחרי 99 פותחים את מדריך הפרימיום ומסתירים את הצעת השדרוג
+  if (premium) {
+    document.querySelector('h1').textContent = 'תודה! מדריך הפרימיום מוכן';
+    document.querySelector('.lead').innerHTML = 'קיבלנו את התשלום — <b>מדריך הפרימיום שלכם מוכן, עם כל הכלים האינטראקטיביים.</b>';
+    link.textContent = 'פתיחת מדריך הפרימיום ←';
+    var up = document.querySelector('.upsell'); if (up) up.style.display = 'none';
+    var dv = document.querySelector('.divider'); if (dv) dv.style.display = 'none';
+  }
 })();
 
 /* שדרוג לפרימיום — מפעיל תשלום 99₪ (דרך create-payment) ומחזיר ישר לפרימיום */
