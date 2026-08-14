@@ -40,6 +40,15 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 .u-fine{color:rgba(255,255,255,.6);font-size:12.5px;margin-top:12px}
 .skip{display:block;margin-top:16px;color:var(--muted);font-size:13.5px;text-decoration:none}
 .skip:hover{text-decoration:underline}
+/* app-grade polish */
+.card{animation:tyrise .6s cubic-bezier(.2,.8,.2,1) both}
+.upsell{animation:tyrise .6s .12s cubic-bezier(.2,.8,.2,1) both}
+@keyframes tyrise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.badge{animation:pop .5s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.btn,.u-btn{transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
+.btn:active,.u-btn:active{transform:scale(.97)}
+@media(prefers-reduced-motion:reduce){.card,.upsell,.badge{animation:none}}
 </style>
 <!-- pwa -->
 <link rel="manifest" href="/manifest.webmanifest">
