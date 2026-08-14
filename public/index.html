@@ -2,163 +2,123 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#FF0090">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7C3AED">
 <meta name="description" content="Multibrawn — איתור מתחמי אירוח לשבת חתן. כמה תשובות קצרות, ונחזור עם הצעות מדויקות. מדריך שבת חתן חינם.">
 <meta property="og:title" content="Multibrawn · שבת חתן">
 <meta property="og:description" content="שבת חתן חוגגים פעם בחיים. כמה תשובות — ונחזור עם הצעות מדויקות.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='84'>🌸</text></svg>">
-<title>Multibrawn · אפיון שבת חתן</title>
+<title>שאלון שבת חתן · Multibrawn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;800&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FBF8FF; --bg2:#F3ECFD; --card:#fff; --ink:#1A0B2E; --muted:#66557E; --line:#EBE2F7;
-  --purple:#A06BFF; --purple-d:#7b2d8b; --fuchsia:#FF0090; --gold:#E7B34A; --wa:#25D366;
-  --shadow:0 12px 40px rgba(123,45,139,.10); --shadow-lg:0 24px 60px rgba(123,45,139,.16);
+  --bg:#E9D6F2;          /* fuchsia-lavender, mid tone */
+  --card:#F6EAFA;        /* soft fuchsia-tinted card */
+  --field:#EFE0F6;
+  --ink:#2C1A3D;
+  --muted:#715B85;
+  --line:#D7B8E6;
+  --purple:#7C3AED;
+  --fuchsia:#D946EF;
+  --turq:#40E0D0;
+  --wa:#25D366;
+  --tint:#E3C9F0;
+  --grad:linear-gradient(90deg,#7C3AED 0%,#D946EF 55%,#40E0D0 100%);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{font-family:'Assistant',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:'Rubik',sans-serif}
-a{color:inherit}
-.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+body{background:var(--bg);color:var(--ink);font-family:'Heebo',sans-serif;font-size:17px;line-height:1.6;padding:0 0 160px}
+.sheet{max-width:720px;margin:0 auto;padding:0 20px}
 
-/* header */
-.top{position:relative;text-align:center;color:#fff;padding:64px 20px 54px;overflow:hidden;
-  background:radial-gradient(900px 600px at 80% -10%,rgba(255,0,144,.5),transparent 60%),linear-gradient(160deg,#2a0d3f,#7b2d8b 55%,#1A0B2E)}
-.top::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;opacity:.4;mix-blend-mode:overlay}
-.top-in{position:relative;z-index:2}
-.brand{font-family:'Rubik',sans-serif;font-weight:700;font-size:22px;letter-spacing:.5px;margin-bottom:16px}
-.brand span{color:var(--fuchsia)}
-.top h1{font-weight:700;font-size:clamp(30px,8vw,50px);line-height:1.08;margin-bottom:12px;text-shadow:0 6px 30px rgba(0,0,0,.4)}
-.top .script{font-family:'Rubik',sans-serif;font-weight:500;font-size:clamp(19px,5vw,28px);letter-spacing:.5px;color:#ffd9ef;margin-bottom:14px}
-.top p{font-size:clamp(15px,4vw,18px);color:rgba(255,255,255,.9);max-width:520px;margin:0 auto}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:34px 0 30px;margin-bottom:16px}
+.bar{height:5px;background:var(--grad);border-radius:5px;width:58px;margin-bottom:20px}
+.mark{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:22px}
+.mark em{font-style:normal;color:var(--fuchsia)}
+h1{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:37px;line-height:1.25;margin-top:14px}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--muted);margin-top:12px;font-weight:300}
+.lede b{color:var(--ink);font-weight:600}
 
-/* free guide callout */
-.guide-note{max-width:640px;margin:-28px auto 0;position:relative;z-index:3;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:22px 22px;display:flex;gap:16px;align-items:flex-start}
-.guide-note .ico{flex:0 0 auto;width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));display:flex;align-items:center;justify-content:center;font-size:24px}
-.guide-note b{font-family:'Rubik',sans-serif;font-size:18px}
-.guide-note .free{color:var(--wa);font-weight:900}
-.guide-note p{color:var(--muted);font-size:14.5px;margin-top:4px}
+/* free guide */
+.guide{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;
+  margin-bottom:16px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 2px 12px rgba(90,40,120,.06)}
+.guide .ic{width:42px;height:42px;border-radius:12px;background:var(--grad);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:20px}
+.guide .t{font-weight:700;font-size:18px}
+.guide .t .free{background:var(--grad);color:#fff;font-size:12px;font-weight:700;
+  border-radius:999px;padding:3px 9px;margin-inline-start:7px;vertical-align:middle}
+.guide p{color:var(--muted);font-size:15px;font-weight:300;margin-top:5px;line-height:1.6}
 
-/* form */
-form{max-width:640px;margin:34px auto 0}
-.section{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 6px 22px rgba(123,45,139,.06);padding:24px;margin-bottom:20px}
-.section > .head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
-.section .num{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
-.section h2{font-size:20px;font-weight:700}
-.section .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px 46px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:520px){.grid{grid-template-columns:1fr}}
-.f{display:flex;flex-direction:column}
-.f.full{grid-column:1 / -1}
-.f label{font-weight:700;font-size:13.5px;margin-bottom:6px}
-.f label .opt{color:var(--muted);font-weight:400}
-.f input,.f select,.f textarea{font-family:'Assistant';font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;transition:.2s;width:100%}
-.f textarea{min-height:70px;resize:vertical}
-.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(160,107,255,.14)}
-.note{background:var(--bg2);border-radius:11px;padding:11px 14px;font-size:13px;color:#4a3a58;margin-top:4px}
-.note b{color:var(--purple-d)}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px;
+  margin-bottom:16px;box-shadow:0 2px 12px rgba(90,40,120,.06)}
+.sec-h{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.sec-h .n{width:29px;height:29px;border-radius:9px;background:var(--tint);color:var(--purple);
+  font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex:none}
+.sec-h .t{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:22px}
+.sec-sub{color:var(--muted);font-size:14.5px;font-weight:300;margin-bottom:18px;padding-inline-start:40px}
 
-/* MultiGive box */
-.gift{margin-top:16px;border:1px dashed var(--gold);border-radius:14px;padding:16px;background:linear-gradient(160deg,#fff,#fffaf0)}
-.gift .gh{display:flex;align-items:center;gap:8px;font-family:'Rubik',sans-serif;font-weight:600;font-size:16px;color:#a9791a}
-.gift p{color:var(--muted);font-size:13px;margin:2px 0 12px}
+.f{margin-bottom:18px}
+.f:last-child{margin-bottom:0}
+label{display:block;font-weight:600;font-size:16px;margin-bottom:7px}
+.hint{display:block;font-weight:300;font-size:14px;color:var(--muted);margin-top:2px}
+input[type=text],input[type=tel],input[type=email],input[type=number],select,textarea{
+  width:100%;background:var(--field);border:1px solid var(--line);border-radius:11px;
+  padding:13px 14px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--fuchsia);background:#FCF6FE;
+  box-shadow:0 0 0 3px rgba(217,70,239,.14)}
+textarea{min-height:86px;resize:vertical}
+.row{display:flex;gap:10px}.row>*{flex:1}
 
-/* commitment */
-.commit{background:linear-gradient(160deg,#fff,var(--bg2));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:26px;margin-bottom:20px}
-.fee{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.fee .amt{font-family:'Rubik',sans-serif;font-weight:800;font-size:40px;color:var(--fuchsia);line-height:1}
-.fee .amt small{font-size:20px}
-.fee .txt b{display:block;font-size:15px}
-.fee .txt span{color:var(--muted);font-size:13px}
-.fine{color:var(--muted);font-size:12.5px;line-height:1.7;border-top:1px solid var(--line);padding-top:14px;margin-top:6px}
-.terms{margin-top:14px}
-.terms .th{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--purple-d);font-size:14px;margin-bottom:8px}
-.terms ul{list-style:none;padding:0;margin:0}
-.terms li{position:relative;padding-right:20px;font-size:13px;color:#4a3a58;margin-bottom:8px}
-.terms li::before{content:"•";position:absolute;right:0;color:var(--fuchsia);font-weight:900}
-.agree{display:flex;gap:10px;align-items:flex-start;margin-top:18px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px}
-.agree input{margin-top:3px;width:20px;height:20px;accent-color:var(--fuchsia);flex:0 0 auto}
-.agree label{font-size:14px;font-weight:500;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:block;border:1px solid var(--line);background:var(--field);border-radius:999px;
+  padding:10px 16px;font-size:15px;font-weight:500;cursor:pointer;user-select:none;transition:transform .12s,background .15s,border-color .15s}
+.chip span:active{transform:scale(.95)}
+.chip input:checked + span{background:var(--fuchsia);border-color:var(--fuchsia);color:#fff}
+.chip.p input:checked + span{background:var(--purple);border-color:var(--purple)}
 
-/* CTAs */
-.cta-wrap{max-width:640px;margin:0 auto 20px;display:flex;flex-direction:column;gap:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border:none;font-family:'Assistant';font-weight:700;font-size:19px;color:#fff;padding:18px 28px;border-radius:14px;transition:transform .2s,box-shadow .2s;width:100%}
-.btn-pay{background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));box-shadow:0 14px 34px rgba(255,0,144,.35)}
-.btn-pay:hover{transform:translateY(-2px)}
-.btn:disabled{opacity:.6;cursor:default;transform:none}
-.err{color:#c01a72;font-size:13.5px;text-align:center;min-height:18px}
-.wa-help{text-align:center;color:var(--muted);font-size:14px;margin-top:2px}
-.wa-help a{color:var(--wa);font-weight:700;text-decoration:none;white-space:nowrap}
-.wa-help a:hover{text-decoration:underline}
+.note{background:var(--tint);border-radius:11px;padding:12px 14px;font-size:14.5px;
+  color:#4A2E5E;font-weight:400;margin-top:10px;line-height:1.55}
+.note b{font-weight:700}
 
-footer{text-align:center;padding:30px 20px 90px;color:var(--muted);font-size:13.5px}
-footer b{font-family:'Rubik',sans-serif;color:var(--ink)}
-footer b span{color:var(--fuchsia)}
+.budget{background:var(--field);border:1px dashed var(--fuchsia);border-radius:12px;padding:15px;margin-top:16px}
+.budget label{margin-bottom:6px}
 
-/* hero CTA + intro/steps/why */
-.hero-cta{display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:800;font-size:16px;text-decoration:none;padding:13px 28px;border-radius:999px;backdrop-filter:blur(8px);transition:.2s}
-.hero-cta:hover{background:rgba(255,255,255,.24)}
+.fee{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px;
+  margin-bottom:16px;box-shadow:0 2px 12px rgba(90,40,120,.06)}
+.fee .top{display:flex;align-items:center;gap:16px}
+.fee .amt{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:44px;color:var(--fuchsia);line-height:1}
+.fee .lb{font-weight:700;font-size:18px}
+.fee .lb small{display:block;font-weight:400;font-size:14px;color:var(--muted);margin-top:3px}
+.fee p{color:var(--muted);font-size:15px;font-weight:300;margin-top:14px;line-height:1.65}
+.fee p b{color:var(--ink);font-weight:600}
 
-/* about / מקדמה — מסבירה מה זה ומה הרעיון */
-.about{max-width:720px;margin:0 auto;padding:56px 18px 6px;text-align:center}
-.about h2{font-size:clamp(24px,6vw,36px);line-height:1.15;margin-bottom:16px}
-.about h2 em{font-style:normal;color:var(--fuchsia)}
-.about p{color:#4a3a58;font-size:16.5px;line-height:1.85;max-width:600px;margin:0 auto 16px}
-.about p.soft{color:var(--muted);font-size:15.5px}
-.about .sign{display:inline-flex;align-items:center;gap:8px;margin-top:8px;color:var(--purple-d);font-weight:700;font-size:15px}
-.divider{width:52px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--purple),var(--fuchsia));margin:26px auto 0}
-.intro-sec{max-width:720px;margin:0 auto;padding:52px 18px 8px;text-align:center}
-.kick{color:var(--fuchsia);font-weight:700;letter-spacing:2px;font-size:12px;text-transform:uppercase;margin-bottom:10px}
-.intro-sec h2{font-size:clamp(24px,6vw,36px);line-height:1.15;margin-bottom:12px}
-.intro-sec .lead{color:var(--muted);font-size:16.5px;max-width:580px;margin:0 auto 32px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
-@media(max-width:640px){.steps{grid-template-columns:1fr}}
-.stp{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 18px;box-shadow:0 6px 22px rgba(123,45,139,.06);text-align:right}
-.stp .n{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--fuchsia));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px}
-.stp b{font-family:'Rubik',sans-serif;font-size:17px;display:block;margin-bottom:4px}
-.stp p{color:var(--muted);font-size:14px}
-.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
-@media(max-width:640px){.why{grid-template-columns:1fr}}
-.why .w{background:var(--bg2);border-radius:14px;padding:16px;text-align:right}
-.why .w b{color:var(--purple-d);display:block;font-size:15px}
-.why .w span{color:var(--muted);font-size:13px}
-.start-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;font-weight:700;font-size:18px;text-decoration:none;padding:16px 34px;border-radius:14px;box-shadow:0 14px 34px rgba(255,0,144,.32);transition:transform .2s}
-.start-btn:hover{transform:translateY(-2px)}
-.form-lead{max-width:640px;margin:0 auto;text-align:center;padding:22px 18px 0;scroll-margin-top:12px}
-.form-lead h2{font-size:clamp(22px,5.5vw,30px);margin-bottom:8px}
-.form-lead p{color:var(--muted);font-size:15px;max-width:520px;margin:0 auto}
+.terms{list-style:none;margin-top:4px}
+.terms li{position:relative;padding-inline-start:22px;font-size:15.5px;font-weight:300;
+  color:#4A3A5E;margin-bottom:11px;line-height:1.6}
+.terms li b{font-weight:600;color:var(--ink)}
+.terms li::before{content:"";position:absolute;inset-inline-start:0;top:9px;width:8px;height:8px;
+  border-radius:50%;background:var(--fuchsia)}
+.agree{display:flex;gap:12px;align-items:flex-start;background:var(--tint);border-radius:12px;
+  padding:15px;margin-top:18px;cursor:pointer}
+.agree input{width:22px;height:22px;accent-color:var(--fuchsia);flex:none;margin-top:2px}
+.agree .txt{font-size:15.5px;font-weight:500;line-height:1.55}
 
-/* ===== app-grade polish ===== */
-/* scroll reveal (class added by JS so no-JS still shows everything) */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
-.reveal.in{opacity:1;transform:none}
-/* header entrance */
-.top-in>*{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
-.top .script{animation-delay:.06s}.top h1{animation-delay:.14s}.top p{animation-delay:.24s}.top .hero-cta{animation-delay:.34s}
-@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-/* soft floating glow in header */
-.top::after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,0,144,.45),transparent 70%);top:-90px;left:-60px;filter:blur(20px);animation:float 9s ease-in-out infinite;pointer-events:none}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,26px)}}
-/* press feedback + smoother transitions */
-.btn,.start-btn,.hero-cta,.wa-help a{transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,background .2s}
-.btn:active,.start-btn:active,.hero-cta:active{transform:scale(.975)}
-.section{transition:box-shadow .25s,transform .25s}
-.section:focus-within{box-shadow:0 12px 34px rgba(160,107,255,.16);transform:translateY(-2px)}
-/* nicer inputs */
-.f input,.f select,.f textarea{transition:border-color .2s,box-shadow .2s,background .2s}
-.f input:hover,.f select:hover,.f textarea:hover{border-color:#d9c9f2}
-/* sticky mobile CTA bar */
-.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:900;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(251,248,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(123,45,139,.12);transform:translateY(130%);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
-.sticky-cta.show{transform:none}
-.sticky-cta a{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;font-family:'Rubik',sans-serif;font-weight:700;font-size:17px;text-decoration:none;padding:15px;border-radius:13px;box-shadow:0 10px 26px rgba(255,0,144,.32)}
-.sticky-cta a:active{transform:scale(.98)}
-@media(min-width:721px){.sticky-cta{display:none}}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.top-in>*{animation:none}.top::after{animation:none}}
+.dock{position:fixed;bottom:0;left:0;right:0;background:rgba(233,214,242,.95);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line);
+  padding:12px 20px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(90,40,120,.10)}
+.dock .inner{max-width:720px;margin:0 auto}
+button{width:100%;border:none;border-radius:14px;padding:17px;font-family:inherit;
+  font-size:18px;font-weight:700;color:#fff;background:var(--grad);cursor:pointer;transition:transform .16s,box-shadow .2s,opacity .2s}
+button:active{transform:scale(.98)}
+button:disabled{opacity:.6;cursor:default;transform:none}
+.wa-alt{display:block;text-align:center;margin-top:10px;color:var(--purple);font-weight:600;font-size:15px;text-decoration:none;cursor:pointer}
+.wa-alt:hover{text-decoration:underline}
+.err{color:#B01E63;font-size:14px;font-weight:600;text-align:center;margin-bottom:9px;display:none}
+.foot{text-align:center;color:var(--muted);font-size:13.5px;margin-top:22px;letter-spacing:.03em}
+.foot a{color:var(--purple);font-weight:600;text-decoration:none}
 </style>
 <!-- pwa -->
 <link rel="manifest" href="/manifest.webmanifest">
@@ -171,266 +131,346 @@ footer b span{color:var(--fuchsia)}
 </head>
 <body>
 
-<header class="top">
-  <div class="top-in">
-    <div class="brand">Multi<span>brawn</span></div>
-    <div class="script">שבת חתן חוגגים פעם בחיים</div>
-    <h1>נמצא לכם את המתחם המושלם</h1>
-    <p>כמה תשובות קצרות — ונחזור אליכם עם הצעות מדויקות, לא רשימות אקראיות.</p>
-    <a href="#start" class="hero-cta">בואו נתחיל ←</a>
+<!-- Netlify Forms detection (backup capture; JS posts to / as well) -->
+<form name="intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="contact_name"><input name="phone"><input name="email"><input name="couple_names">
+  <input name="shabbat_date"><input name="alt_date"><input name="guests"><input name="rooms">
+  <input name="area"><input name="kashrut"><input name="nusach"><input name="synagogue"><input name="private_dining">
+  <input name="extra_reqs"><input name="gifts_rooms"><input name="branding"><input name="gifts_budget">
+  <input name="catering"><input name="service"><input name="music"><input name="kashrut_supervisor"><input name="side_events">
+  <input name="budget"><input name="priority"><input name="deadline"><textarea name="notes"></textarea>
+</form>
+
+<header>
+  <div class="sheet">
+    <div class="bar"></div>
+    <div class="mark">Multi<em>brawn</em></div>
+    <h1>שבת חתן חוגגים<br><span class="g">פעם בחיים.</span></h1>
+    <p class="lede">כמה תשובות קצרות — ונחזור אליכם עם <b>הצעות מדויקות, לא רשימות אקראיות.</b></p>
   </div>
 </header>
 
-<div class="wrap">
-  <div class="guide-note">
-    <div class="ico">📘</div>
+<div class="sheet">
+
+  <div class="guide">
+    <div class="ic">📘</div>
     <div>
-      <b>מדריך שבת חתן <span class="free">חינם</span></b>
+      <div class="t">מדריך שבת חתן<span class="free">חינם</span></div>
       <p>לא מכירים אותנו עדיין? קבלו את המדריך — מה באמת עולה, מה שוכחים להזמין, ואיפה מפסידים כסף. נשלח אליכם בוואטסאפ יחד עם ההצעה.</p>
     </div>
   </div>
-</div>
 
-<!-- ABOUT · מקדמה: מה זה שבת חתן ומה הרעיון -->
-<section class="about">
-  <div class="kick">שבת חתן · הרעיון</div>
-  <h2>שבת שלמה של שמחה — <em>ואתם רק צריכים להיות שם</em></h2>
-  <p>שבת חתן היא אחת השבתות היפות בחיים: המשפחה והחברים מתכנסים למתחם אירוח לשבת שלמה סביב החתן — תפילות, סעודות חגיגיות, שירה, דרשות ושמחה גדולה. חוגגים אותה פעם אחת, ורוצים שהיא תהיה מושלמת.</p>
-  <p>אבל מאחורי השבת המושלמת מסתתרים עשרות מתחמים, ספקים, מחירים ופרטים קטנים — וקל מאוד ללכת לאיבוד, לשלם יותר מדי, או לגלות בדיעבד שמשהו חסר.</p>
-  <p class="soft"><b>כאן נכנסת Multibrawn.</b> אנחנו מתמחים באיתור מתחמי אירוח לשבת חתן: מכירים את המקומות, את הספקים ואת המחירים האמיתיים. אתם מספרים לנו מה אתם מחפשים — ואנחנו מוצאים, בודקים זמינות, מתמקחים על המחיר, וחוזרים אליכם עם הצעות מדויקות. בלי עמלה מכם, בלי לרדוף אחרי אף אחד.</p>
-  <div class="divider"></div>
-</section>
-
-<!-- INTRO · המסר: איך זה עובד ולמה -->
-<section class="intro-sec">
-  <div class="kick">איך זה עובד</div>
-  <h2>אתם חולמים — אנחנו מוצאים ומתמקחים</h2>
-  <p class="lead">כל התהליך בנוי כדי לחסוך לכם זמן, כסף ובלגן — שלושה צעדים פשוטים, ואנחנו עושים את השאר.</p>
-  <div class="steps">
-    <div class="stp"><div class="n">1</div><b>ממלאים אפיון קצר</b><p>כמה שאלות על הזוג, השבת והדרישות — בערך 3 דקות.</p></div>
-    <div class="stp"><div class="n">2</div><b>אנחנו עושים את העבודה</b><p>מאתרים מתחמים שמתאימים, בודקים זמינות, ומנהלים מו״מ על המחיר.</p></div>
-    <div class="stp"><div class="n">3</div><b>מקבלים הצעות מדויקות</b><p>חוזרים אליכם עד 5 ימי עסקים — הצעות אמיתיות, לא רשימות אקראיות.</p></div>
-  </div>
-  <div class="why">
-    <div class="w"><b>0 ₪ עמלה מכם</b><span>העמלה נגבית מהמתחם — המחיר שתקבלו הוא המחיר.</span></div>
-    <div class="w"><b>חוסכים לכם שעות</b><span>אנחנו מכירים את המתחמים והספקים, ומדברים בשמכם.</span></div>
-    <div class="w"><b>מדריך חינם</b><span>מה עולה, מה שוכחים, ואיפה מפסידים כסף — נשלח בוואטסאפ.</span></div>
-  </div>
-  <a href="#start" class="start-btn">בואו נתחיל — מילוי אפיון ←</a>
-</section>
-
-<div id="start"></div>
-<div class="form-lead">
-  <h2>ממלאים אפיון — ויוצאים לדרך</h2>
-  <p>ככל שתפרטו יותר, ההצעות שנחזור איתן יהיו מדויקות יותר. חובה רק שם וטלפון — השאר לפי מה שכבר ידוע לכם.</p>
-</div>
-
-<!-- Netlify Forms registration (also fires /lead + payment via JS) -->
-<form name="intake" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you-lead.html" id="intake">
-  <input type="hidden" name="form-name" value="intake">
-  <p hidden><label>אל תמלאו: <input name="bot-field"></label></p>
-
-  <!-- 1 -->
-  <div class="section">
-    <div class="head"><span class="num">1</span><h2>פרטי הזוג והשבת</h2></div>
-    <div class="sub">כדי שנדע למי לחזור ומתי</div>
-    <div class="grid">
-      <div class="f"><label>שם מלא של איש הקשר *</label><input type="text" name="contact_name" required autocomplete="name"></div>
-      <div class="f"><label>טלפון *</label><input type="tel" name="phone" required inputmode="tel" autocomplete="tel"></div>
-      <div class="f"><label>אימייל <span class="opt">· לא חובה</span></label><input type="email" name="email" autocomplete="email"></div>
-      <div class="f"><label>שם החתן והכלה</label><input type="text" name="couple_names"></div>
-      <div class="f"><label>תאריך השבת המבוקש</label><input type="text" name="shabbat_date" placeholder="פרשת… / תאריך"></div>
-      <div class="f"><label>תאריך חלופי <span class="opt">· אם יש גמישות</span></label><input type="text" name="alt_date"></div>
-      <div class="f"><label>מספר אורחים</label><input type="number" name="guests" min="1" inputmode="numeric"></div>
-      <div class="f"><label>מספר חדרים משוער</label><input type="number" name="rooms" min="1" inputmode="numeric"></div>
+  <div class="sec">
+    <div class="sec-h"><span class="n">1</span><span class="t">פרטי הזוג והשבת</span></div>
+    <div class="sec-sub">כדי שנדע למי לחזור ומתי</div>
+    <div class="f"><label>שם מלא של איש הקשר</label><input type="text" id="name" placeholder="שם ושם משפחה"></div>
+    <div class="f"><label>טלפון</label><input type="tel" id="phone" placeholder="050-0000000"></div>
+    <div class="f"><label>אימייל <span class="hint">לא חובה</span></label><input type="email" id="email" placeholder="name@mail.com"></div>
+    <div class="f"><label>שם החתן והכלה</label><input type="text" id="couple" placeholder="לדוגמה: יוסי ורחל"></div>
+    <div class="f"><label>תאריך השבת המבוקש</label><input type="text" id="date1" placeholder="לדוגמה: 23–24/10"></div>
+    <div class="f"><label>תאריך חלופי <span class="hint">אם יש גמישות</span></label><input type="text" id="date2" placeholder="לדוגמה: 30–31/10"></div>
+    <div class="f"><label>מספר אורחים</label>
+      <div class="row">
+        <input type="number" id="adults" placeholder="מבוגרים">
+        <input type="number" id="kids" placeholder="ילדים">
+        <input type="number" id="babies" placeholder="תינוקות">
+      </div>
     </div>
+    <div class="f"><label>מספר חדרים משוער</label><input type="number" id="rooms" placeholder="לדוגמה: 15"></div>
   </div>
 
-  <!-- 2 -->
-  <div class="section">
-    <div class="head"><span class="num">2</span><h2>המתחם והדרישות</h2></div>
-    <div class="sub">מה חייב להיות במקום</div>
-    <div class="grid">
-      <div class="f full"><label>אזור מועדף</label><input type="text" name="area" placeholder="צפון / מרכז / ירושלים…"></div>
-      <div class="f"><label>רמת כשרות</label><select name="kashrut"><option value="">בחרו…</option><option>רגילה</option><option>מהדרין</option><option>בד״ץ</option><option>לא רלוונטי</option></select></div>
-      <div class="f"><label>נוסח תפילה</label><select name="nusach"><option value="">בחרו…</option><option>אשכנז</option><option>ספרד</option><option>עדות המזרח</option><option>ללא העדפה</option></select></div>
-      <div class="f"><label>בית כנסת בתוך המתחם</label><select name="synagogue"><option value="">בחרו…</option><option>חובה</option><option>רצוי</option><option>לא נדרש</option></select></div>
-      <div class="f"><label>חדר אוכל פרטי לקבוצה</label><select name="private_dining"><option value="">בחרו…</option><option>חובה</option><option>רצוי</option><option>לא נדרש</option></select></div>
-      <div class="f full"><label>דרישות נוספות</label><textarea name="extra_reqs"></textarea></div>
+  <div class="sec">
+    <div class="sec-h"><span class="n">2</span><span class="t">המתחם והדרישות</span></div>
+    <div class="sec-sub">מה חייב להיות במקום</div>
+
+    <div class="f"><label>אזור מועדף</label>
+      <div class="chips" id="area">
+        <label class="chip p"><input type="checkbox" value="צפון"><span>צפון</span></label>
+        <label class="chip p"><input type="checkbox" value="מרכז"><span>מרכז</span></label>
+        <label class="chip p"><input type="checkbox" value="ירושלים"><span>ירושלים</span></label>
+        <label class="chip p"><input type="checkbox" value="דרום"><span>דרום</span></label>
+        <label class="chip p"><input type="checkbox" value="ללא העדפה"><span>ללא העדפה</span></label>
+      </div>
     </div>
 
-    <div class="gift">
-      <div class="gh">🎁 MultiGive · מתנות ממותגות</div>
-      <p>עם שם החתן והכלה — המזכרת היחידה שנשארת אחרי השבת</p>
-      <div class="grid">
-        <div class="f"><label>מתנות לחדרים</label><select name="gifts_rooms"><option value="">בחרו…</option><option>מעוניינים</option><option>אולי</option><option>לא</option></select></div>
-        <div class="f"><label>מיתוג ומזכרות</label><select name="branding"><option value="">בחרו…</option><option>מעוניינים</option><option>אולי</option><option>לא</option></select></div>
-        <div class="f full"><label>תקציב למתנות <span class="opt">· בנפרד מתקציב המתחם</span></label><input type="text" name="gifts_budget"></div>
+    <div class="f"><label>רמת כשרות</label>
+      <select id="kosher"><option value="">בחרו…</option><option>רגילה</option><option>מהדרין</option><option>בד״ץ</option><option>לא רלוונטי</option></select>
+    </div>
+    <div class="f"><label>נוסח תפילה</label>
+      <select id="nusach"><option value="">בחרו…</option><option>אשכנז</option><option>ספרד</option><option>עדות המזרח</option><option>ללא העדפה</option></select>
+    </div>
+    <div class="f"><label>בית כנסת בתוך המתחם</label>
+      <select id="shul"><option value="">בחרו…</option><option>חובה</option><option>רצוי</option><option>לא נדרש</option></select>
+    </div>
+    <div class="f"><label>חדר אוכל פרטי לקבוצה</label>
+      <select id="dining"><option value="">בחרו…</option><option>חובה</option><option>רצוי</option><option>לא נדרש</option></select>
+    </div>
+    <div class="f"><label>דרישות נוספות</label>
+      <div class="chips" id="extras">
+        <label class="chip p"><input type="checkbox" value="הפרדה"><span>הפרדה</span></label>
+        <label class="chip p"><input type="checkbox" value="בריכה"><span>בריכה</span></label>
+        <label class="chip p"><input type="checkbox" value="מתחם סגור"><span>מתחם סגור</span></label>
+        <label class="chip p"><input type="checkbox" value="נגישות"><span>נגישות</span></label>
+        <label class="chip p"><input type="checkbox" value="ספר תורה ועמוד"><span>ספר תורה ועמוד</span></label>
+        <label class="chip p"><input type="checkbox" value="עירוב"><span>עירוב</span></label>
+        <label class="chip p"><input type="checkbox" value="מקווה באזור"><span>מקווה באזור</span></label>
       </div>
     </div>
   </div>
 
-  <!-- 3 -->
-  <div class="section">
-    <div class="head"><span class="num">3</span><h2>ספקים ושירותים</h2></div>
-    <div class="sub">מה עוד תרצו שנארגן — בנוסף למתחם</div>
-    <div class="grid">
-      <div class="f full"><label>קייטרינג — סוג הגשה</label><input type="text" name="catering" placeholder="כמו מלון / רגיל / בופה…"></div>
+  <!-- MULTIGIVE -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">🎁</span><span class="t">MultiGive · מתנות ממותגות</span></div>
+    <div class="sec-sub">עם שם החתן והכלה — המזכרת היחידה שנשארת אחרי השבת</div>
+
+    <div class="f"><label>מתנות לחדרים</label>
+      <div class="chips" id="gifts_rooms">
+        <label class="chip"><input type="checkbox" value="מגש קבלת פנים (פירות/יין)"><span>מגש קבלת פנים</span></label>
+        <label class="chip"><input type="checkbox" value="ערכת שבת (נרות/גפרורים)"><span>ערכת שבת</span></label>
+        <label class="chip"><input type="checkbox" value="מארז פינוקים ממותג"><span>מארז פינוקים ממותג</span></label>
+        <label class="chip"><input type="checkbox" value="כרטיס ברכה אישי"><span>כרטיס ברכה אישי</span></label>
+        <label class="chip"><input type="checkbox" value="ערכת כיבוד לילדים"><span>כיבוד לילדים</span></label>
+        <label class="chip"><input type="checkbox" value="שי מוגבה להורים"><span>שי מוגבה להורים</span></label>
+      </div>
     </div>
-    <div class="note">💡 שווה לדעת: זה הפער הגדול ביותר במחיר בין הצעה להצעה. <b>"כמו מלון"</b> = חרסינה, סכו״ם, מפות בד וזכוכית.</div>
-    <div class="grid" style="margin-top:14px">
-      <div class="f"><label>שירות</label><input type="text" name="service"></div>
-      <div class="f"><label>מוזיקה ותפילה</label><input type="text" name="music"></div>
-      <div class="f"><label>משגיח כשרות</label><select name="kashrut_supervisor"><option value="">בחרו…</option><option>חובה</option><option>רצוי</option><option>לא נדרש</option></select></div>
-      <div class="f"><label>אירועים נלווים</label><input type="text" name="side_events"></div>
+
+    <div class="f"><label>מיתוג ומזכרות</label>
+      <div class="chips" id="gifts_brand">
+        <label class="chip"><input type="checkbox" value="ברכונים / זמירונים ממותגים"><span>ברכונים / זמירונים</span></label>
+        <label class="chip"><input type="checkbox" value="כיפות ממותגות"><span>כיפות ממותגות</span></label>
+        <label class="chip"><input type="checkbox" value="סוכריות / מגנטים ממותגים"><span>סוכריות / מגנטים</span></label>
+        <label class="chip"><input type="checkbox" value="שילוט ומיתוג בכניסה"><span>שילוט בכניסה</span></label>
+        <label class="chip"><input type="checkbox" value="שי לאורחים בפרידה"><span>שי לפרידה</span></label>
+      </div>
     </div>
-    <div class="note" style="margin-top:14px">🎵 לתשומת ליבכם: קלידן והגברה אפשריים רק לפני כניסת שבת או במוצ״ש. בשבת עצמה — <b>שירה בלבד</b> (חזן, זמר, פייטן).</div>
+
+    <div class="budget">
+      <label>תקציב למתנות <span class="hint">בנפרד מתקציב המתחם — כדי שנדע עם מה לחזור אליכם</span></label>
+      <input type="text" id="gift_budget" placeholder="לדוגמה: ₪2,000 סה״כ / ₪25 לאורח">
+    </div>
   </div>
 
-  <!-- 4 -->
-  <div class="section">
-    <div class="head"><span class="num">4</span><h2>תקציב וסדרי עדיפויות</h2></div>
-    <div class="sub">התקציב של המתחם — בלי המתנות</div>
-    <div class="grid">
-      <div class="f full"><label>מסגרת תקציב למתחם</label><input type="text" name="budget"></div>
-      <div class="f full"><label>מה הכי חשוב לכם?</label><input type="text" name="priority" placeholder="קרבה לבית / כשרות / גינה לילדים…"></div>
-      <div class="f full"><label>עד מתי אתם צריכים תשובה?</label><input type="text" name="deadline"></div>
-      <div class="f full"><label>הערות נוספות <span class="opt">· גילאי ילדים, בקשות מיוחדות</span></label><textarea name="notes"></textarea></div>
+  <!-- SUPPLIERS -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">3</span><span class="t">ספקים ושירותים</span></div>
+    <div class="sec-sub">מה עוד תרצו שנארגן — בנוסף למתחם</div>
+
+    <div class="f"><label>קייטרינג — סוג הגשה</label>
+      <div class="chips" id="catering_style">
+        <label class="chip p"><input type="checkbox" value="חד־פעמי איכותי"><span>חד־פעמי איכותי</span></label>
+        <label class="chip p"><input type="checkbox" value="כלים כמו מלון (חרסינה, בד, זכוכית)"><span>כלים כמו מלון</span></label>
+        <label class="chip p"><input type="checkbox" value="לא נדרש קייטרינג"><span>לא נדרש</span></label>
+      </div>
+      <div class="note"><b>שווה לדעת:</b> זה הפער הגדול ביותר במחיר בין הצעה להצעה. "כמו מלון" = חרסינה, סכו״ם, מפות בד וזכוכית.</div>
+    </div>
+
+    <div class="f"><label>שירות</label>
+      <div class="chips" id="service">
+        <label class="chip p"><input type="checkbox" value="מלצרים"><span>מלצרים</span></label>
+        <label class="chip p"><input type="checkbox" value="מנהל אירוע"><span>מנהל אירוע</span></label>
+        <label class="chip p"><input type="checkbox" value="שף פרטי"><span>שף פרטי</span></label>
+        <label class="chip p"><input type="checkbox" value="שמרטפות / הפעלות לילדים"><span>שמרטפות לילדים</span></label>
+      </div>
+    </div>
+
+    <div class="f"><label>מוזיקה ותפילה</label>
+      <div class="chips" id="music">
+        <label class="chip p"><input type="checkbox" value="חזן"><span>חזן</span></label>
+        <label class="chip p"><input type="checkbox" value="בעל קורא"><span>בעל קורא</span></label>
+        <label class="chip p"><input type="checkbox" value="זמר / פייטן"><span>זמר / פייטן</span></label>
+        <label class="chip p"><input type="checkbox" value="קלידן (ליל שישי / מוצ״ש)"><span>קלידן</span></label>
+        <label class="chip p"><input type="checkbox" value="הגברה למוצ״ש"><span>הגברה למוצ״ש</span></label>
+      </div>
+      <div class="note"><b>לתשומת ליבכם:</b> קלידן והגברה אפשריים רק לפני כניסת שבת או במוצ״ש. בשבת עצמה — <b>שירה בלבד</b> (חזן, זמר, פייטן).</div>
+    </div>
+
+    <div class="f"><label>משגיח כשרות</label>
+      <div class="chips" id="kashrut">
+        <label class="chip p"><input type="checkbox" value="תעודת המתחם מספיקה"><span>תעודת המתחם מספיקה</span></label>
+        <label class="chip p"><input type="checkbox" value="נדרש משגיח (רבנות)"><span>נדרש משגיח — רבנות</span></label>
+        <label class="chip p"><input type="checkbox" value="נדרש משגיח מהדרין / בד״ץ"><span>מהדרין / בד״ץ</span></label>
+        <label class="chip p"><input type="checkbox" value="משגיח צמוד לאורך השבת"><span>משגיח צמוד</span></label>
+      </div>
+    </div>
+
+    <div class="f"><label>אירועים נלווים</label>
+      <div class="chips" id="events">
+        <label class="chip p"><input type="checkbox" value="קבלת פנים ליל שישי"><span>קבלת פנים ליל שישי</span></label>
+        <label class="chip p"><input type="checkbox" value="קידושא רבא"><span>קידושא רבא</span></label>
+        <label class="chip p"><input type="checkbox" value="שיעור"><span>שיעור</span></label>
+        <label class="chip p"><input type="checkbox" value="מלווה מלכה"><span>מלווה מלכה</span></label>
+        <label class="chip p"><input type="checkbox" value="צלם שומר שבת"><span>צלם שומר שבת</span></label>
+        <label class="chip p"><input type="checkbox" value="הסעות"><span>הסעות</span></label>
+      </div>
     </div>
   </div>
 
-  <!-- Commitment -->
-  <div class="commit">
-    <div class="fee">
+  <div class="sec">
+    <div class="sec-h"><span class="n">4</span><span class="t">תקציב וסדרי עדיפויות</span></div>
+    <div class="sec-sub">התקציב של המתחם — בלי המתנות</div>
+    <div class="f"><label>מסגרת תקציב למתחם</label><input type="text" id="budget" placeholder="סכום כולל לשבת / תקציב לזוג"></div>
+    <div class="f"><label>מה הכי חשוב לכם?</label>
+      <div class="chips" id="priority">
+        <label class="chip p"><input type="checkbox" value="מיקום"><span>מיקום</span></label>
+        <label class="chip p"><input type="checkbox" value="כשרות"><span>כשרות</span></label>
+        <label class="chip p"><input type="checkbox" value="רמת אירוח"><span>רמת אירוח</span></label>
+        <label class="chip p"><input type="checkbox" value="מחיר"><span>מחיר</span></label>
+        <label class="chip p"><input type="checkbox" value="פרטיות"><span>פרטיות</span></label>
+      </div>
+    </div>
+    <div class="f"><label>עד מתי אתם צריכים תשובה?</label><input type="text" id="deadline" placeholder="לדוגמה: תוך שבוע"></div>
+    <div class="f"><label>הערות נוספות <span class="hint">גילאי ילדים, בקשות מיוחדות</span></label><textarea id="notes" placeholder="כל מה שחשוב שנדע…"></textarea></div>
+  </div>
+
+  <div class="fee">
+    <div class="top">
       <div class="amt">₪50</div>
-      <div class="txt"><b>דמי רצינות חד־פעמיים</b><span>לפתיחת תהליך איתור, בדיקת זמינות ומו״מ מול המתחמים</span></div>
+      <div class="lb">דמי רצינות חד־פעמיים<small>לפתיחת תהליך איתור, בדיקת זמינות ומו״מ מול המתחמים</small></div>
     </div>
-    <div class="fine">הסכום מקוזז במלואו מהעסקה בעת סגירה. אינו מהווה תשלום עבור השירות, ואינו מוחזר במקרה של ביטול או אי־היענות מצד הלקוח. מדריך שבת חתן נשלח אליכם ללא עלות.</div>
-    <div class="terms">
-      <div class="th">✓ התחייבות הדדית</div>
-      <ul>
-        <li>אינכם משלמים עמלה על המתחם. העמלה נגבית מהמתחם בלבד — המחיר שתקבלו הוא המחיר.</li>
-        <li>בלעדיות על מתחמים וספקים שהוצגו: הלקוח מתחייב שלא לפנות ישירות למתחם או לספק שהוצג לו על ידי Multibrawn, ולא לסגור מולו — במישרין או דרך צד שלישי — למשך 12 חודשים ממועד ההצגה.</li>
-        <li>תיאום מחירים: כל תמחור, הנחה או שינוי בהצעה מאושרים דרך Multibrawn בלבד.</li>
-        <li>מצדנו: נציג רק מתחמים וספקים שעונים לדרישות שהגדרתם, ונחזור עם תשובה מסודרת עד 5 ימי עסקים.</li>
-        <li>סודיות: הפרטים ישמשו לצורך התהליך בלבד.</li>
-        <li>הזמנה סופית נסגרת מול המתחם והספקים, בהתאם לתנאי התשלום והביטול שלהם.</li>
-      </ul>
-    </div>
-    <div class="agree">
-      <input type="checkbox" id="agree" name="agree" required>
-      <label for="agree">קראתי ואני מאשר/ת את דמי הרצינות ואת תנאי ההתחייבות.</label>
-    </div>
+    <p>הסכום <b>מקוזז במלואו</b> מהעסקה בעת סגירה. אינו מהווה תשלום עבור השירות, ואינו מוחזר במקרה של ביטול או אי־היענות מצד הלקוח. <b>מדריך שבת חתן נשלח אליכם ללא עלות.</b></p>
   </div>
 
-  <div class="cta-wrap">
-    <div class="err" id="err"></div>
-    <button type="button" class="btn btn-pay" id="pay">לתשלום דמי רצינות ושליחת הבקשה — 50 ₪ <span>←</span></button>
-    <p class="wa-help">יש שאלה לפני שמתחילים? <a href="https://wa.me/972523983394" id="wa">דברו איתנו בוואטסאפ ←</a></p>
+  <div class="sec">
+    <div class="sec-h"><span class="n">✓</span><span class="t">התחייבות הדדית</span></div>
+    <ul class="terms">
+      <li><b>אינכם משלמים עמלה על המתחם.</b> העמלה נגבית מהמתחם בלבד — המחיר שתקבלו הוא המחיר.</li>
+      <li><b>בלעדיות על מתחמים וספקים שהוצגו:</b> הלקוח מתחייב שלא לפנות ישירות למתחם או לספק שהוצג לו על ידי Multibrawn, ולא לסגור מולו — במישרין או דרך צד שלישי — למשך <b>12 חודשים</b> ממועד ההצגה.</li>
+      <li><b>תיאום מחירים:</b> כל תמחור, הנחה או שינוי בהצעה מאושרים דרך Multibrawn בלבד.</li>
+      <li><b>מצדנו:</b> נציג רק מתחמים וספקים שעונים לדרישות שהגדרתם, ונחזור עם תשובה מסודרת <b>עד 5 ימי עסקים</b>.</li>
+      <li><b>סודיות:</b> הפרטים ישמשו לצורך התהליך בלבד.</li>
+      <li><b>הזמנה סופית</b> נסגרת מול המתחם והספקים, בהתאם לתנאי התשלום והביטול שלהם.</li>
+    </ul>
+    <label class="agree">
+      <input type="checkbox" id="agree">
+      <span class="txt">קראתי ואני מאשר/ת את דמי הרצינות ואת תנאי ההתחייבות.</span>
+    </label>
   </div>
-</form>
 
-<footer>
-  <b>Multi<span>brawn</span></b> · שבתות חתן · מתחמי אירוח · MultiGive<br>
-  <span style="font-size:12.5px">שאלות? <a href="https://wa.me/972523983394" style="color:var(--purple-d);font-weight:700">052-398-3394</a></span>
-</footer>
+  <div class="foot">Multibrawn · שבתות חתן · מתחמי אירוח · MultiGive<br>
+    שאלות? <a href="https://wa.me/972523983394">052-398-3394</a></div>
+</div>
 
-<!-- sticky CTA (mobile) -->
-<div class="sticky-cta" id="stickyCta"><a href="#start">התחילו — דמי רצינות 50 ₪ <span>←</span></a></div>
+<div class="dock">
+  <div class="inner">
+    <div class="err" id="err">נא למלא שם, טלפון ולאשר את ההתחייבות</div>
+    <button id="pay">לתשלום דמי רצינות ושליחת הבקשה — ₪50 ←</button>
+    <a class="wa-alt" id="send">או שליחה בוואטסאפ ←</a>
+  </div>
+</div>
 
 <script>
-const WA_NUMBER = '972523983394';
-const form = document.getElementById('intake');
-const err = document.getElementById('err');
-const LABELS = {
-  contact_name:'איש קשר', phone:'טלפון', email:'אימייל', couple_names:'החתן והכלה',
-  shabbat_date:'תאריך שבת', alt_date:'תאריך חלופי', guests:'אורחים', rooms:'חדרים',
-  area:'אזור', kashrut:'כשרות', nusach:'נוסח', synagogue:'בית כנסת', private_dining:'חדר אוכל פרטי',
-  extra_reqs:'דרישות נוספות', gifts_rooms:'מתנות לחדרים', branding:'מיתוג', gifts_budget:'תקציב מתנות',
-  catering:'קייטרינג', service:'שירות', music:'מוזיקה', kashrut_supervisor:'משגיח', side_events:'אירועים נלווים',
-  budget:'תקציב מתחם', priority:'הכי חשוב', deadline:'דדליין', notes:'הערות'
-};
+// מספר הוואטסאפ של ערדית — Multibrawn
+const WHATSAPP = "972523983394";
+const IS_TEST = new URLSearchParams(location.search).has('test');
 
+const v  = id => (document.getElementById(id).value || "").trim();
+const ch = id => [...document.querySelectorAll('#'+id+' input:checked')].map(c=>c.value).join(", ");
+const L  = (l,val) => val ? l + ": " + val + "\n" : "";
+
+function guests(){
+  let g=[];
+  if(v('adults')) g.push(v('adults')+" מבוגרים");
+  if(v('kids'))   g.push(v('kids')+" ילדים");
+  if(v('babies')) g.push(v('babies')+" תינוקות");
+  return g.join(" · ");
+}
+
+// מקבץ את כל השדות למבנה שהשרת (/lead) והגיליון מכירים
 function collect(){
-  const fd = new FormData(form), o = {};
-  for (const [k,v] of fd.entries()){ if(k==='form-name'||k==='bot-field'||k==='agree') continue; if(String(v).trim()) o[k]=String(v).trim(); }
-  return o;
+  const o = {
+    source:'intake',
+    contact_name:v('name'), phone:v('phone'), email:v('email'), couple_names:v('couple'),
+    shabbat_date:v('date1'), alt_date:v('date2'), guests:guests(), rooms:v('rooms'),
+    area:ch('area'), kashrut:v('kosher'), nusach:v('nusach'), synagogue:v('shul'), private_dining:v('dining'),
+    extra_reqs:ch('extras'), gifts_rooms:ch('gifts_rooms'), branding:ch('gifts_brand'), gifts_budget:v('gift_budget'),
+    catering:ch('catering_style'), service:ch('service'), music:ch('music'), kashrut_supervisor:ch('kashrut'),
+    side_events:ch('events'), budget:v('budget'), priority:ch('priority'), deadline:v('deadline'), notes:v('notes')
+  };
+  const clean = {};
+  Object.keys(o).forEach(k => { if(String(o[k]).trim()) clean[k] = o[k]; });
+  return clean;
 }
+
 function validate(){
-  err.textContent='';
-  const name=(form.contact_name.value||'').trim(), phone=(form.phone.value||'').trim();
-  if(!name){ err.textContent='נא למלא שם איש קשר.'; form.contact_name.focus(); return null; }
-  if(!phone){ err.textContent='נא למלא טלפון.'; form.phone.focus(); return null; }
-  if(!form.agree.checked){ err.textContent='יש לאשר את דמי הרצינות ותנאי ההתחייבות.'; document.getElementById('agree').focus(); return null; }
-  return collect();
+  const err = document.getElementById('err');
+  if(!v('name') || !v('phone') || !document.getElementById('agree').checked){
+    err.style.display='block';
+    window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+    return false;
+  }
+  err.style.display='none';
+  return true;
 }
+
+// לכידת הליד: הפונקציה שלנו (Sheets + מייל/וואטסאפ לערדית) + גיבוי Netlify Forms
 function sendLead(data){
-  // 0) שמירת פרטי הקונה למכשיר — כדי שגם תשלום הפרימיום (בדף התודה) יוכל להעביר שם+טלפון ל-GROW
   try{ localStorage.setItem('mb_buyer', JSON.stringify({ name:data.contact_name||'', phone:data.phone||'', email:data.email||'' })); }catch(e){}
-  // 1) הפונקציה שלנו — Google Sheets + מייל/וואטסאפ לערדית (פועל עם משתני הסביבה)
   try{
-    const payload = JSON.stringify(Object.assign({ source:'intake' }, data));
+    const payload = JSON.stringify(data);
     if(navigator.sendBeacon) navigator.sendBeacon('/lead', new Blob([payload],{type:'application/json'}));
     else fetch('/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:payload,keepalive:true}).catch(function(){});
   }catch(e){}
-  // 2) רשת ביטחון — Netlify Forms (אפס הגדרות; כל ליד נשמר בדשבורד גם בלי Sheets)
   try{
     const p = Object.assign({ 'form-name':'intake' }, data);
-    const enc = Object.keys(p).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(p[k]); }).join('&');
+    const enc = Object.keys(p).map(k => encodeURIComponent(k)+'='+encodeURIComponent(p[k])).join('&');
     fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:enc, keepalive:true }).catch(function(){});
   }catch(e){}
 }
-function waText(data){
-  let t = 'שלום Multibrawn 🌸 אני רוצה לפתוח תהליך איתור מתחם לשבת חתן:\n';
-  Object.keys(data).forEach(function(k){ if(LABELS[k]) t += '• '+LABELS[k]+': '+data[k]+'\n'; });
-  return t;
+
+function waText(){
+  let m = "*שאלון שבת חתן · Multibrawn*\n_שבת חתן חוגגים פעם בחיים_\n\n";
+  m += "*1 · פרטי הזוג והשבת*\n";
+  m += L("שם", v('name')) + L("טלפון", v('phone')) + L("אימייל", v('email'));
+  m += L("החתן והכלה", v('couple'));
+  m += L("תאריך מבוקש", v('date1')) + L("תאריך חלופי", v('date2'));
+  m += L("אורחים", guests()) + L("חדרים", v('rooms'));
+  m += "\n*2 · המתחם והדרישות*\n";
+  m += L("אזור", ch('area')) + L("כשרות", v('kosher')) + L("נוסח", v('nusach'));
+  m += L("בית כנסת", v('shul')) + L("חדר אוכל פרטי", v('dining'));
+  m += L("דרישות נוספות", ch('extras'));
+  const gr = ch('gifts_rooms'), gb = ch('gifts_brand');
+  if(gr || gb || v('gift_budget')){
+    m += "\n*🎁 MultiGive · מתנות ממותגות*\n";
+    m += L("מתנות לחדרים", gr) + L("מיתוג ומזכרות", gb) + L("תקציב למתנות", v('gift_budget'));
+  }
+  m += "\n*3 · ספקים ושירותים*\n";
+  m += L("קייטרינג — סוג הגשה", ch('catering_style')) + L("שירות", ch('service'));
+  m += L("מוזיקה ותפילה", ch('music')) + L("משגיח כשרות", ch('kashrut')) + L("אירועים נלווים", ch('events'));
+  m += "\n*4 · תקציב ועדיפויות*\n";
+  m += L("תקציב למתחם", v('budget')) + L("הכי חשוב", ch('priority'));
+  m += L("צריך תשובה עד", v('deadline')) + L("הערות", v('notes'));
+  m += "\n✅ אישרתי דמי רצינות ₪50 ואת תנאי ההתחייבות.";
+  m += "\n📘 אשמח לקבל את מדריך שבת חתן (חינם).";
+  return m;
 }
 
-/* תשלום דמי רצינות 50₪ (דרך create-payment) + שליחת הפרטים ל-Sheets/וואטסאפ של ערדית */
+/* תשלום דמי רצינות 50₪ + שליחת הפרטים לערדית/גיליון, ואז פתיחת המדריך אחרי תשלום */
 document.getElementById('pay').addEventListener('click', async function(){
-  // מצב טסט (?test=1) — מדלג על התשלום ועובר ישר לדף התודה כדי לראות את כל המשפך
-  if(new URLSearchParams(location.search).has('test')){ location.href='/thank-you.html?amount=50&test=1'; return; }
-  const data = validate(); if(!data) return;
-  const btn=this, orig=btn.innerHTML; btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
+  if(IS_TEST){ location.href='/thank-you.html?amount=50&test=1'; return; }
+  if(!validate()) return;
+  const data = collect();
+  const btn = this, orig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'רגע, יוצרים תשלום…';
   sendLead(data);
   try{
-    const r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:50,name:data.contact_name||'',email:data.email||'',phone:data.phone||''})});
+    const r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({amount:50, name:data.contact_name||'', email:data.email||'', phone:data.phone||''})});
     const d = await r.json();
-    if(d && d.url){ location.href=d.url; return; }
+    if(d && d.url){ location.href = d.url; return; }
   }catch(e){}
-  btn.disabled=false; btn.innerHTML=orig; err.textContent='תקלה ביצירת התשלום. נסו שוב, או שלחו לנו בוואטסאפ.';
+  btn.disabled = false; btn.textContent = orig;
+  const err = document.getElementById('err');
+  err.textContent = 'תקלה ביצירת התשלום. נסו שוב, או שלחו בוואטסאפ.'; err.style.display='block';
 });
 
-/* וואטסאפ = ערוץ שאלות בלבד (לא חלופה לתשלום). פותח צ'אט עם הודעת פתיחה קצרה. */
-document.getElementById('wa').addEventListener('click', function(e){
+/* שליחה בוואטסאפ — הפרטים נפתחים בוואטסאפ של ערדית + נרשמים במאגר */
+document.getElementById('send').addEventListener('click', function(e){
   e.preventDefault();
-  const name=(form.contact_name.value||'').trim();
-  const hi = 'שלום Multibrawn 🌸 ' + (name ? '('+name+') ' : '') + 'יש לי שאלה על שבת חתן לפני שאני ממלא/ת אפיון.';
-  location.href = 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(hi);
+  if(!validate()) return;
+  sendLead(collect());
+  window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(waText()), "_blank");
 });
-
-/* ===== app-grade polish ===== */
-/* scroll reveal — class added here so no-JS still shows everything */
-(function(){
-  var els = document.querySelectorAll('.guide-note,.about,.intro-sec,.section,.commit,.cta-wrap');
-  els.forEach(function(el){ el.classList.add('reveal'); });
-  if(!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('in'); }); return; }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } });
-  }, { threshold:.08, rootMargin:'0px 0px -40px 0px' });
-  els.forEach(function(el){ io.observe(el); });
-})();
-/* sticky mobile CTA — appears after the hero, hides when the real pay button is on screen */
-(function(){
-  var bar = document.getElementById('stickyCta'); if(!bar) return;
-  var pay = document.getElementById('pay'), payVisible = false;
-  function upd(){ bar.classList.toggle('show', window.scrollY > 520 && !payVisible); }
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(e){ payVisible = e[0].isIntersecting; upd(); }, { threshold:.25 }).observe(pay);
-  }
-  addEventListener('scroll', upd, { passive:true }); addEventListener('resize', upd); upd();
-})();
 </script>
-<script>if(new URLSearchParams(location.search).has('test')){var b=document.createElement('div');b.textContent='🧪 מצב טסט — ללא תשלום';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#E7B34A;color:#1A0B2E;text-align:center;font-family:sans-serif;font-weight:800;font-size:13px;padding:6px 10px';document.body.appendChild(b);}</script>
+<script>if(new URLSearchParams(location.search).has('test')){var b=document.createElement('div');b.textContent='🧪 מצב טסט — ללא תשלום';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#40E0D0;color:#123;text-align:center;font-family:sans-serif;font-weight:800;font-size:13px;padding:6px 10px';document.body.appendChild(b);}</script>
 </body>
 </html>
