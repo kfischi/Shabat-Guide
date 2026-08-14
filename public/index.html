@@ -132,6 +132,33 @@ footer b span{color:var(--fuchsia)}
 .form-lead{max-width:640px;margin:0 auto;text-align:center;padding:22px 18px 0;scroll-margin-top:12px}
 .form-lead h2{font-size:clamp(22px,5.5vw,30px);margin-bottom:8px}
 .form-lead p{color:var(--muted);font-size:15px;max-width:520px;margin:0 auto}
+
+/* ===== app-grade polish ===== */
+/* scroll reveal (class added by JS so no-JS still shows everything) */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+/* header entrance */
+.top-in>*{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.top .script{animation-delay:.06s}.top h1{animation-delay:.14s}.top p{animation-delay:.24s}.top .hero-cta{animation-delay:.34s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+/* soft floating glow in header */
+.top::after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,0,144,.45),transparent 70%);top:-90px;left:-60px;filter:blur(20px);animation:float 9s ease-in-out infinite;pointer-events:none}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,26px)}}
+/* press feedback + smoother transitions */
+.btn,.start-btn,.hero-cta,.wa-help a{transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s,background .2s}
+.btn:active,.start-btn:active,.hero-cta:active{transform:scale(.975)}
+.section{transition:box-shadow .25s,transform .25s}
+.section:focus-within{box-shadow:0 12px 34px rgba(160,107,255,.16);transform:translateY(-2px)}
+/* nicer inputs */
+.f input,.f select,.f textarea{transition:border-color .2s,box-shadow .2s,background .2s}
+.f input:hover,.f select:hover,.f textarea:hover{border-color:#d9c9f2}
+/* sticky mobile CTA bar */
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:900;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(251,248,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(123,45,139,.12);transform:translateY(130%);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+.sticky-cta.show{transform:none}
+.sticky-cta a{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--purple-d),var(--fuchsia));color:#fff;font-family:'Rubik',sans-serif;font-weight:700;font-size:17px;text-decoration:none;padding:15px;border-radius:13px;box-shadow:0 10px 26px rgba(255,0,144,.32)}
+.sticky-cta a:active{transform:scale(.98)}
+@media(min-width:721px){.sticky-cta{display:none}}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.top-in>*{animation:none}.top::after{animation:none}}
 </style>
 <!-- pwa -->
 <link rel="manifest" href="/manifest.webmanifest">
@@ -308,6 +335,9 @@ footer b span{color:var(--fuchsia)}
   <span style="font-size:12.5px">שאלות? <a href="https://wa.me/972523983394" style="color:var(--purple-d);font-weight:700">052-398-3394</a></span>
 </footer>
 
+<!-- sticky CTA (mobile) -->
+<div class="sticky-cta" id="stickyCta"><a href="#start">התחילו — דמי רצינות 50 ₪ <span>←</span></a></div>
+
 <script>
 const WA_NUMBER = '972523983394';
 const form = document.getElementById('intake');
@@ -378,6 +408,28 @@ document.getElementById('wa').addEventListener('click', function(e){
   const hi = 'שלום Multibrawn 🌸 ' + (name ? '('+name+') ' : '') + 'יש לי שאלה על שבת חתן לפני שאני ממלא/ת אפיון.';
   location.href = 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(hi);
 });
+
+/* ===== app-grade polish ===== */
+/* scroll reveal — class added here so no-JS still shows everything */
+(function(){
+  var els = document.querySelectorAll('.guide-note,.about,.intro-sec,.section,.commit,.cta-wrap');
+  els.forEach(function(el){ el.classList.add('reveal'); });
+  if(!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } });
+  }, { threshold:.08, rootMargin:'0px 0px -40px 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+/* sticky mobile CTA — appears after the hero, hides when the real pay button is on screen */
+(function(){
+  var bar = document.getElementById('stickyCta'); if(!bar) return;
+  var pay = document.getElementById('pay'), payVisible = false;
+  function upd(){ bar.classList.toggle('show', window.scrollY > 520 && !payVisible); }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){ payVisible = e[0].isIntersecting; upd(); }, { threshold:.25 }).observe(pay);
+  }
+  addEventListener('scroll', upd, { passive:true }); addEventListener('resize', upd); upd();
+})();
 </script>
 <script>if(new URLSearchParams(location.search).has('test')){var b=document.createElement('div');b.textContent='🧪 מצב טסט — ללא תשלום';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#E7B34A;color:#1A0B2E;text-align:center;font-family:sans-serif;font-weight:800;font-size:13px;padding:6px 10px';document.body.appendChild(b);}</script>
 </body>
