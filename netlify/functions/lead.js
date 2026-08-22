@@ -42,9 +42,11 @@ exports.handler = async (event) => {
   const summary = [b.couple_names, b.shabbat_date, b.area, b.guests && b.guests + ' אורחים', b.budget]
     .filter(Boolean).join(' · ');
 
-  // 1) רישום ב-Google Sheet (best-effort)
+  // 1) רישום ב-Google Sheet (best-effort). עמודות: תאריך·מקור·שם·אימייל·טלפון·תקציב·אזור·סטטוס·תקציר·וואטסאפ
+  const src = b.source === 'whatsapp' ? 'וואטסאפ' : 'אתר';
+  const waCell = norm ? `=HYPERLINK("https://wa.me/${norm}","שליחה")` : '';
   try {
-    await sheets.appendRow([stamp, 'LEAD', name, email, norm || phone, b.budget || '', b.area || '', 'ליד חדש', summary, '']);
+    await sheets.appendRow([stamp, src, name, email, norm || phone, b.budget || '', b.area || '', 'ליד חדש', summary, waCell]);
   } catch (e) {
     console.error('[lead] רישום בגיליון נכשל:', String(e && e.message));
   }

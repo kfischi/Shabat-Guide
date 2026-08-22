@@ -531,7 +531,8 @@ document.getElementById('pay').addEventListener('click', async function(){
 document.getElementById('send').addEventListener('click', function(e){
   e.preventDefault();
   if(!validate()) return;
-  sendLead(collect());
+  var d = collect(); d.source = 'whatsapp';
+  sendLead(d);
   window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(waText()), "_blank");
 });
 </script>

@@ -204,11 +204,14 @@ exports.handler = async (event) => {
   let arditStatus = arditRes.status === 'fulfilled' ? 'נשלח' : 'נכשל: ' + hebrewReason(arditRes.reason);
   if (!phone) arditStatus += ' · טלפון לא תקין';
 
-  // §5.5 — רישום בגיליון (כתיבה אחת, לא חוסמת, לא מפילה)
+  // §5.5 — רישום בגיליון (כתיבה אחת, לא חוסמת, לא מפילה). מיושר לעמודות העיצוב;
+  // מזהה העסקה נשאר בעמודה B לצורך מניעת כפילות (hasTransaction סורק אותה).
   try {
     const stamp = new Date().toISOString().replace('T', ' ').slice(0, 16);
+    const waCell = phone ? `=HYPERLINK("https://wa.me/${phone}","שליחה")` : '';
     await sheets.appendRow([
-      stamp, transactionId, name, email, phone || rawPhone || '', amount, link, custStatus, arditStatus, '',
+      stamp, transactionId, name, email, phone || rawPhone || '', amount, '', 'נסגר',
+      `שילם ${amount}₪ · ${link}`, waCell,
     ]);
   } catch (e) {
     console.error('[grow-webhook] רישום בגיליון נכשל:', hebrewReason(e));

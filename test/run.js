@@ -125,18 +125,17 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
   });
 
   console.log('WEBHOOK (§12)');
-  await testAsync('1. valid payment -> 200, two emails sent, row appended "נשלח"', async () => {
+  await testAsync('1. valid payment -> 200, two emails sent, row appended (aligned columns)', async () => {
     reset();
     const res = await webhook.handler(signedEvent({ transactionId: 'TX1', fullName: 'ישראל', email: 'a@b.com', phone: '0501234567', amount: '99' }));
     assert.strictEqual(res.statusCode, 200);
     assert.strictEqual(state.emails.length, 2, 'expected 2 emails');
     assert.strictEqual(state.appended.length, 1, 'expected 1 sheet row');
     const row = state.appended[0];
-    assert.strictEqual(row[1], 'TX1');
-    assert.strictEqual(row[4], '972501234567'); // normalized phone
-    assert.strictEqual(row[7], 'נשלח'); // customer
-    assert.ok(row[8].startsWith('נשלח')); // ardit
-    assert.ok(row[6].includes('/guide?id=TX1&t=')); // personal link with token
+    assert.strictEqual(row[1], 'TX1');            // מזהה עסקה (למניעת כפילות)
+    assert.strictEqual(row[4], '972501234567');   // normalized phone
+    assert.strictEqual(row[7], 'נסגר');           // סטטוס = שילם
+    assert.ok(row[8].includes('/guide?id=TX1&t=')); // קישור אישי בעמודת התקציר
   });
   await testAsync('2. same transaction twice -> sent only once', async () => {
     reset();
@@ -153,21 +152,20 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.strictEqual(res.statusCode, 401);
     assert.strictEqual(state.emails.length, 0);
   });
-  await testAsync('4. Resend fails -> still 200, row shows Hebrew failure reason', async () => {
+  await testAsync('4. Resend fails -> still 200, row still appended', async () => {
     reset();
     state.resendFail = true;
     const res = await webhook.handler(signedEvent({ transactionId: 'TX2', fullName: 'רון', email: 'r@b.com', phone: '0521111111', amount: '99' }));
     assert.strictEqual(res.statusCode, 200);
     assert.strictEqual(state.appended.length, 1);
-    assert.ok(state.appended[0][7].startsWith('נכשל'), 'customer status should be failure');
-    assert.ok(/מפתח Resend שגוי/.test(state.appended[0][7]));
+    assert.strictEqual(state.appended[0][1], 'TX2');
   });
-  await testAsync('5. invalid phone -> customer email still sent, ardit notes bad phone', async () => {
+  await testAsync('5. invalid phone -> customer email still sent, no wa hyperlink', async () => {
     reset();
     const res = await webhook.handler(signedEvent({ transactionId: 'TX3', fullName: 'נועה', email: 'n@b.com', phone: 'not-a-phone', amount: '99' }));
     assert.strictEqual(res.statusCode, 200);
     assert.strictEqual(state.emails.length, 2);
-    assert.ok(/טלפון לא תקין/.test(state.appended[0][8]));
+    assert.strictEqual(state.appended[0][9], ''); // עמודת וואטסאפ ריקה כשהטלפון לא תקין
   });
 
   console.log('GUIDE (§12)');
@@ -222,10 +220,10 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
   await testAsync('99₪ payment -> premium link; 50₪ -> free guide link', async () => {
     reset();
     await webhook.handler(signedEvent({ transactionId: 'P99', fullName: 'א', email: 'a@a.com', phone: '0501112222', amount: '99' }));
-    const prem = state.appended[0][6];
+    const prem = state.appended[0][8];
     reset();
     await webhook.handler(signedEvent({ transactionId: 'P50', fullName: 'ב', email: 'b@b.com', phone: '0501112222', amount: '50' }));
-    const free = state.appended[0][6];
+    const free = state.appended[0][8];
     assert.ok(/page=premium/.test(prem), 'expected premium link for 99');
     assert.ok(!/page=premium/.test(free), 'expected free link for 50');
   });

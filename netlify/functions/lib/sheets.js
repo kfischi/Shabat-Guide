@@ -99,10 +99,14 @@ async function apiCall(path, opts = {}) {
   return res.json().catch(() => ({}));
 }
 
-// מוסיף שורה אחת בסוף הגיליון (עמודות A..J).
+// שם הטאב בגיליון (העיצוב של Multibrawn). ניתן לעקוף עם SHEET_TAB.
+const TAB = process.env.SHEET_TAB || 'לידים 2026';
+const RANGE = () => encodeURIComponent(`'${TAB}'!A:J`);
+
+// מוסיף שורה אחת בסוף הטאב (עמודות A..J).
 async function appendRow(values) {
   return apiCall(
-    `/values/A:J:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+    `/values/${RANGE()}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
     { method: 'POST', body: JSON.stringify({ values: [values] }) }
   );
 }
@@ -110,7 +114,7 @@ async function appendRow(values) {
 // מחזיר את השורה שבה עמודה B == transactionId, או null.
 async function findRowByTransaction(transactionId) {
   const id = String(transactionId);
-  const data = await apiCall(`/values/A:J`);
+  const data = await apiCall(`/values/${RANGE()}`);
   const rows = (data && data.values) || [];
   for (const row of rows) {
     if (String(row[1] || '').trim() === id.trim()) return row;
