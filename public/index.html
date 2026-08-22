@@ -201,7 +201,7 @@ button:disabled{opacity:.6;cursor:default;transform:none}
       <div class="stp"><div class="n">3</div><b>מקבלים הצעות מדויקות</b><p>חוזרים אליכם עד 5 ימי עסקים — הצעות אמיתיות, לא רשימות אקראיות.</p></div>
     </div>
     <div class="why">
-      <div class="w"><b>0 ₪ עמלה מכם</b><span>העמלה נגבית מהמתחם — המחיר שתקבלו הוא המחיר.</span></div>
+      <div class="w"><b>מתמקחים בשבילכם</b><span>מנהלים מו״מ מול המתחמים כדי להשיג לכם מחיר טוב יותר.</span></div>
       <div class="w"><b>חוסכים לכם שעות</b><span>מכירים את המתחמים והספקים, ומדברים בשמכם.</span></div>
       <div class="w"><b>מדריך חינם</b><span>מה עולה, מה שוכחים, ואיפה מפסידים כסף.</span></div>
     </div>
@@ -228,7 +228,7 @@ button:disabled{opacity:.6;cursor:default;transform:none}
     <div class="sec-sub">כדי שנדע למי לחזור ומתי</div>
     <div class="f"><label>שם מלא של איש הקשר</label><input type="text" id="name" placeholder="שם ושם משפחה"></div>
     <div class="f"><label>טלפון</label><input type="tel" id="phone" placeholder="050-0000000"></div>
-    <div class="f"><label>אימייל <span class="hint">לא חובה</span></label><input type="email" id="email" placeholder="name@mail.com"></div>
+    <div class="f"><label>אימייל</label><input type="email" id="email" required placeholder="name@mail.com"></div>
     <div class="f"><label>שם החתן והכלה</label><input type="text" id="couple" placeholder="לדוגמה: יוסי ורחל"></div>
     <div class="f"><label>תאריך השבת המבוקש</label><input type="text" id="date1" placeholder="לדוגמה: 23–24/10"></div>
     <div class="f"><label>תאריך חלופי <span class="hint">אם יש גמישות</span></label><input type="text" id="date2" placeholder="לדוגמה: 30–31/10"></div>
@@ -396,7 +396,6 @@ button:disabled{opacity:.6;cursor:default;transform:none}
   <div class="sec">
     <div class="sec-h"><span class="n">✓</span><span class="t">התחייבות הדדית</span></div>
     <ul class="terms">
-      <li><b>אינכם משלמים עמלה על המתחם.</b> העמלה נגבית מהמתחם בלבד — המחיר שתקבלו הוא המחיר.</li>
       <li><b>בלעדיות על מתחמים וספקים שהוצגו:</b> הלקוח מתחייב שלא לפנות ישירות למתחם או לספק שהוצג לו על ידי Multibrawn, ולא לסגור מולו — במישרין או דרך צד שלישי — למשך <b>12 חודשים</b> ממועד ההצגה.</li>
       <li><b>תיאום מחירים:</b> כל תמחור, הנחה או שינוי בהצעה מאושרים דרך Multibrawn בלבד.</li>
       <li><b>מצדנו:</b> נציג רק מתחמים וספקים שעונים לדרישות שהגדרתם, ונחזור עם תשובה מסודרת <b>עד 5 ימי עסקים</b>.</li>
@@ -415,7 +414,7 @@ button:disabled{opacity:.6;cursor:default;transform:none}
 
 <div class="dock">
   <div class="inner">
-    <div class="err" id="err">נא למלא שם, טלפון ולאשר את ההתחייבות</div>
+    <div class="err" id="err">נא למלא שם, טלפון, אימייל ולאשר את ההתחייבות</div>
     <button id="pay">לתשלום דמי רצינות ושליחת הבקשה — ₪50 ←</button>
     <a class="wa-alt" id="send">או שליחה בוואטסאפ ←</a>
   </div>
@@ -455,7 +454,11 @@ function collect(){
 
 function validate(){
   const err = document.getElementById('err');
-  if(!v('name') || !v('phone') || !document.getElementById('agree').checked){
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'));
+  if(!v('name') || !v('phone') || !emailOk || !document.getElementById('agree').checked){
+    err.textContent = (v('name') && v('phone') && !emailOk)
+      ? 'נא למלא כתובת אימייל תקינה'
+      : 'נא למלא שם, טלפון, אימייל ולאשר את ההתחייבות';
     err.style.display='block';
     window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
     return false;
