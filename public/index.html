@@ -32,14 +32,20 @@
 body{background:var(--bg);color:var(--ink);font-family:'Heebo',sans-serif;font-size:17px;line-height:1.6;padding:0 0 160px}
 .sheet{max-width:720px;margin:0 auto;padding:0 20px}
 
-header{background:var(--card);border-bottom:1px solid var(--line);padding:34px 0 30px;margin-bottom:16px}
-.bar{height:5px;background:var(--grad);border-radius:5px;width:58px;margin-bottom:20px}
-.mark{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:22px}
-.mark em{font-style:normal;color:var(--fuchsia)}
-h1{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:37px;line-height:1.25;margin-top:14px}
+/* video hero */
+header{position:relative;overflow:hidden;min-height:min(86svh,640px);display:flex;align-items:flex-end;
+  color:#fff;margin-bottom:16px;background:linear-gradient(160deg,#2a0d3f,#7C3AED 60%,#1E0A2D)}
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-overlay{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(30,10,45,.94) 4%,rgba(44,26,61,.55) 42%,rgba(44,26,61,.20) 100%)}
+.hero-in{position:relative;z-index:2;width:100%;max-width:720px;margin:0 auto;padding:0 20px 46px}
+.bar{height:5px;background:var(--grad);border-radius:5px;width:58px;margin-bottom:18px;box-shadow:0 0 16px rgba(217,70,239,.6)}
+.mark{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:22px;color:#fff}
+.mark em{font-style:normal;color:#ff9be9}
+h1{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:clamp(34px,9vw,48px);line-height:1.12;margin-top:14px;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.45)}
 h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lede{color:var(--muted);margin-top:12px;font-weight:300}
-.lede b{color:var(--ink);font-weight:600}
+.lede{color:rgba(255,255,255,.92);margin-top:12px;font-weight:300;max-width:520px;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.lede b{color:#fff;font-weight:600}
 
 /* free guide */
 .guide{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;
@@ -168,7 +174,12 @@ button:disabled{opacity:.6;cursor:default;transform:none}
 </form>
 
 <header>
-  <div class="sheet">
+  <video class="hero-vid" autoplay muted loop playsinline preload="auto"
+    poster="https://res.cloudinary.com/dptyfvwyo/video/upload/so_1/v1787397143/%D7%99%D7%A6%D7%99%D7%A8%D7%AA_%D7%A1%D7%A8%D7%98%D7%95%D7%9F_%D7%A9%D7%91%D7%AA_%D7%97%D7%AA%D7%9F_%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D_gzpy70.jpg">
+    <source src="https://res.cloudinary.com/dptyfvwyo/video/upload/v1787397143/%D7%99%D7%A6%D7%99%D7%A8%D7%AA_%D7%A1%D7%A8%D7%98%D7%95%D7%9F_%D7%A9%D7%91%D7%AA_%D7%97%D7%AA%D7%9F_%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D_gzpy70.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-in">
     <div class="bar"></div>
     <div class="mark">Multi<em>brawn</em></div>
     <h1>שבת חתן חוגגים<br><span class="g">פעם בחיים.</span></h1>
