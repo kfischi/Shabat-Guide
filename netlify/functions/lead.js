@@ -51,6 +51,24 @@ exports.handler = async (event) => {
     console.error('[lead] רישום בגיליון נכשל:', String(e && e.message));
   }
 
+  // 1b) Apps Script Web App — כותב ישירות לגיליון (חלופה ל-Service Account, בלי Google Cloud).
+  //     מוגדר עם LEAD_WEBHOOK (כתובת ה-/exec). הטוקן חייב להתאים לזה שבסקריפט.
+  const HOOK = process.env.LEAD_WEBHOOK;
+  if (HOOK) {
+    try {
+      await fetch(HOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: 'mb-lead-2026-a7k9x2', source: src, name, email,
+          phone: norm || phone, budget: b.budget || '', area: b.area || '', summary,
+        }),
+      });
+    } catch (e) {
+      console.error('[lead] webhook לגיליון נכשל:', String(e && e.message));
+    }
+  }
+
   // 2) מייל לערדית עם כל הפרטים + כפתור וואטסאפ מוכן
   const GROW = process.env.GROW_LINK_50 || process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/MTAxNDc1~6e3a5a0ac617763f08f9ba396aa13e42-MzgyODM2Mw';
   const waMsg = `שלום ${name || ''}, מדברים מ-Multibrawn 🌸\nקיבלנו את בקשת האפיון שלך לשבת חתן ונחזור עם הצעות. לפתיחת התהליך (דמי רצינות 50₪, מקוזזים מהעסקה):\n${GROW}`;
