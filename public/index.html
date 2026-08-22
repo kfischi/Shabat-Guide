@@ -119,6 +119,32 @@ button:disabled{opacity:.6;cursor:default;transform:none}
 .err{color:#B01E63;font-size:14px;font-weight:600;text-align:center;margin-bottom:9px;display:none}
 .foot{text-align:center;color:var(--muted);font-size:13.5px;margin-top:22px;letter-spacing:.03em}
 .foot a{color:var(--purple);font-weight:600;text-decoration:none}
+
+/* hero CTA + intro / pitch */
+.hero-cta{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:var(--grad);color:#fff;font-weight:700;font-size:16px;text-decoration:none;padding:14px 30px;border-radius:999px;box-shadow:0 12px 30px rgba(217,70,239,.3);transition:transform .18s}
+.hero-cta:active{transform:scale(.97)}
+.intro{padding:6px 0 2px;text-align:center}
+.kick{color:var(--fuchsia);font-weight:800;letter-spacing:2px;font-size:12px;text-transform:uppercase;margin-bottom:10px}
+.intro h2{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:clamp(24px,6.5vw,34px);line-height:1.2;margin-bottom:12px}
+.intro h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro .lead{color:var(--muted);font-size:16.5px;max-width:560px;margin:0 auto;font-weight:400;line-height:1.7}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 18px}
+@media(max-width:600px){.steps{grid-template-columns:1fr}}
+.stp{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 16px;text-align:right;box-shadow:0 2px 12px rgba(90,40,120,.06)}
+.stp .n{width:34px;height:34px;border-radius:10px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;margin-bottom:10px}
+.stp b{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:17px;display:block;margin-bottom:4px}
+.stp p{color:var(--muted);font-size:14px;font-weight:300;line-height:1.5}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:600px){.why{grid-template-columns:1fr}}
+.why .w{background:var(--tint);border-radius:14px;padding:15px;text-align:right}
+.why .w b{color:var(--purple);display:block;font-size:15px;font-weight:700}
+.why .w span{color:var(--muted);font-size:13px;font-weight:300}
+.start-wrap{text-align:center;margin:6px 0 8px}
+.start-cta{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#fff;font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;text-decoration:none;padding:16px 36px;border-radius:14px;box-shadow:0 12px 30px rgba(217,70,239,.32);transition:transform .18s}
+.start-cta:active{transform:scale(.97)}
+.form-lead{text-align:center;padding:20px 0 2px;scroll-margin-top:10px}
+.form-lead h2{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:clamp(22px,5.5vw,28px);margin-bottom:6px}
+.form-lead p{color:var(--muted);font-size:15px;font-weight:300;max-width:520px;margin:0 auto}
 </style>
 <!-- pwa -->
 <link rel="manifest" href="/manifest.webmanifest">
@@ -147,10 +173,28 @@ button:disabled{opacity:.6;cursor:default;transform:none}
     <div class="mark">Multi<em>brawn</em></div>
     <h1>שבת חתן חוגגים<br><span class="g">פעם בחיים.</span></h1>
     <p class="lede">כמה תשובות קצרות — ונחזור אליכם עם <b>הצעות מדויקות, לא רשימות אקראיות.</b></p>
+    <a href="#start" class="hero-cta">בואו נתחיל ←</a>
   </div>
 </header>
 
 <div class="sheet">
+
+  <!-- INTRO · הקדמה, טריגר ומשיכה -->
+  <section class="intro">
+    <div class="kick">איך זה עובד</div>
+    <h2>אתם חולמים — <em>אנחנו מוצאים ומתמקחים</em></h2>
+    <p class="lead">שבת חתן חוגגים פעם בחיים — ומאחורי השבת המושלמת מסתתרים עשרות מתחמים, מחירים ופרטים קטנים שקל ללכת בהם לאיבוד. במקום לרדוף אחרי הצעות, אתם עונים על כמה שאלות — ואנחנו חוזרים עם מתחמים שמתאימים בדיוק לכם, אחרי שבדקנו זמינות והתמקחנו על המחיר.</p>
+    <div class="steps">
+      <div class="stp"><div class="n">1</div><b>ממלאים אפיון קצר</b><p>כמה שאלות על הזוג, השבת והדרישות — בערך 3 דקות.</p></div>
+      <div class="stp"><div class="n">2</div><b>אנחנו עושים את העבודה</b><p>מאתרים מתחמים מתאימים, בודקים זמינות, ומנהלים מו״מ על המחיר.</p></div>
+      <div class="stp"><div class="n">3</div><b>מקבלים הצעות מדויקות</b><p>חוזרים אליכם עד 5 ימי עסקים — הצעות אמיתיות, לא רשימות אקראיות.</p></div>
+    </div>
+    <div class="why">
+      <div class="w"><b>0 ₪ עמלה מכם</b><span>העמלה נגבית מהמתחם — המחיר שתקבלו הוא המחיר.</span></div>
+      <div class="w"><b>חוסכים לכם שעות</b><span>מכירים את המתחמים והספקים, ומדברים בשמכם.</span></div>
+      <div class="w"><b>מדריך חינם</b><span>מה עולה, מה שוכחים, ואיפה מפסידים כסף.</span></div>
+    </div>
+  </section>
 
   <div class="guide">
     <div class="ic">📘</div>
@@ -158,6 +202,14 @@ button:disabled{opacity:.6;cursor:default;transform:none}
       <div class="t">מדריך שבת חתן<span class="free">חינם</span></div>
       <p>לא מכירים אותנו עדיין? קבלו את המדריך — מה באמת עולה, מה שוכחים להזמין, ואיפה מפסידים כסף. נשלח אליכם בוואטסאפ יחד עם ההצעה.</p>
     </div>
+  </div>
+
+  <div class="start-wrap"><a href="#start" class="start-cta">בואו נתחיל — מילוי אפיון ←</a></div>
+
+  <div id="start"></div>
+  <div class="form-lead">
+    <h2>ממלאים אפיון — ויוצאים לדרך</h2>
+    <p>ככל שתפרטו יותר, ההצעות שנחזור איתן יהיו מדויקות יותר. חובה רק שם וטלפון — השאר לפי מה שכבר ידוע לכם.</p>
   </div>
 
   <div class="sec">
