@@ -118,6 +118,18 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
   var link = document.getElementById('guide-link');
   link.href = '/guide?id=' + encodeURIComponent(id) + (token ? '&t=' + encodeURIComponent(token) : '') + pageParam;
 
+  // שולחים את המדריך גם במייל (best-effort) — לפי האימייל מהטופס, פעם אחת.
+  try {
+    var buyer = JSON.parse(localStorage.getItem('mb_buyer') || '{}');
+    if (buyer.email && !sessionStorage.getItem('mb_guide_mailed')) {
+      sessionStorage.setItem('mb_guide_mailed', '1');
+      fetch('/send-guide', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+        body: JSON.stringify({ email: buyer.email, name: buyer.name || '', link: link.href }),
+      }).catch(function(){});
+    }
+  } catch (e) {}
+
   // דף התודה מודע לפרימיום: אחרי 99 פותחים את מדריך הפרימיום ומסתירים את הצעת השדרוג
   if (premium) {
     document.querySelector('h1').textContent = 'תודה! מדריך הפרימיום מוכן';
