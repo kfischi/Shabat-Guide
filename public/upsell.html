@@ -273,7 +273,6 @@ const PREMIUM_PRICE = 99;
 
 /* יצירת עסקת GROW דרך Make (create-payment) ומעבר לתשלום */
 async function buyPremium(btn){
-  if(new URLSearchParams(location.search).has('test')){ location.href='/thank-you.html?amount=99&product=premium&test=1'; return; }
   var orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'רגע, יוצרים תשלום…';
   var buyer={}; try{ buyer=JSON.parse(localStorage.getItem('mb_buyer')||'{}'); }catch(e){}
   try{
@@ -292,6 +291,5 @@ document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>q.
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
-<script>if(new URLSearchParams(location.search).has('test')){var b=document.createElement('div');b.textContent='🧪 מצב טסט — 0 ₪';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#40E0D0;color:#123;text-align:center;font-family:sans-serif;font-weight:800;font-size:13px;padding:6px 10px';document.body.appendChild(b);}</script>
 </body>
 </html>
