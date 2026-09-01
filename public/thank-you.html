@@ -130,6 +130,11 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
     }
   } catch (e) {}
 
+  // פתיחה אוטומטית של המדריך — בלי צורך ללחוץ. נותנים רגע לראות את התודה ואז פותחים.
+  var noteEl = document.querySelector('.note');
+  if (noteEl) noteEl.textContent = 'פותחים לך את המדריך תוך רגע… (או לחצו על הכפתור למעלה)';
+  setTimeout(function(){ if (link && link.href && link.href.indexOf('/guide') > -1) location.href = link.href; }, 3500);
+
   // דף התודה מודע לפרימיום: אחרי 99 פותחים את מדריך הפרימיום ומסתירים את הצעת השדרוג
   if (premium) {
     document.querySelector('h1').textContent = 'תודה! מדריך הפרימיום מוכן';

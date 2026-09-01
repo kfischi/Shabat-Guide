@@ -183,6 +183,20 @@ exports.handler = async (event) => {
   const waMsg = `היי ${name || ''}, מדברים מ-Multibrawn.\nהתשלום התקבל והמדריך התפעולי לשבת חתן מחכה לך כאן:\n${link}\nהקישור אישי ושמור עבורך. בהצלחה!`;
   const waUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(waMsg)}` : '';
 
+  // מסירת המדריך במייל דרך Apps Script (Gmail) — גיבוי שלא תלוי בהפניה של GROW.
+  const HOOK = process.env.LEAD_WEBHOOK;
+  if (HOOK && email) {
+    try {
+      await fetch(HOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: 'mb-lead-2026-a7k9x2', action: 'guideEmail', email, name, link }),
+      });
+    } catch (e) {
+      console.error('[grow-webhook] guide email webhook:', String(e && e.message));
+    }
+  }
+
   const [custRes, arditRes] = await Promise.allSettled([
     sendEmail({
       apiKey: process.env.RESEND_API_KEY,
