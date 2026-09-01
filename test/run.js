@@ -57,6 +57,16 @@ global.fetch = async (url, opts) => {
     state.emails.push(JSON.parse(opts.body));
     return jsonRes({ id: 'email_1' });
   }
+  if (url.includes('graph.facebook.com')) {
+    state.graph = state.graph || [];
+    state.graph.push({ url, body: opts && opts.body });
+    if (state.graphFail) return jsonRes({ error: { message: 'invalid token' } }, 400);
+    if (/\/media_publish/.test(url)) return jsonRes({ id: 'ig_post_1' });
+    if (/\/media/.test(url)) return jsonRes({ id: 'container_1' });
+    if (/\/photos/.test(url)) return jsonRes({ post_id: 'fb_photo_1', id: 'x' });
+    if (/\/feed/.test(url)) return jsonRes({ id: 'fb_feed_1' });
+    return jsonRes({});
+  }
   throw new Error('unexpected fetch ' + url);
 };
 function reset() { state.rows = []; state.appended = []; state.emails = []; state.resendFail = false; state.anthropicFail = false; state.anthropicCalls = 0; }
@@ -69,6 +79,7 @@ const webhook = require('../netlify/functions/grow-webhook');
 const guide = require('../netlify/functions/guide');
 const ai = require('../netlify/functions/ai');
 const cpay = require('../netlify/functions/create-payment');
+const social = require('../netlify/functions/social-post');
 const lead = require('../netlify/functions/lead');
 process.env.ANTHROPIC_API_KEY = 'sk-ant-test';
 process.env.GROW_LINK_50 = 'https://pay.grow.link/L50';
@@ -324,6 +335,40 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.strictEqual(JSON.parse(res.body).ok, false);
     assert.strictEqual(state.appended.length, 0);
     assert.strictEqual(state.emails.length, 0);
+  });
+
+  console.log('SOCIAL POST (Meta Graph)');
+  process.env.SOCIAL_POST_TOKEN = 'social-secret';
+  process.env.META_ACCESS_TOKEN = 'meta-tok';
+  process.env.META_PAGE_ID = 'PAGE1';
+  process.env.META_IG_USER_ID = 'IG1';
+  await testAsync('bad token -> 401 unauthorized', async () => {
+    const res = await social.handler({ httpMethod: 'POST', body: JSON.stringify({ token: 'wrong', text: 'hi' }) });
+    assert.strictEqual(res.statusCode, 401);
+  });
+  await testAsync('text-only -> facebook feed only, instagram reports needs image', async () => {
+    state.graph = [];
+    const res = await social.handler({ httpMethod: 'POST', body: JSON.stringify({ token: 'social-secret', text: 'שלום' }) });
+    const b = JSON.parse(res.body);
+    assert.ok(b.ok && b.results.facebook.ok, 'facebook should post');
+    assert.strictEqual(b.results.facebook.id, 'fb_feed_1');
+    assert.strictEqual(b.results.instagram.ok, false);
+    assert.ok(/תמונה/.test(b.results.instagram.error), 'instagram should require image');
+  });
+  await testAsync('with image -> facebook photo + instagram publish (2-step)', async () => {
+    state.graph = [];
+    const res = await social.handler({ httpMethod: 'POST', body: JSON.stringify({ token: 'social-secret', text: 'שלום', imageUrl: 'https://img/x.jpg' }) });
+    const b = JSON.parse(res.body);
+    assert.ok(b.results.facebook.ok && b.results.facebook.id === 'fb_photo_1');
+    assert.ok(b.results.instagram.ok && b.results.instagram.id === 'ig_post_1');
+    assert.ok(state.graph.some((g) => /\/media\b/.test(g.url)) && state.graph.some((g) => /media_publish/.test(g.url)), 'IG two-step');
+  });
+  await testAsync('graph error -> per-target ok:false, 502', async () => {
+    state.graph = []; state.graphFail = true;
+    const res = await social.handler({ httpMethod: 'POST', body: JSON.stringify({ token: 'social-secret', text: 'x', targets: ['facebook'] }) });
+    state.graphFail = false;
+    assert.strictEqual(res.statusCode, 502);
+    assert.strictEqual(JSON.parse(res.body).results.facebook.ok, false);
   });
 
   console.log('MAILER reasons');
