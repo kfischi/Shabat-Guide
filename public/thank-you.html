@@ -147,7 +147,6 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 
 /* שדרוג לפרימיום — מפעיל תשלום 99₪ (דרך create-payment) ומחזיר ישר לפרימיום */
 document.getElementById('upgrade').addEventListener('click', async function(){
-  if(new URLSearchParams(location.search).has('test')){ location.href='/thank-you.html?amount=99&product=premium&test=1'; return; }
   var btn=this, orig=btn.innerHTML, err=document.getElementById('u-err');
   btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
   var buyer={}; try{ buyer=JSON.parse(localStorage.getItem('mb_buyer')||'{}'); }catch(e){}
@@ -166,6 +165,5 @@ document.getElementById('skip').addEventListener('click', function(e){
   location.href = document.getElementById('guide-link').href;
 });
 </script>
-<script>if(new URLSearchParams(location.search).has('test')){var b=document.createElement('div');b.textContent='🧪 מצב טסט — 0 ₪';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#40E0D0;color:#123;text-align:center;font-family:sans-serif;font-weight:800;font-size:13px;padding:6px 10px';document.body.appendChild(b);}</script>
 </body>
 </html>

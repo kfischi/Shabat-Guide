@@ -513,8 +513,6 @@ function waText(){
 document.getElementById('pay').addEventListener('click', async function(){
   if(!validate()) return;
   const data = collect();
-  // מצב טסט (?test=1) — 0 ₪: מדלגים על GROW ועוברים ישר לדף התודה, כדי לבדוק את כל ההמשך
-  if(new URLSearchParams(location.search).has('test')){ sendLead(data); location.href='/thank-you.html?amount=50&test=1'; return; }
   const btn = this, orig = btn.textContent;
   btn.disabled = true; btn.textContent = 'רגע, יוצרים תשלום…';
   sendLead(data);
@@ -538,6 +536,5 @@ document.getElementById('send').addEventListener('click', function(e){
   window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(waText()), "_blank");
 });
 </script>
-<script>if(new URLSearchParams(location.search).has('test')){var b=document.createElement('div');b.textContent='🧪 מצב טסט — 0 ₪ (ללא תשלום אמיתי)';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#40E0D0;color:#123;text-align:center;font-family:sans-serif;font-weight:800;font-size:13px;padding:6px 10px';document.body.appendChild(b);}</script>
 </body>
 </html>
