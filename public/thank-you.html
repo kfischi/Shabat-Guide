@@ -81,7 +81,7 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
       <li>יועץ AI אישי לכל שאלה בתכנון</li>
       <li>פלייבוק מלא + כלים אינטראקטיביים</li>
     </ul>
-    <button type="button" class="u-btn" id="upgrade">שדרוג למדריך הפרימיום — 99 ₪ <span>←</span></button>
+    <button type="button" class="u-btn" id="upgrade">שדרוג למדריך הפרימיום — 97 ₪ <span>←</span></button>
     <p class="u-fine" id="u-err">תשלום חד־פעמי · גישה מיידית</p>
     <a href="#" class="skip" id="skip">לא עכשיו, תודה — אמשיך עם המדריך החינם</a>
   </div>
@@ -98,7 +98,7 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
   var urlToken = q.get('t') || q.get('token') || '';
 
   var amount = parseFloat((q.get('amount') || q.get('sum') || '').replace(/[^\d.]/g, '')) || 0;
-  var premium = amount >= 99 || /premium/i.test(q.get('product') || '');
+  var premium = amount >= 90 || /premium/i.test(q.get('product') || '');
   var pageParam = premium ? '&page=premium' : '';
 
   async function sha256hex(s){
@@ -135,7 +135,7 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
   if (noteEl) noteEl.textContent = 'פותחים לך את המדריך תוך רגע… (או לחצו על הכפתור למעלה)';
   setTimeout(function(){ if (link && link.href && link.href.indexOf('/guide') > -1) location.href = link.href; }, 3500);
 
-  // דף התודה מודע לפרימיום: אחרי 99 פותחים את מדריך הפרימיום ומסתירים את הצעת השדרוג
+  // דף התודה מודע לפרימיום: אחרי תשלום הפרימיום פותחים את המדריך ומסתירים את הצעת השדרוג
   if (premium) {
     document.querySelector('h1').textContent = 'תודה! מדריך הפרימיום מוכן';
     document.querySelector('.lead').innerHTML = 'קיבלנו את התשלום — <b>מדריך הפרימיום שלכם מוכן, עם כל הכלים האינטראקטיביים.</b>';
@@ -145,13 +145,13 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
   }
 })();
 
-/* שדרוג לפרימיום — מפעיל תשלום 99₪ (דרך create-payment) ומחזיר ישר לפרימיום */
+/* שדרוג לפרימיום — מפעיל תשלום 97₪ (דרך create-payment) ומחזיר ישר לפרימיום */
 document.getElementById('upgrade').addEventListener('click', async function(){
   var btn=this, orig=btn.innerHTML, err=document.getElementById('u-err');
   btn.disabled=true; btn.textContent='רגע, יוצרים תשלום…';
   var buyer={}; try{ buyer=JSON.parse(localStorage.getItem('mb_buyer')||'{}'); }catch(e){}
   try{
-    var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:99,product:'premium',name:buyer.name||'',phone:buyer.phone||'',email:buyer.email||''})});
+    var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:97,product:'premium',name:buyer.name||'',phone:buyer.phone||'',email:buyer.email||''})});
     var d = await r.json();
     if(d && d.url){ location.href=d.url; return; }
   }catch(e){}

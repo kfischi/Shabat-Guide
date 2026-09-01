@@ -217,14 +217,14 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
   });
 
   console.log('PRODUCT ROUTING (§ two-tier)');
-  await testAsync('99₪ payment -> premium link; 50₪ -> free guide link', async () => {
+  await testAsync('97₪ payment -> premium link; 50₪ -> free guide link', async () => {
     reset();
-    await webhook.handler(signedEvent({ transactionId: 'P99', fullName: 'א', email: 'a@a.com', phone: '0501112222', amount: '99' }));
+    await webhook.handler(signedEvent({ transactionId: 'P97', fullName: 'א', email: 'a@a.com', phone: '0501112222', amount: '97' }));
     const prem = state.appended[0][8];
     reset();
     await webhook.handler(signedEvent({ transactionId: 'P50', fullName: 'ב', email: 'b@b.com', phone: '0501112222', amount: '50' }));
     const free = state.appended[0][8];
-    assert.ok(/page=premium/.test(prem), 'expected premium link for 99');
+    assert.ok(/page=premium/.test(prem), 'expected premium link for 97');
     assert.ok(!/page=premium/.test(free), 'expected free link for 50');
   });
 
@@ -275,13 +275,13 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.ok(b.url && b.fallback === true);
     state.makeFail = false;
   });
-  await testAsync('no Make -> fixed GROW link routed by amount (50 vs 99)', async () => {
+  await testAsync('no Make -> fixed GROW link routed by amount (50 vs 97)', async () => {
     delete process.env.MAKE_PAYMENT_WEBHOOK;
     const r50 = JSON.parse((await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 50 }) })).body);
-    const r99 = JSON.parse((await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 99 }) })).body);
+    const r97 = JSON.parse((await cpay.handler({ httpMethod: 'POST', body: JSON.stringify({ amount: 97 }) })).body);
     assert.strictEqual(r50.url, 'https://pay.grow.link/L50');
-    assert.strictEqual(r99.url, 'https://pay.grow.link/L99');
-    assert.ok(r50.fallback && r99.fallback);
+    assert.strictEqual(r97.url, 'https://pay.grow.link/L99');
+    assert.ok(r50.fallback && r97.fallback);
   });
   await testAsync('GROW API configured -> uses createPaymentProcess (multipart) and returns data.url', async () => {
     process.env.GROW_USER_ID = 'u123';

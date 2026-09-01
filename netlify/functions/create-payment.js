@@ -16,8 +16,8 @@ function site() {
 function fixedLinkFor(amount) {
   // לינקי GROW קבועים (עמודי סליקה ציבוריים — לא סוד). ניתן לעקוף עם משתני סביבה.
   const L50 = process.env.GROW_LINK_50 || process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/MTAxNDc1~46e74b5eb5e243744df1ddecf1b36e44-MzkyOTMyOQ'; // דמי רצינות 50₪
-  const L99 = process.env.GROW_LINK_99 || 'https://pay.grow.link/6e880b694e3a5cedda22d6f52a6bb84b-MzUyMzAzNA'; // מדריך פרימיום 99₪
-  return amount >= 99 ? L99 : L50;
+  const L99 = process.env.GROW_LINK_99 || 'https://pay.grow.link/MTAxNDc1~8b1466f36d4e64c0c7d055a5ae116433-MzkyOTM0MA'; // מדריך פרימיום 97₪ (עמוד קבוע)
+  return amount >= 90 ? L99 : L50;
 }
 
 function json(statusCode, obj) {

@@ -161,12 +161,12 @@ exports.handler = async (event) => {
     console.error('[grow-webhook] בדיקת כפילות נכשלה:', hebrewReason(e));
   }
 
-  // §5.3 — קישור אישי. המוצר נגזר מהסכום: 99₪+ → מדריך הפרימיום, אחרת → מדריך הכניסה (50₪).
+  // §5.3 — קישור אישי. המוצר נגזר מהסכום: 90₪+ → מדריך הפרימיום (97₪), אחרת → מדריך הכניסה (50₪).
   const phone = normalizePhone(rawPhone);
   const secret = process.env.TOKEN_SECRET;
   const amtNum = parseFloat(String(amount).replace(/[^\d.]/g, '')) || 0;
-  const pageParam = amtNum >= 99 ? '&page=premium' : '';
-  const productName = amtNum >= 99 ? 'מהדורת הפרימיום' : 'המדריך';
+  const pageParam = amtNum >= 90 ? '&page=premium' : '';
+  const productName = amtNum >= 90 ? 'מהדורת הפרימיום' : 'המדריך';
   let link;
   try {
     const token = makeToken(transactionId, secret);
