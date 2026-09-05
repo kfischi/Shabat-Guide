@@ -118,14 +118,18 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
   var link = document.getElementById('guide-link');
   link.href = '/guide?id=' + encodeURIComponent(id) + (token ? '&t=' + encodeURIComponent(token) : '') + pageParam;
 
-  // שולחים את המדריך גם במייל (best-effort) — לפי האימייל מהטופס, פעם אחת.
+  // שולחים את המדריך גם במייל (best-effort). האימייל — מהטופס (localStorage),
+  // ואם חסר (למשל דפדפן-בתוך-אפליקציה שאיפס storage) — מנסים מפרמטרי ה-URL ש-GROW מצרף.
   try {
-    var buyer = JSON.parse(localStorage.getItem('mb_buyer') || '{}');
-    if (buyer.email && !sessionStorage.getItem('mb_guide_mailed')) {
+    var buyer = {}; try { buyer = JSON.parse(localStorage.getItem('mb_buyer') || '{}'); } catch (e) {}
+    var urlEmail = q.get('email') || q.get('payerEmail') || q.get('customerEmail') || q.get('clientEmail') || '';
+    var mailTo = (buyer.email || urlEmail || '').trim();
+    var mailName = (buyer.name || q.get('fullName') || q.get('payerName') || '').trim();
+    if (mailTo && !sessionStorage.getItem('mb_guide_mailed')) {
       sessionStorage.setItem('mb_guide_mailed', '1');
       fetch('/send-guide', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
-        body: JSON.stringify({ email: buyer.email, name: buyer.name || '', link: link.href }),
+        body: JSON.stringify({ email: mailTo, name: mailName, link: link.href }),
       }).catch(function(){});
     }
   } catch (e) {}
