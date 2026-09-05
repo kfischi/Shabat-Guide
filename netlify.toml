@@ -46,3 +46,9 @@
   from = "/thank-you"
   to = "/thank-you.html"
   status = 200
+
+# לינק ייעודי ונקי למכירת מדריך הפרימיום (97₪) — משמש לפרסום ולשיתוף
+[[redirects]]
+  from = "/premium"
+  to = "/upsell.html"
+  status = 200
