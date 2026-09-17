@@ -239,6 +239,20 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     const res = await guide.handler({ queryStringParameters: { open: '1', page: 'premium' } });
     assert.strictEqual(res.statusCode, 403);
   });
+  await testAsync('6i. /free-guide function serves open guide without any query', async () => {
+    reset();
+    const freeGuide = require('../netlify/functions/free-guide');
+    const res = await freeGuide.handler({ queryStringParameters: null });
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(res.body.includes('/free-guide'));
+  });
+  await testAsync('6j. /free-guide cannot reach premium via page param', async () => {
+    reset();
+    const freeGuide = require('../netlify/functions/free-guide');
+    const res = await freeGuide.handler({ queryStringParameters: { page: 'premium' } });
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(!res.body.includes('mb_premium_v1'), 'must not serve the premium guide page');
+  });
 
   console.log('PRODUCT ROUTING (§ two-tier)');
   await testAsync('97₪ payment -> premium link; 50₪ -> free guide link', async () => {
