@@ -53,8 +53,9 @@
   to = "/upsell.html"
   status = 200
 
-# לינק פתוח למדריך החינמי — נגיש לכולם בלי טוקן ובלי תשלום (מתנה שיווקית ללכידת לידים)
+# לינק פתוח למדריך החינמי — נגיש לכולם בלי טוקן ובלי תשלום (מתנה שיווקית ללכידת לידים).
+# פונקציה ייעודית (לא query ב-redirect) כי Netlify לא מעביר query מה-`to` לפונקציה.
 [[redirects]]
   from = "/free-guide"
-  to = "/.netlify/functions/guide?open=1"
+  to = "/.netlify/functions/free-guide"
   status = 200
