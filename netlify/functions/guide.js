@@ -46,6 +46,28 @@ exports.handler = async (event) => {
   const id = (q.id || '').trim();
   const t = (q.t || '').trim();
   const page = PAGES[q.page] ? q.page : 'guide';
+  const openMode = q.open === '1' || q.open === 'true' || q.free === '1';
+
+  // מצב פתוח — המדריך החינמי גלוי לכולם, בלי טוקן ובלי תשלום (לינק שיווקי /free-guide).
+  // הפרימיום לעולם אינו פתוח — בקשת open ל-premium נופלת למסלול המאומת ונדחית.
+  if (openMode && page !== 'premium') {
+    let html;
+    try {
+      html = loadPrivate(PAGES[page]);
+    } catch (e) {
+      console.error('[guide] open:', String(e && e.message));
+      return { statusCode: 500, headers: { 'Content-Type': 'text/html; charset=utf-8' }, body: 'שגיאה בטעינת המדריך' };
+    }
+    html = html
+      .replace(/__GUIDE_URL__/g, '/free-guide')
+      .replace(/__GAMES_URL__/g, '/free-guide?page=games')
+      .replace(/__HOME_URL__/g, '/');
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=300' },
+      body: html,
+    };
+  }
 
   if (!id) return denied();
 

@@ -227,6 +227,19 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.strictEqual(res2.statusCode, 403);
   });
 
+  await testAsync('6g. open mode -> free guide served without token, cross-links use /free-guide', async () => {
+    reset();
+    const res = await guide.handler({ queryStringParameters: { open: '1' } });
+    assert.strictEqual(res.statusCode, 200);
+    assert.ok(res.body.includes('/free-guide'), 'cross-links should point to /free-guide');
+    assert.ok(!res.body.includes('__GUIDE_URL__'));
+  });
+  await testAsync('6h. open mode never serves premium (still requires auth)', async () => {
+    reset();
+    const res = await guide.handler({ queryStringParameters: { open: '1', page: 'premium' } });
+    assert.strictEqual(res.statusCode, 403);
+  });
+
   console.log('PRODUCT ROUTING (§ two-tier)');
   await testAsync('97₪ payment -> premium link; 50₪ -> free guide link', async () => {
     reset();

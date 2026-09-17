@@ -52,3 +52,9 @@
   from = "/premium"
   to = "/upsell.html"
   status = 200
+
+# לינק פתוח למדריך החינמי — נגיש לכולם בלי טוקן ובלי תשלום (מתנה שיווקית ללכידת לידים)
+[[redirects]]
+  from = "/free-guide"
+  to = "/.netlify/functions/guide?open=1"
+  status = 200
