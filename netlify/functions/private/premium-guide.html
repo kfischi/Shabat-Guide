@@ -203,6 +203,9 @@ button:active,a.btn:active{transform:scale(.97)}
     <a href="#budget">תקציב</a>
     <a href="#rooms">חלוקת חדרים</a>
     <a href="#vendors">ספקים</a>
+    <a href="#compare">השוואת מתחמים</a>
+    <a href="#hidden">עלויות נסתרות</a>
+    <a href="#halacha">בדיקות הלכה</a>
     <a href="#invite">הזמנה לאורחים</a>
     <a href="#game">המשחק</a>
     <a href="#deep">המדריך המלא</a>
@@ -336,6 +339,48 @@ button:active,a.btn:active{transform:scale(.97)}
         <button class="btn" onclick="addVendor()">הוסף</button>
       </div>
       <div class="out"><table class="grid" id="v-table"><thead><tr><th>ספק</th><th>שעה</th><th>איש קשר</th><th>אישור</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- VENUE COMPARISON -->
+  <section class="block reveal" id="compare" style="padding-top:12px">
+    <div class="tool" style="border-right:5px solid var(--gold)">
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 7h18M6 7l-3 6a3 3 0 0 0 6 0zM18 7l-3 6a3 3 0 0 0 6 0z"/></svg></span> טבלת השוואת מתחמים</h3>
+      <p class="hint">ההחלטה הכי יקרה בתהליך. הזינו 2-3 מתחמים זה מול זה — ונחשב מחיר לאורח ונסמן את המשתלם ביותר. נשמר במכשיר.</p>
+      <div class="row">
+        <div class="inp" style="max-width:170px"><label>מספר אורחים</label><input type="number" id="cmp-guests" min="1" placeholder="60" oninput="renderCompare()"></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="inp"><label>שם המתחם</label><input type="text" id="cmp-name" placeholder="מלון / אכסניה…"></div>
+        <div class="inp"><label>מחיר כולל (₪)</label><input type="number" id="cmp-price" min="0" placeholder="18000"></div>
+        <div class="inp"><label>חדרים</label><input type="text" id="cmp-rooms" placeholder="14"></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="inp"><label>כשרות</label><select id="cmp-kosher"><option value="">—</option><option>מהדרין</option><option>רגילה</option><option>לבדוק</option></select></div>
+        <div class="inp"><label>מרחק מביהכ"נ</label><input type="text" id="cmp-shul" placeholder="במקום / 5 דק'…"></div>
+        <div class="inp"><label>מה כלול / הערות</label><input type="text" id="cmp-notes" placeholder="ארוחות, ניקיון…"></div>
+        <button class="btn" onclick="addVenue()">הוסף מתחם</button>
+      </div>
+      <div class="out" style="overflow-x:auto"><table class="grid" id="cmp-table"><thead><tr><th>מתחם</th><th>מחיר</th><th>לאורח</th><th>כשרות</th><th>חדרים</th><th>ביהכ"נ</th><th>הערות</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- HIDDEN COSTS -->
+  <section class="block reveal" id="hidden" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> רשימת עלויות נסתרות</h3>
+      <p class="hint">ההוצאות שמפתיעות אחרי החתימה. סמנו מה רלוונטי והזינו סכום — ונסכם כמה "מעל המחיר" באמת תשלמו. נשמר במכשיר.</p>
+      <div class="out"><table class="grid" id="hidden-table"><thead><tr><th>סעיף</th><th>רלוונטי?</th><th>עלות משוערת (₪)</th></tr></thead><tbody></tbody></table></div>
+      <div class="callout" style="margin-top:14px;font-size:16px">סה"כ עלויות נסתרות משוער: <b id="hidden-sum">₪0</b></div>
+    </div>
+  </section>
+
+  <!-- HALACHA CHECKS -->
+  <section class="block reveal" id="halacha" style="padding-top:12px">
+    <div class="tool">
+      <h3><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span> בדיקות הלכתיות לפני חתימה</h3>
+      <p class="hint">מה שחייבים לוודא במתחם לפני שסוגרים — כשרות, עירוב, בית כנסת ועוד. סמנו כל פריט שבדקתם. נשמר במכשיר.</p>
+      <div id="halacha-list"></div>
     </div>
   </section>
 
@@ -551,6 +596,7 @@ function load(){try{return JSON.parse(localStorage.getItem(STORE))||{}}catch(e){
 function save(){try{localStorage.setItem(STORE,JSON.stringify(DB))}catch(e){}}
 let DB=load();
 DB.budget=DB.budget||{};DB.vendors=DB.vendors||[];DB.checks=DB.checks||{};DB.rooms=DB.rooms||[];
+DB.venues=DB.venues||[];DB.hidden=DB.hidden||{};DB.halacha=DB.halacha||{};
 
 /* ---- FOOD CALCULATOR ---- */
 function calcFood(){
@@ -644,6 +690,104 @@ function addVendor(){
 function toggleVendor(i){DB.vendors[i].ok=!DB.vendors[i].ok;save();renderVendors();}
 function delVendor(i){DB.vendors.splice(i,1);save();renderVendors();}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ---- VENUE COMPARISON ---- */
+function addVenue(){
+  const name=document.getElementById('cmp-name').value.trim(); if(!name) return;
+  DB.venues.push({
+    name,
+    price:+document.getElementById('cmp-price').value||0,
+    rooms:document.getElementById('cmp-rooms').value.trim(),
+    kosher:document.getElementById('cmp-kosher').value,
+    shul:document.getElementById('cmp-shul').value.trim(),
+    notes:document.getElementById('cmp-notes').value.trim()
+  });
+  save();
+  ['cmp-name','cmp-price','cmp-rooms','cmp-shul','cmp-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('cmp-kosher').value='';
+  renderCompare();
+}
+function delVenue(i){DB.venues.splice(i,1);save();renderCompare();}
+function renderCompare(){
+  const tb=document.querySelector('#cmp-table tbody'); tb.innerHTML='';
+  if(!DB.venues.length){tb.innerHTML='<tr><td colspan="8" style="color:var(--muted)">הוסיפו מתחם ראשון כדי להשוות.</td></tr>';return;}
+  const g=Math.max(0,+(document.getElementById('cmp-guests').value)||0);
+  let best=-1,bestv=Infinity;
+  DB.venues.forEach((v,i)=>{ if(g&&v.price){const pp=v.price/g; if(pp<bestv){bestv=pp;best=i;}} });
+  DB.venues.forEach((v,i)=>{
+    const pp=(g&&v.price)?('₪'+Math.round(v.price/g).toLocaleString()):'—';
+    const win=i===best;
+    const tr=document.createElement('tr');
+    if(win) tr.style.background='#eafff0';
+    tr.innerHTML=`<td><b>${esc(v.name)}</b>${win?' <span class="pill" style="background:#1a8f43;color:#fff">הכי משתלם</span>':''}</td>`+
+      `<td>${v.price?('₪'+v.price.toLocaleString()):'—'}</td>`+
+      `<td><b>${pp}</b></td>`+
+      `<td>${esc(v.kosher||'—')}</td>`+
+      `<td>${esc(v.rooms||'—')}</td>`+
+      `<td>${esc(v.shul||'—')}</td>`+
+      `<td style="color:var(--muted)">${esc(v.notes||'')}</td>`+
+      `<td><button onclick="delVenue(${i})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+/* ---- HIDDEN COSTS ---- */
+const HIDDEN=[
+  ['service','דמי שירות / מלצרים'],
+  ['vat','מע"מ (אם המחיר לפני מע"מ)'],
+  ['clean','ניקיון / דמי סידור'],
+  ['deposit','פיקדון / דמי ביטחון'],
+  ['kids','תוספת מחיר לילדים'],
+  ['power','חשמל / גנרטור / מיזוג'],
+  ['vendorstay','לינה ואוכל לספקים'],
+  ['transport','הסעות / הובלות'],
+  ['insurance','ביטוח אירוע'],
+  ['overtime','חריגת שעות / הארכה'],
+  ['tips','טיפים'],
+  ['branding','מתנות / מיתוג / מזכרות']
+];
+function hiddenSum(){let s=0;HIDDEN.forEach(([k])=>{const c=DB.hidden[k];if(c&&c.on)s+=(+c.amt||0);});return s;}
+function renderHidden(){
+  const tb=document.querySelector('#hidden-table tbody'); tb.innerHTML='';
+  HIDDEN.forEach(([k,label])=>{
+    const cur=DB.hidden[k]||{on:false,amt:''};
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${label}</td>`+
+      `<td><span class="pill" style="cursor:pointer;background:${cur.on?'#eafff0':'#fff0f7'};color:${cur.on?'#1a8f43':'#c01a72'}" onclick="toggleHidden('${k}')">${cur.on?'✓ כן':'לא'}</span></td>`+
+      `<td><input type="number" min="0" value="${cur.amt||''}" placeholder="0" oninput="setHidden('${k}',this.value)" style="width:120px;border:1.5px solid var(--line);border-radius:9px;padding:8px 10px;font-size:15px"></td>`;
+    tb.appendChild(tr);
+  });
+  document.getElementById('hidden-sum').textContent='₪'+hiddenSum().toLocaleString();
+}
+function toggleHidden(k){const c=DB.hidden[k]||{on:false,amt:''};c.on=!c.on;DB.hidden[k]=c;save();renderHidden();}
+function setHidden(k,v){const c=DB.hidden[k]||{on:false,amt:''};c.amt=v;DB.hidden[k]=c;save();document.getElementById('hidden-sum').textContent='₪'+hiddenSum().toLocaleString();}
+
+/* ---- HALACHA CHECKS ---- */
+const HALACHA=[
+  'תעודת כשרות בתוקף + שם המשגיח',
+  'רמת ההשגחה (מהדרין/רגילה) תואמת למשפחה',
+  'עירוב תקין באזור (לטלטול בשבת)',
+  'בית כנסת / מניין במקום או בקרבת הליכה',
+  'נוסח התפילה תואם למשפחה',
+  'מעלית שבת — קיימת ובאיזו קומה',
+  'היכן מותר להדליק נרות שבת',
+  'מפתחות רגילים (לא כרטיס מגנטי)',
+  'חיישני תנועה בחדרים — ניתן לנטרל',
+  'פלטה / מיחם / כירת שבת זמינים',
+  'מקום לסעודה שלישית ומלווה מלכה',
+  'הסדרי אוכל לשבת — הכל מוכן מבעוד יום'
+];
+function renderHalacha(){
+  const box=document.getElementById('halacha-list'); box.innerHTML='';
+  HALACHA.forEach((it,i)=>{
+    const on=!!DB.halacha[i];
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer';
+    row.innerHTML=`<span style="flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid ${on?'#1a8f43':'var(--line)'};background:${on?'#1a8f43':'#fff'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px">${on?'✓':''}</span><span style="font-size:15px;${on?'color:var(--muted);text-decoration:line-through':''}">${esc(it)}</span>`;
+    row.onclick=()=>{DB.halacha[i]=!DB.halacha[i];save();renderHalacha();};
+    box.appendChild(row);
+  });
+}
 
 /* ---- TEMPLATES COPY ---- */
 function copyTpl(btn){
@@ -844,7 +988,7 @@ const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links
 secs.forEach(s=>io2.observe(s));
 
 /* init */
-calcFood();calcTimeline();renderBudget();renderVendors();renderRooms();renderCk();
+calcFood();calcTimeline();renderBudget();renderVendors();renderRooms();renderCk();renderCompare();renderHidden();renderHalacha();
 document.querySelector('#game-tabs button[data-cat="icebreak"]').classList.remove('ghost');
 document.getElementById('b-guests').addEventListener('input',sumBudget);
 </script>
