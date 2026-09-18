@@ -133,6 +133,8 @@ footer .logo span{color:var(--fuchsia)}
 <link rel="apple-touch-icon" href="/icon.svg">
 <style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
 <script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+<!-- Meta Pixel (נטען מהשרת עם המזהה מ-env; רדום עד שמוגדר) -->
+<script src="/px"></script>
 </head>
 <body>
 
@@ -275,6 +277,7 @@ const PREMIUM_PRICE = 97;
 async function buyPremium(btn){
   var orig = btn.innerHTML; btn.disabled = true; btn.textContent = 'רגע, יוצרים תשלום…';
   var buyer={}; try{ buyer=JSON.parse(localStorage.getItem('mb_buyer')||'{}'); }catch(e){}
+  try{ if(window.mbTrack) mbTrack('InitiateCheckout',{value:PREMIUM_PRICE,currency:'ILS',content_name:'premium'}); }catch(e){}
   try{
     var r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({amount:PREMIUM_PRICE, product:'premium', name:buyer.name||'', phone:buyer.phone||'', email:buyer.email||''})});

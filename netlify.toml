@@ -42,6 +42,12 @@
   to = "/.netlify/functions/send-guide"
   status = 200
 
+# Meta Pixel — נטען מהשרת עם המזהה ממשתני הסביבה (רדום עד שמוגדר META_PIXEL_ID)
+[[redirects]]
+  from = "/px"
+  to = "/.netlify/functions/px"
+  status = 200
+
 [[redirects]]
   from = "/thank-you"
   to = "/thank-you.html"
