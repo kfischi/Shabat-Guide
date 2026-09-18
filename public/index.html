@@ -32,7 +32,9 @@ h1,h2,h3{font-family:'Frank Ruhl Libre',serif}
 /* HERO */
 .hero{position:relative;text-align:center;color:#fff;padding:84px 22px 66px;overflow:hidden;
   background:radial-gradient(1000px 700px at 78% -10%,rgba(255,0,144,.45),transparent 60%),radial-gradient(800px 600px at 8% 15%,rgba(160,107,255,.9),transparent 55%),linear-gradient(160deg,#2a0d3f,#7C3AED 55%,#2C1A3D)}
-.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:26px 26px;opacity:.4;mix-blend-mode:overlay}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:26px 26px;opacity:.4;mix-blend-mode:overlay;z-index:1}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55}
+.hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(15,4,25,.35) 0%,rgba(15,4,25,.55) 55%,rgba(15,4,25,.82) 100%)}
 .hero-in{position:relative;z-index:2;max-width:720px;margin:0 auto}
 .crown{font-size:46px;filter:drop-shadow(0 8px 20px rgba(231,179,74,.5));margin-bottom:8px}
 .ribbon{display:inline-flex;align-items:center;gap:9px;background:rgba(231,179,74,.16);border:1px solid rgba(231,179,74,.5);color:#ffe9be;font-weight:800;letter-spacing:1px;font-size:12.5px;padding:8px 18px;border-radius:999px;margin-bottom:20px}
@@ -138,6 +140,11 @@ footer .logo span{color:var(--fuchsia)}
 
 <!-- HERO -->
 <header class="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"
+    poster="https://res.cloudinary.com/dptyfvwyo/video/upload/so_1,w_1200,h_1500,c_fill,q_auto,f_auto/v1787397143/%D7%99%D7%A6%D7%99%D7%A8%D7%AA_%D7%A1%D7%A8%D7%98%D7%95%D7%9F_%D7%A9%D7%91%D7%AA_%D7%97%D7%AA%D7%9F_%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D_gzpy70.jpg">
+    <source src="https://res.cloudinary.com/dptyfvwyo/video/upload/q_auto/v1787397143/%D7%99%D7%A6%D7%99%D7%A8%D7%AA_%D7%A1%D7%A8%D7%98%D7%95%D7%9F_%D7%A9%D7%91%D7%AA_%D7%97%D7%AA%D7%9F_%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D_gzpy70.mp4" type="video/mp4">
+  </video>
+  <div class="hero-shade"></div>
   <div class="hero-in">
     <div class="crown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 4.5 4L12 4l4.5 6L21 6l-2 12H5L3 6z"/><path d="M5 20h14"/></svg></div>
     <span class="ribbon">מהדורת הפרימיום · המערכת המלאה</span>
