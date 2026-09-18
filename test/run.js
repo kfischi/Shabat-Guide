@@ -398,6 +398,41 @@ function signedEvent(bodyObj, secret = process.env.GROW_WEBHOOK_SECRET) {
     assert.strictEqual(JSON.parse(res.body).results.facebook.ok, false);
   });
 
+  console.log('META PIXEL + CAPI');
+  const capi = require('../netlify/functions/lib/capi');
+  const px = require('../netlify/functions/px');
+  await testAsync('capi dormant when unconfigured -> skipped, no fetch', async () => {
+    delete process.env.META_DATASET_ID; delete process.env.META_PIXEL_ID; delete process.env.META_CAPI_TOKEN;
+    assert.strictEqual(capi.enabled(), false);
+    const r = await capi.sendEvent({ eventName: 'Lead', email: 'a@b.com' });
+    assert.strictEqual(r.ok, false); assert.strictEqual(r.skipped, 'unconfigured');
+  });
+  await testAsync('capi configured -> posts hashed event to graph (dedup event_id)', async () => {
+    process.env.META_DATASET_ID = 'DS1'; process.env.META_CAPI_TOKEN = 'tok';
+    state.graph = [];
+    const r = await capi.sendEvent({ eventName: 'Purchase', eventId: 'TX9', email: 'A@B.com', phone: '0501234567', value: 97 });
+    assert.ok(r.ok, 'should send');
+    assert.ok(state.graph.some((g) => /\/DS1\/events/.test(g.url)), 'posts to dataset events');
+    const sent = JSON.parse(state.graph[state.graph.length - 1].body).data[0];
+    assert.strictEqual(sent.event_name, 'Purchase');
+    assert.strictEqual(sent.event_id, 'TX9');
+    assert.ok(/^[a-f0-9]{64}$/.test(sent.user_data.em[0]), 'email is SHA-256 hashed');
+    assert.strictEqual(sent.custom_data.value, 97);
+    assert.strictEqual(sent.custom_data.currency, 'ILS');
+    delete process.env.META_DATASET_ID; delete process.env.META_CAPI_TOKEN;
+  });
+  await testAsync('px dormant -> no-op mbTrack when no pixel id', async () => {
+    delete process.env.META_PIXEL_ID;
+    const res = await px.handler({});
+    assert.ok(/MB_PIXEL_ON=false/.test(res.body) && /mbTrack=function\(\)\{\}/.test(res.body));
+  });
+  await testAsync('px active -> emits pixel init with id', async () => {
+    process.env.META_PIXEL_ID = '111222333';
+    const res = await px.handler({});
+    assert.ok(/fbq\('init','111222333'\)/.test(res.body) && /MB_PIXEL_ON=true/.test(res.body));
+    delete process.env.META_PIXEL_ID;
+  });
+
   console.log('MAILER reasons');
   test('hebrewReason maps 401', () => assert.ok(/שגוי/.test(hebrewReason(new Error('Resend 401: unauthorized api key')))));
 

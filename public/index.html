@@ -170,6 +170,8 @@ button:disabled{opacity:.6;cursor:default;transform:none}
 <link rel="apple-touch-icon" href="/icon.svg">
 <style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
 <script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+<!-- Meta Pixel (נטען מהשרת עם המזהה מ-env; רדום עד שמוגדר) -->
+<script src="/px"></script>
 </head>
 <body>
 
@@ -481,6 +483,11 @@ function validate(){
 function sendLead(data){
   try{ localStorage.setItem('mb_buyer', JSON.stringify({ name:data.contact_name||'', phone:data.phone||'', email:data.email||'' })); }catch(e){}
   try{
+    var eid=(window.mbEventId?mbEventId():''), ck=(window.mbCookies?mbCookies():{});
+    data.event_id=eid; data.fbp=ck.fbp; data.fbc=ck.fbc; data.source_url=location.href;
+    if(window.mbTrack) mbTrack('Lead',{content_name:data.source||'intake'},eid);
+  }catch(e){}
+  try{
     const payload = JSON.stringify(data);
     if(navigator.sendBeacon) navigator.sendBeacon('/lead', new Blob([payload],{type:'application/json'}));
     else fetch('/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:payload,keepalive:true}).catch(function(){});
@@ -526,6 +533,7 @@ document.getElementById('pay').addEventListener('click', async function(){
   const btn = this, orig = btn.textContent;
   btn.disabled = true; btn.textContent = 'רגע, יוצרים תשלום…';
   sendLead(data);
+  try{ if(window.mbTrack) mbTrack('InitiateCheckout',{value:50,currency:'ILS',content_name:'serious-fee'}); }catch(e){}
   try{
     const r = await fetch('/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({amount:50, name:data.contact_name||'', email:data.email||'', phone:data.phone||''})});

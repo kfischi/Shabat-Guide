@@ -58,6 +58,8 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 <link rel="apple-touch-icon" href="/icon.svg">
 <style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
 <script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+<!-- Meta Pixel (נטען מהשרת עם המזהה מ-env; רדום עד שמוגדר) -->
+<script src="/px"></script>
 </head>
 <body>
 <div class="card" id="card">
@@ -99,6 +101,8 @@ p.lead{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:30px}
 
   var amount = parseFloat((q.get('amount') || q.get('sum') || '').replace(/[^\d.]/g, '')) || 0;
   var premium = amount >= 90 || /premium/i.test(q.get('product') || '');
+  // Meta Pixel — Purchase. event_id = מזהה העסקה, לדדופ מול ה-CAPI מ-grow-webhook.
+  try{ if(window.mbTrack && amount>0) mbTrack('Purchase',{value:amount,currency:'ILS'}, id||undefined); }catch(e){}
   var pageParam = premium ? '&page=premium' : '';
 
   async function sha256hex(s){

@@ -7,6 +7,7 @@ const { makeToken } = require('./lib/token');
 const { normalizePhone } = require('./lib/phone');
 const { sendEmail, hebrewReason } = require('./lib/mailer');
 const sheets = require('./lib/sheets');
+const capi = require('./lib/capi');
 
 // כתובת האתר לבניית קישורים אישיים. env קודם (כשמחברים דומיין), אחרת ברירת מחדל שעובדת עכשיו.
 const SITE = (process.env.SITE_URL || 'https://shabat-guide.netlify.app').replace(/\/+$/, '');
@@ -196,6 +197,20 @@ exports.handler = async (event) => {
       console.error('[grow-webhook] guide email webhook:', String(e && e.message));
     }
   }
+
+  // Meta Conversions API — אירוע Purchase שרת-לשרת (מאומת תשלום). מזהה העסקה = event_id לדדופ מול הפיקסל.
+  try {
+    const h = event.headers || {};
+    await capi.sendEvent({
+      eventName: 'Purchase',
+      eventId: transactionId,
+      email, phone: phone || rawPhone, name,
+      value: amtNum, currency: 'ILS',
+      sourceUrl: `${SITE}/thank-you.html`,
+      clientIp: h['x-nf-client-connection-ip'] || (h['x-forwarded-for'] || '').split(',')[0].trim() || undefined,
+      userAgent: h['user-agent'],
+    });
+  } catch (e) { console.error('[grow-webhook] CAPI:', String(e && e.message)); }
 
   const [custRes, arditRes] = await Promise.allSettled([
     sendEmail({

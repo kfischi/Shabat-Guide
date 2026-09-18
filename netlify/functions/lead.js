@@ -7,6 +7,7 @@
 const sheets = require('./lib/sheets');
 const { sendEmail } = require('./lib/mailer');
 const { normalizePhone } = require('./lib/phone');
+const capi = require('./lib/capi');
 
 // תוויות עבריות לשדות האפיון (לתצוגה במייל לערדית)
 const LABELS = {
@@ -77,6 +78,20 @@ exports.handler = async (event) => {
       console.error('[lead] webhook לגיליון נכשל:', String(e && e.message));
     }
   }
+
+  // 1c) Meta Conversions API — אירוע Lead שרת-לשרת (דדופ מול הפיקסל דרך event_id). רדום עד שמוגדר.
+  try {
+    const h = event.headers || {};
+    await capi.sendEvent({
+      eventName: 'Lead',
+      eventId: b.event_id,
+      email, phone: norm || phone, name,
+      sourceUrl: b.source_url,
+      clientIp: h['x-nf-client-connection-ip'] || (h['x-forwarded-for'] || '').split(',')[0].trim() || undefined,
+      userAgent: h['user-agent'],
+      fbp: b.fbp, fbc: b.fbc,
+    });
+  } catch (e) { console.error('[lead] CAPI:', String(e && e.message)); }
 
   // 2) מייל לערדית עם כל הפרטים + כפתור וואטסאפ מוכן
   const GROW = process.env.GROW_LINK_50 || process.env.GROW_FALLBACK_LINK || 'https://pay.grow.link/MTAxNDc1~46e74b5eb5e243744df1ddecf1b36e44-MzkyOTMyOQ';
