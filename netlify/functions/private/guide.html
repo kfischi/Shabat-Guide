@@ -296,6 +296,36 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
 </head>
 <body>
 
+<!-- LEAD GATE — טופס לכידת פרטים לפני המדריך החינמי (מוצג רק במצב הפתוח /free-guide) -->
+<style>
+.lead-gate{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(30,10,45,.72);backdrop-filter:blur(8px)}
+.lg-card{background:#fff;border-radius:22px;max-width:400px;width:100%;padding:30px 26px;text-align:center;box-shadow:0 30px 80px rgba(20,5,35,.4);animation:lgrise .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes lgrise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.lg-badge{display:inline-block;background:linear-gradient(90deg,var(--purple),var(--fuchsia));color:#fff;font-weight:800;font-size:12.5px;padding:6px 14px;border-radius:999px;margin-bottom:14px}
+.lg-card h2{font-family:'Frank Ruhl Libre',serif;font-weight:800;font-size:24px;color:var(--ink);line-height:1.15;margin-bottom:8px}
+.lg-card>p{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:18px}
+.lg-f{margin-bottom:11px}
+.lg-f input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;font-family:'Heebo';color:var(--ink);background:#FBF5FE}
+.lg-f input:focus{outline:none;border-color:var(--fuchsia);box-shadow:0 0 0 3px rgba(217,70,239,.14)}
+#lg-go{width:100%;cursor:pointer;border:none;font-family:'Heebo';font-weight:800;font-size:17px;color:#fff;background:linear-gradient(135deg,var(--purple),var(--fuchsia));padding:15px;border-radius:12px;margin-top:6px;box-shadow:0 12px 28px rgba(217,70,239,.35);transition:transform .15s}
+#lg-go:hover{transform:translateY(-2px)}#lg-go:disabled{opacity:.7;transform:none}
+.lg-err{color:#c01a72;font-size:13.5px;margin-top:10px;min-height:16px}
+.lg-fine{color:var(--muted);font-size:12px;margin-top:12px;line-height:1.5}
+</style>
+<div class="lead-gate" id="leadGate" role="dialog" aria-modal="true">
+  <div class="lg-card">
+    <div class="lg-badge">🌸 המדריך במתנה</div>
+    <h2>רגע לפני שנכנסים…</h2>
+    <p>השאירו פרטים ונפתח לכם את המדריך המלא (30 שלבים) — וגם נשלח עותק במייל.</p>
+    <div class="lg-f"><input type="text" id="lg-name" placeholder="שם מלא" autocomplete="name"></div>
+    <div class="lg-f"><input type="email" id="lg-email" placeholder="אימייל" inputmode="email" autocomplete="email"></div>
+    <div class="lg-f"><input type="tel" id="lg-phone" placeholder="טלפון" inputmode="tel" autocomplete="tel"></div>
+    <button id="lg-go">קבלת המדריך ←</button>
+    <div class="lg-err" id="lg-err"></div>
+    <div class="lg-fine">בלחיצה אני מאשר/ת קבלת המדריך ופנייה חוזרת מ-Multibrawn.</div>
+  </div>
+</div>
+
 <!-- PROGRESS -->
 <div id="progress-wrap"><div id="progress-bar"></div></div>
 <div id="progress-pill"><span>הושלמו <b id="pill-num">0</b>/30</span></div>
@@ -685,6 +715,31 @@ function fireConfetti(){
   }
   btn.addEventListener('click',ask);
   input.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); ask(); }});
+})();
+
+/* ---- LEAD GATE (open free guide only) ---- */
+(function(){
+  var GATE = ('__LEAD_GATE__' === '1');   // מוזרק ע"י guide.js: '1' במצב הפתוח, ריק במסלול המשולם
+  if(!GATE) return;
+  var LEAD_URL='/lead', KEY='mb_free_lead', gate=document.getElementById('leadGate');
+  if(!gate) return;
+  try{ if(localStorage.getItem(KEY)) return; }catch(e){}
+  function v(id){ return (document.getElementById(id).value||'').trim(); }
+  document.body.style.overflow='hidden'; gate.style.display='flex';
+  var btn=document.getElementById('lg-go'), err=document.getElementById('lg-err');
+  function submit(){
+    var name=v('lg-name'), email=v('lg-email'), phone=v('lg-phone');
+    if(!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !phone){ err.textContent='נא למלא שם, אימייל תקין וטלפון'; return; }
+    btn.disabled=true; btn.textContent='רגע…';
+    try{ fetch(LEAD_URL,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,
+      body:JSON.stringify({source:'free-guide',contact_name:name,email:email,phone:phone})}).catch(function(){}); }catch(e){}
+    try{ localStorage.setItem(KEY,'1'); localStorage.setItem('mb_buyer',JSON.stringify({name:name,email:email,phone:phone})); }catch(e){}
+    gate.style.display='none'; document.body.style.overflow='';
+  }
+  btn.addEventListener('click',submit);
+  ['lg-name','lg-email','lg-phone'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); submit(); }});
+  });
 })();
 
 /* init */

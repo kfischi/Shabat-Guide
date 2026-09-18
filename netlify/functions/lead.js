@@ -19,13 +19,20 @@ const LABELS = {
   notes: 'הערות', event: 'סוג אירוע', event_type: 'סוג אירוע',
 };
 
+// CORS — מאפשר לאתרים העצמאיים (מדריך חינמי/פרימיום בדומיין נפרד) לשלוח לידים לכאן.
+const CORS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
 function json(statusCode, obj) {
-  return { statusCode, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, body: JSON.stringify(obj) };
+  return { statusCode, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...CORS }, body: JSON.stringify(obj) };
 }
 function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS, body: '' };
+  if (event.httpMethod !== 'POST') return { statusCode: 405, headers: CORS, body: 'Method Not Allowed' };
 
   let b;
   try { b = JSON.parse(event.body || '{}'); } catch (e) { b = {}; }
