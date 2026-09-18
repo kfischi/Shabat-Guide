@@ -50,7 +50,9 @@ exports.handler = async (event) => {
     .filter(Boolean).join(' · ');
 
   // 1) רישום ב-Google Sheet (best-effort). עמודות: תאריך·מקור·שם·אימייל·טלפון·תקציב·אזור·סטטוס·תקציר·וואטסאפ
-  const src = b.source === 'whatsapp' ? 'וואטסאפ' : 'אתר';
+  // תיוג מקור הליד לגיליון — כדי לדעת בדיוק מאיפה כל ליד הגיע
+  const SRC_LABELS = { whatsapp: 'וואטסאפ', 'free-guide': 'מדריך חינם', premium: 'פרימיום', intake: 'אתר' };
+  const src = SRC_LABELS[String(b.source || '')] || 'אתר';
   const waCell = norm ? `=HYPERLINK("https://wa.me/${norm}","שליחה")` : '';
   try {
     await sheets.appendRow([stamp, src, name, email, norm || phone, b.budget || '', b.area || '', 'ליד חדש', summary, waCell]);
