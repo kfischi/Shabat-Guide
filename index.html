@@ -300,6 +300,8 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
 <link rel="apple-touch-icon" href="/icon.svg">
 <style>@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}</style>
 <script>if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+<!-- Meta Pixel (נטען מהאתר הראשי, CORS) -->
+<script src="https://shabat-guide.netlify.app/px"></script>
 </head>
 <body>
 
@@ -733,8 +735,10 @@ function fireConfetti(){
     var name=v('lg-name'), email=v('lg-email'), phone=v('lg-phone');
     if(!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !phone){ err.textContent='נא למלא שם, אימייל תקין וטלפון'; return; }
     btn.disabled=true; btn.textContent='רגע…';
+    var eid=(window.mbEventId?mbEventId():''), ck=(window.mbCookies?mbCookies():{});
+    try{ if(window.mbTrack) mbTrack('Lead',{content_name:'free-guide'},eid); }catch(e){}
     try{ fetch(LEAD_URL,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,
-      body:JSON.stringify({source:'free-guide',contact_name:name,email:email,phone:phone})}).catch(function(){}); }catch(e){}
+      body:JSON.stringify({source:'free-guide',contact_name:name,email:email,phone:phone,event_id:eid,fbp:ck.fbp,fbc:ck.fbc,source_url:location.href})}).catch(function(){}); }catch(e){}
     try{ localStorage.setItem(KEY,'1'); localStorage.setItem('mb_buyer',JSON.stringify({name:name,email:email,phone:phone})); }catch(e){}
     gate.style.display='none'; document.body.style.overflow='';
   }
