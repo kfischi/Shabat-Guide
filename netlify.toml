@@ -1,61 +1,9 @@
-# Netlify — אתר סטטי (public/) + פונקציות (netlify/functions).
-# תוכן המדריך יושב בתוך netlify/functions/private ולכן אינו נגיש ישירות מהדפדפן;
-# הוא מוגש רק דרך הפונקציה guide לאחר אימות.
-
+# אתר סטטי עצמאי — המדריך החינמי לשבת חתן (Multibrawn)
 [build]
-  publish = "public"
-  functions = "netlify/functions"
+  publish = "."
 
-[functions]
-  node_bundler = "esbuild"
-  # לוודא שתוכן ה-private נארז יחד עם הפונקציה guide
-  included_files = ["netlify/functions/private/**"]
-
-# קישורים "יפים" -> פונקציות (משמרים query string אוטומטית)
+# כתובת יפה: /games -> games.html
 [[redirects]]
-  from = "/guide"
-  to = "/.netlify/functions/guide"
-  status = 200
-
-[[redirects]]
-  from = "/grow-webhook"
-  to = "/.netlify/functions/grow-webhook"
-  status = 200
-
-[[redirects]]
-  from = "/ai"
-  to = "/.netlify/functions/ai"
-  status = 200
-
-[[redirects]]
-  from = "/create-payment"
-  to = "/.netlify/functions/create-payment"
-  status = 200
-
-[[redirects]]
-  from = "/lead"
-  to = "/.netlify/functions/lead"
-  status = 200
-
-[[redirects]]
-  from = "/send-guide"
-  to = "/.netlify/functions/send-guide"
-  status = 200
-
-[[redirects]]
-  from = "/thank-you"
-  to = "/thank-you.html"
-  status = 200
-
-# לינק ייעודי ונקי למכירת מדריך הפרימיום (97₪) — משמש לפרסום ולשיתוף
-[[redirects]]
-  from = "/premium"
-  to = "/upsell.html"
-  status = 200
-
-# לינק פתוח למדריך החינמי — נגיש לכולם בלי טוקן ובלי תשלום (מתנה שיווקית ללכידת לידים).
-# פונקציה ייעודית (לא query ב-redirect) כי Netlify לא מעביר query מה-`to` לפונקציה.
-[[redirects]]
-  from = "/free-guide"
-  to = "/.netlify/functions/free-guide"
+  from = "/games"
+  to = "/games.html"
   status = 200

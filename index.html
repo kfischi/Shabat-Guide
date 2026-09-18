@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#D946EF">
 <meta name="description" content="המדריך המלא לשבת חתן — 30 שלבים מעשיים לשבת מושלמת, מאת Multi Brawn.">
-<meta name="robots" content="noindex">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="מדריך שבת חתן — במתנה">
+<meta property="og:description" content="כל מה שצריך לדעת כדי לתכנן שבת חתן חלקה — 30 שלבים מעשיים, חינם.">
+<meta property="og:image" content="https://res.cloudinary.com/dptyfvwyo/video/upload/so_1,w_1200,h_630,c_fill/v1787397143/%D7%99%D7%A6%D7%99%D7%A8%D7%AA_%D7%A1%D7%A8%D7%98%D7%95%D7%9F_%D7%A9%D7%91%D7%AA_%D7%97%D7%AA%D7%9F_%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D_gzpy70.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://res.cloudinary.com/dptyfvwyo/video/upload/so_1,w_1200,h_630,c_fill/v1787397143/%D7%99%D7%A6%D7%99%D7%A8%D7%AA_%D7%A1%D7%A8%D7%98%D7%95%D7%9F_%D7%A9%D7%91%D7%AA_%D7%97%D7%AA%D7%9F_%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D_gzpy70.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='86'>🌸</text></svg>">
 <title>מדריך שבת חתן · Multi Brawn</title>
 <!-- מוגש רק דרך netlify/functions/guide.js אחרי אימות. אין שער בצד לקוח. -->
@@ -345,7 +351,7 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
     </div>
     <div id="ait-upsell" style="display:none;margin-top:14px;padding:14px 16px;background:#fff0f7;border-radius:12px;text-align:center">
       <b style="color:var(--fuchsia)">רוצים יועץ AI ללא הגבלה + כלים חכמים?</b>
-      <a href="/upsell.html" style="display:inline-block;margin-top:8px;background:linear-gradient(135deg,#2a0d3f,#7C3AED);color:#fff;font-weight:800;text-decoration:none;padding:11px 24px;border-radius:999px">לשדרוג למהדורת הפרימיום ←</a>
+      <a href="https://shabat-guide.netlify.app/premium" style="display:inline-block;margin-top:8px;background:linear-gradient(135deg,#2a0d3f,#7C3AED);color:#fff;font-weight:800;text-decoration:none;padding:11px 24px;border-radius:999px">לשדרוג למהדורת הפרימיום ←</a>
     </div>
   </div>
 </section>
@@ -378,7 +384,7 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
         <li>תבניות מוכנות + פלייבוק משברים</li>
       </ul>
       <div class="pf-price"><span class="was">₪830</span><span class="now">97 ₪</span></div>
-      <a href="/upsell.html" class="pf-btn">שדרוג למהדורת הפרימיום <span>←</span></a>
+      <a href="https://shabat-guide.netlify.app/premium" class="pf-btn">שדרוג למהדורת הפרימיום <span>←</span></a>
       <p class="pf-fine">תשלום חד־פעמי · גישה מיידית · חשבונית אוטומטית</p>
     </div>
   </div>
@@ -386,7 +392,7 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
 
 <!-- GAMES CTA -->
 <section class="games-cta reveal">
-  <a href="__GAMES_URL__">
+  <a href="games.html">
     <div class="ico">🎲</div>
     <div class="txt">
       <b>משחקי חיבור לשבת</b>
@@ -478,7 +484,7 @@ const DATA = [
   {
     g:"g6", num:"קטגוריה ו׳", title:"חוויה וסגירה", sub:"שהזיכרון יישאר", img:"images/cat-6.jpg",
     steps:[
-      {n:20,t:"משחקי חיבור",h:`<p>2 משפחות + שבת ארוכה = צריך מנחה ומשחקים. ראו קובץ <a href="__GAMES_URL__" style="color:var(--fuchsia);font-weight:700">משחקי החיבור</a>.</p>`},
+      {n:20,t:"משחקי חיבור",h:`<p>2 משפחות + שבת ארוכה = צריך מנחה ומשחקים. ראו קובץ <a href="games.html" style="color:var(--fuchsia);font-weight:700">משחקי החיבור</a>.</p>`},
       {n:21,t:"מזכרות",h:`<p>ריבה ביתית / נר ריחני / ספר קטן — עם תווית ושם הזוג. אריזה יפה = חוויה שלמה.</p>`},
       {n:22,t:"ניהול משברים",h:`<p>תוכנית גיבוי לכל ספק קריטי. רשימת טלפוני חירום. מי מחליט בשבת?</p>`},
       {n:23,t:"פרידה חלקה",h:`<p>תזכורת ביציאה + שקיות לשאריות. הרגע האחרון = הזיכרון האחרון.</p>`},
@@ -669,19 +675,16 @@ function fireConfetti(){
           'align-self:flex-end;background:#fff;border:1px solid var(--line)')+(muted?';opacity:.6':'');
     el.textContent=text; chat.appendChild(el); return el;
   }
-  async function ask(){
+  function ask(){
     var q=(input.value||'').trim(); if(!q||asked>=MAX) return;
     asked++; input.value=''; btn.disabled=true; bubble('user',q);
     var typing=bubble('assistant','חושב…',true);
-    try{
-      var r=await fetch('/ai',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({id:ID,t:T,question:q})});
-      var d=await r.json();
-      typing.textContent=(r.status===403)?'הגישה ליועץ פתוחה לרוכשים. אם רכשתם ולא נכנסתם — דברו איתנו בוואטסאפ.':((d&&d.reply)||'תקלה. נסו שוב.');
+    setTimeout(function(){
+      typing.textContent='שאלה מצוינת! ליועץ החכם שלנו יש תשובה מדויקת בדיוק לזה — והוא זמין ללא הגבלה במהדורת הפרימיום, יחד עם מחשבוני כמויות, תקציב ולוח זמנים אוטומטי.';
       typing.style.opacity=1;
-    }catch(e){ typing.textContent='תקלה בחיבור. נסו שוב.'; typing.style.opacity=1; }
-    btn.disabled=false;
-    if(asked>=MAX){ input.disabled=true; btn.disabled=true; input.placeholder='זו הייתה הטעימה 🙂'; up.style.display='block'; }
+      up.style.display='block';
+      input.disabled=true; btn.disabled=true; input.placeholder='רוצים תשובות ללא הגבלה? שדרגו לפרימיום 🙂';
+    }, 650);
   }
   btn.addEventListener('click',ask);
   input.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); ask(); }});
