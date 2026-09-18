@@ -97,10 +97,11 @@ a{color:inherit;text-decoration:none}
 }
 .hero-inner{position:relative;z-index:2;max-width:760px}
 .brand{
+  position:absolute;top:20px;right:22px;z-index:4;
   display:inline-flex;align-items:center;gap:9px;
   font-weight:800;letter-spacing:.5px;font-size:15px;
   background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
-  padding:8px 16px;border-radius:999px;margin-bottom:26px;
+  padding:8px 16px;border-radius:999px;
   backdrop-filter:blur(8px);
 }
 .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--fuchsia);box-shadow:0 0 12px var(--fuchsia)}
@@ -309,8 +310,8 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
 <!-- HERO -->
 <header class="hero">
   <img class="hero-img" src="https://res.cloudinary.com/dptyfvwyo/video/upload/so_1,w_1600,h_1200,c_fill,q_auto,f_auto/v1787397143/%D7%99%D7%A6%D7%99%D7%A8%D7%AA_%D7%A1%D7%A8%D7%98%D7%95%D7%9F_%D7%A9%D7%91%D7%AA_%D7%97%D7%AA%D7%9F_%D7%91%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D_gzpy70.jpg" alt="שבת חתן" onerror="this.remove()">
+  <span class="brand"><span class="dot"></span> מולטיבראון</span>
   <div class="hero-inner">
-    <span class="brand"><span class="dot"></span> MULTI BRAWN · מדריך פרימיום</span>
     <div class="tagline">שבת שמתחילה בלב, נזכרת לתמיד</div>
     <h1>מדריך <span class="glow">שבת חתן</span></h1>
     <p class="sub">30 שלבים מעשיים שהופכים שבת אחת לחוויה שכל המשפחה תזכור — מהחזון ועד הפרידה.</p>
