@@ -61,7 +61,8 @@ exports.handler = async (event) => {
     html = html
       .replace(/__GUIDE_URL__/g, '/free-guide')
       .replace(/__GAMES_URL__/g, '/free-guide?page=games')
-      .replace(/__HOME_URL__/g, '/');
+      .replace(/__HOME_URL__/g, '/')
+      .replace(/__LEAD_GATE__/g, '1'); // מצב פתוח — מציגים טופס לכידת ליד לפני המדריך
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=300' },
@@ -107,7 +108,8 @@ exports.handler = async (event) => {
   html = html
     .replace(/__GUIDE_URL__/g, `/guide?${qs}`)
     .replace(/__GAMES_URL__/g, `/guide?${qs}&page=games`)
-    .replace(/__HOME_URL__/g, '/');
+    .replace(/__HOME_URL__/g, '/')
+    .replace(/__LEAD_GATE__/g, ''); // מסלול מאומת (שילם) — ללא טופס לכידה
 
   return {
     statusCode: 200,
