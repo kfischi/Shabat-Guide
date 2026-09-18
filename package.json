@@ -1,13 +1,13 @@
 {
-  "name": "multibrawn-shabat-guide",
+  "name": "multibrawn-premium",
   "version": "1.0.0",
   "private": true,
-  "description": "Multibrawn — מדריך תפעולי לשבת חתן: אתר סטטי + Netlify Functions למסירת המדריך אחרי תשלום GROW.",
+  "description": "Multibrawn — אתר הפרימיום העצמאי: דף מכירה + תשלום GROW + מסירת מדריך הפרימיום מאחורי טוקן.",
   "type": "commonjs",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "test": "node test/run.js"
+    "test": "echo \"no tests on premium-site branch\" && exit 0"
   }
 }

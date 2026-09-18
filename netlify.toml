@@ -1,6 +1,6 @@
-# Netlify — אתר סטטי (public/) + פונקציות (netlify/functions).
-# תוכן המדריך יושב בתוך netlify/functions/private ולכן אינו נגיש ישירות מהדפדפן;
-# הוא מוגש רק דרך הפונקציה guide לאחר אימות.
+# Netlify — אתר הפרימיום העצמאי של Multibrawn.
+# דף הבית (public/index.html) הוא דף המכירה; התשלום דרך GROW;
+# מדריך הפרימיום מוגש רק אחרי תשלום דרך פונקציית guide (מאחורי טוקן).
 
 [build]
   publish = "public"
@@ -8,7 +8,6 @@
 
 [functions]
   node_bundler = "esbuild"
-  # לוודא שתוכן ה-private נארז יחד עם הפונקציה guide
   included_files = ["netlify/functions/private/**"]
 
 # קישורים "יפים" -> פונקציות (משמרים query string אוטומטית)
@@ -33,11 +32,6 @@
   status = 200
 
 [[redirects]]
-  from = "/lead"
-  to = "/.netlify/functions/lead"
-  status = 200
-
-[[redirects]]
   from = "/send-guide"
   to = "/.netlify/functions/send-guide"
   status = 200
@@ -45,17 +39,4 @@
 [[redirects]]
   from = "/thank-you"
   to = "/thank-you.html"
-  status = 200
-
-# לינק ייעודי ונקי למכירת מדריך הפרימיום (97₪) — משמש לפרסום ולשיתוף
-[[redirects]]
-  from = "/premium"
-  to = "/upsell.html"
-  status = 200
-
-# לינק פתוח למדריך החינמי — נגיש לכולם בלי טוקן ובלי תשלום (מתנה שיווקית ללכידת לידים).
-# פונקציה ייעודית (לא query ב-redirect) כי Netlify לא מעביר query מה-`to` לפונקציה.
-[[redirects]]
-  from = "/free-guide"
-  to = "/.netlify/functions/free-guide"
   status = 200
