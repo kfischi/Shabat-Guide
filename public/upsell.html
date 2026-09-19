@@ -78,7 +78,7 @@ h2.title{font-weight:800;font-size:clamp(26px,6.5vw,42px);line-height:1.15;text-
 .stack{max-width:600px;margin:0 auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:20px;overflow:hidden}
 .stack .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 22px;border-bottom:1px solid rgba(255,255,255,.1);font-size:15.5px}
 .stack .r:last-child{border-bottom:none}
-.stack .r .v{color:#ffd9ef;font-weight:700;white-space:nowrap}
+.stack .r .v{color:#ffd9ef;font-weight:600;font-size:13.5px;text-align:left;max-width:46%}
 .stack .tot{background:rgba(255,255,255,.08);font-weight:800;font-size:17px}
 .stack .tot .v{color:#fff}
 .value .price-line{text-align:center;margin-top:30px}
@@ -194,16 +194,17 @@ footer .logo span{color:var(--fuchsia)}
 <!-- VALUE STACK -->
 <section class="value">
   <div class="wrap reveal">
-    <div class="eyebrow">מה נכלל</div>
-    <h2 class="title">כל מה שאתם מקבלים</h2>
+    <div class="eyebrow">מה זה חוסך לכם</div>
+    <h2 class="title">שבע עבודות שלא תצטרכו לעשות לבד</h2>
     <div class="stack">
-      <div class="r"><span>מחשבון כמויות אוכל</span><span class="v">✓</span></div>
-      <div class="r"><span>בונה לוח זמנים + הדפסה</span><span class="v">✓</span></div>
-      <div class="r"><span>מחשבון תקציב ומעקב ספקים</span><span class="v">✓</span></div>
-      <div class="r"><span>טבלת השוואת מתחמים + עלויות נסתרות</span><span class="v">✓</span></div>
-      <div class="r"><span>תבניות מוכנות להעתקה + פלייבוק משברים</span><span class="v">✓</span></div>
-      <div class="r"><span>יועץ AI אישי — ללא הגבלה</span><span class="v">✓</span></div>
-      <div class="r"><span>עדכונים ותוספות — לכל החיים</span><span class="v">✓</span></div>
+      <div class="r"><span>מחשבון כמויות אוכל</span><span class="v">בלי עודפים ובלי חוסרים</span></div>
+      <div class="r"><span>בונה לוח זמנים + הדפסה</span><span class="v">מוכן לתלייה בכניסה</span></div>
+      <div class="r"><span>מחשבון תקציב ומעקב ספקים</span><span class="v">תמונת הוצאות בזמן אמת</span></div>
+      <div class="r"><span>השוואת מתחמים + עלויות נסתרות</span><span class="v">מתחם בלי הפתעות</span></div>
+      <div class="r"><span>תבניות מוכנות להעתקה</span><span class="v">חוסך שעות כתיבה</span></div>
+      <div class="r"><span>פלייבוק משברים + 7 פרקים מעמיקים</span><span class="v">תשובה לכל תרחיש</span></div>
+      <div class="r"><span>יועץ AI אישי — ללא הגבלה</span><span class="v">זמין 24/7</span></div>
+      <div class="r"><span>עדכונים ותוספות — לכל החיים</span><span class="v">בלי תוספת תשלום</span></div>
     </div>
     <div class="price-line">
       <div class="now" id="price-big">97<span> ₪</span></div>
@@ -219,7 +220,7 @@ footer .logo span{color:var(--fuchsia)}
     <div class="guarantee">
       <div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
       <h3>אחריות שקט נפשי</h3>
-      <p>נסו את מהדורת הפרימיום. אם היא לא חוסכת לכם זמן וכסף בתכנון השבת — כתבו לנו והכסף חוזר. הסיכון היחיד הוא להישאר עם הניחושים.</p>
+      <p>נסו את מהדורת הפרימיום. אם היא לא חוסכת לכם זמן וכסף בתכנון השבת — כתבו לנו והכסף חוזר תוך 14 יום. הסיכון היחיד הוא להישאר עם הניחושים.</p>
     </div>
   </div>
 </section>
@@ -227,9 +228,13 @@ footer .logo span{color:var(--fuchsia)}
 <!-- WHY IT WORKS -->
 <section style="background:var(--bg2)">
   <div class="wrap reveal">
-    <div class="eyebrow">למה זה עובד</div>
-    <h2 class="title">לא עוד PDF — מערכת מהשטח</h2>
-    <p class="lead">כל כלי כאן נבנה כדי לפתור בעיה אמיתית שראינו אצל משפחות שתכננו שבת חתן. פחות ניחושים, פחות טעויות יקרות, יותר שקט — כדי שתוכלו פשוט ליהנות מהשבת.</p>
+    <div class="eyebrow">למה דווקא כאן</div>
+    <h2 class="title">מתוך העבודה השוטפת של Multibrawn</h2>
+    <div class="testi-grid">
+      <div class="testi"><h3 style="font-size:18px;margin-bottom:8px;color:var(--purple-d)">מתחמים</h3><p style="font-style:normal">אנחנו עובדים מול מתחמים שבהם שוכנים שבתות חתן — יודעים מה עובד ומה נופל.</p></div>
+      <div class="testi"><h3 style="font-size:18px;margin-bottom:8px;color:var(--purple-d)">ספקים</h3><p style="font-style:normal">הרשימות כאן נבנו מהתנהלות אמיתית מול ספקים — קייטרינג, חזן, שטיפה, הסעות.</p></div>
+      <div class="testi"><h3 style="font-size:18px;margin-bottom:8px;color:var(--purple-d)">משפחות</h3><p style="font-style:normal">השאלות שהכלים כאן פותרים הן בדיוק אלה שחוזרות אצל כל משפחה.</p></div>
+    </div>
   </div>
 </section>
 
@@ -252,9 +257,9 @@ footer .logo span{color:var(--fuchsia)}
   <div class="wrap reveal center">
     <div class="script" style="font-family:'Frank Ruhl Libre',serif;color:#ffd9ef;font-size:30px;margin-bottom:6px">מוכנים לשקט?</div>
     <h2 class="title">השבת שלכם — מנוהלת עד הפרט האחרון</h2>
-    <p class="lead">הצטרפו למי שכבר הפכו את התכנון מלחץ לתהליך מסודר.</p>
+    <p class="lead">התחילו את התכנון בצורה מסודרת.</p>
     <button class="cta" data-buy style="background:#fff;color:var(--purple-d)">שדרוג למהדורת הפרימיום <span class="ar">←</span></button>
-    <div class="urgency">⏳ מחיר השדרוג לזמן מוגבל</div>
+    <div class="urgency">תשלום חד־פעמי · בלי מנוי חודשי</div>
   </div>
 </section>
 

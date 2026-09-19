@@ -46,8 +46,8 @@ exports.handler = async (event) => {
   const stamp = new Date().toISOString().replace('T', ' ').slice(0, 16);
   const norm = normalizePhone(phone);
 
-  // תקציר קצר לעמודת ההערות בגיליון
-  const summary = [b.couple_names, b.shabbat_date, b.area, b.guests && b.guests + ' אורחים', b.budget]
+  // תקציר קצר לעמודת ההערות בגיליון (כולל הסכמה לתכנים אם סומנה)
+  const summary = [b.couple_names, b.shabbat_date, b.area, b.guests && b.guests + ' אורחים', b.budget, b.consent ? 'הסכים לתכנים' : '']
     .filter(Boolean).join(' · ');
 
   // 1) רישום ב-Google Sheet (best-effort). עמודות: תאריך·מקור·שם·אימייל·טלפון·תקציב·אזור·סטטוס·תקציר·וואטסאפ
