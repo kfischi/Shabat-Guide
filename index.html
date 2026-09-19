@@ -320,18 +320,21 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
 #lg-go:hover{transform:translateY(-2px)}#lg-go:disabled{opacity:.7;transform:none}
 .lg-err{color:#c01a72;font-size:13.5px;margin-top:10px;min-height:16px}
 .lg-fine{color:var(--muted);font-size:12px;margin-top:12px;line-height:1.5}
+.lg-consent{display:flex;align-items:center;gap:8px;justify-content:center;font-size:13px;color:var(--muted);margin:2px 0 4px;cursor:pointer}
+.lg-consent input{width:16px;height:16px;flex:0 0 auto}
 </style>
 <div class="lead-gate" id="leadGate" role="dialog" aria-modal="true">
   <div class="lg-card">
     <div class="lg-badge">🌸 המדריך במתנה</div>
     <h2>רק רגע — לאן לשלוח את המדריך?</h2>
-    <p>נשלח לכם את המדריך המלא (30 שלבים) למייל, ותיכנסו אליו מיד. בחינם, בלי התחייבות.</p>
+    <p>השאירו שם ומייל, והמדריך המלא (30 שלבים) נפתח מיד וגם נשלח אליכם במייל.</p>
     <div class="lg-f"><input type="text" id="lg-name" placeholder="שם מלא" autocomplete="name"></div>
     <div class="lg-f"><input type="email" id="lg-email" placeholder="אימייל" inputmode="email" autocomplete="email"></div>
-    <div class="lg-f"><input type="tel" id="lg-phone" placeholder="טלפון" inputmode="tel" autocomplete="tel"></div>
+    <div class="lg-f"><input type="tel" id="lg-phone" placeholder="טלפון (לא חובה)" inputmode="tel" autocomplete="tel"></div>
+    <label class="lg-consent"><input type="checkbox" id="lg-consent"><span>אשמח לקבל תכנים נוספים בנושא שבת חתן</span></label>
     <button id="lg-go">שלחו לי את המדריך בחינם ←</button>
     <div class="lg-err" id="lg-err"></div>
-    <div class="lg-fine">אנחנו שומרים על הפרטים שלכם. בלי ספאם.</div>
+    <div class="lg-fine">המדריך יישלח למייל שהשארתם. בלי ספאם, אפשר להסיר בכל רגע.</div>
   </div>
 </div>
 
@@ -347,6 +350,7 @@ button:active,.games-cta a:active,.pf-btn:active{transform:scale(.97)}
     <div class="tagline">שבת שמתחילה בלב, נזכרת לתמיד</div>
     <h1>מדריך <span class="glow">שבת חתן</span></h1>
     <p class="sub">30 שלבים מעשיים שהופכים שבת אחת לחוויה שכל המשפחה תזכור — מהחזון ועד הפרידה.</p>
+    <p class="sub" style="font-size:15px;opacity:.85;margin-top:10px">נבנה מתוך העבודה היומיומית של Multibrawn — עם משפחות שמתכננות שבתות חתן, מתחמים, חדרים, כשרות וספקים.</p>
     <div class="hero-stats">
       <div class="s"><b>30</b><span>שלבים מעשיים</span></div>
       <div class="s"><b>7</b><span>קטגוריות</span></div>
@@ -733,12 +737,12 @@ function fireConfetti(){
   var btn=document.getElementById('lg-go'), err=document.getElementById('lg-err');
   function submit(){
     var name=v('lg-name'), email=v('lg-email'), phone=v('lg-phone');
-    if(!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !phone){ err.textContent='נא למלא שם, אימייל תקין וטלפון'; return; }
+    if(!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ err.textContent='נא למלא שם ואימייל תקין'; return; }
     btn.disabled=true; btn.textContent='רגע…';
     var eid=(window.mbEventId?mbEventId():''), ck=(window.mbCookies?mbCookies():{});
     try{ if(window.mbTrack) mbTrack('Lead',{content_name:'free-guide'},eid); }catch(e){}
     try{ fetch(LEAD_URL,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,
-      body:JSON.stringify({source:'free-guide',contact_name:name,email:email,phone:phone,event_id:eid,fbp:ck.fbp,fbc:ck.fbc,source_url:location.href})}).catch(function(){}); }catch(e){}
+      body:JSON.stringify({source:'free-guide',contact_name:name,email:email,phone:phone,consent:!!(document.getElementById('lg-consent')&&document.getElementById('lg-consent').checked),event_id:eid,fbp:ck.fbp,fbc:ck.fbc,source_url:location.href})}).catch(function(){}); }catch(e){}
     try{ localStorage.setItem(KEY,'1'); localStorage.setItem('mb_buyer',JSON.stringify({name:name,email:email,phone:phone})); }catch(e){}
     gate.style.display='none'; document.body.style.overflow='';
   }
