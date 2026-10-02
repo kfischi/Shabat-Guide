@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>פנייה לאירוע · MULTIBRAWN CHECK</title>
+<meta name="theme-color" content="#7C3AED">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;800&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/check/check.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="mark"><i></i>MULTIBRAWN CHECK</div>
+    <h1 id="title">פנייה לאירוע</h1>
+    <p class="lede" id="lede">טוענים את פרטי הפנייה…</p>
+  </header>
+
+  <section class="card" id="details" hidden>
+    <h2>פרטי האירוע</h2>
+    <dl class="brief" id="brief"></dl>
+  </section>
+
+  <form class="card" id="f" hidden novalidate>
+    <h2>התאריך פנוי אצלכם?</h2>
+    <div class="answer">
+      <button type="button" class="btn yes" data-a="1">פנוי</button>
+      <button type="button" class="btn no" data-a="0">לא פנוי</button>
+    </div>
+    <div id="pricebox" hidden style="margin-top:18px">
+      <div class="q"><label class="l" for="price">מחיר</label>
+        <div class="row">
+          <input type="number" id="price" inputmode="numeric" min="1" placeholder="לדוגמה: 280">
+          <div class="seg">
+            <label><input type="radio" name="price_type" value="per_guest" checked><span>₪ למנה</span></label>
+            <label><input type="radio" name="price_type" value="total"><span>₪ סה"כ</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="q" id="notebox" hidden style="margin-top:18px"><label class="l" for="note">הערה <span class="hint">לא חובה</span></label>
+      <textarea id="note" maxlength="300" placeholder="לדוגמה: המחיר כולל בר, מינימום 150 מנות"></textarea></div>
+    <div class="nav" id="sendbox" hidden><button type="submit" class="btn" id="send">שליחת תשובה</button></div>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+
+  <section class="card" id="done" hidden>
+    <div class="done">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+      <div><h2 style="margin:0 0 4px">התשובה התקבלה, תודה</h2>
+        <p class="hint" id="donetext" style="margin:0"></p>
+        <button type="button" class="btn ghost" id="edit" style="margin-top:14px;min-height:44px">עדכון התשובה</button></div>
+    </div>
+  </section>
+
+  <p class="foot">MULTIBRAWN · <a href="https://multibrawn.co.il">multibrawn.co.il</a></p>
+</div>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var token = new URLSearchParams(location.search).get('t') || '';
+  var answer = null;
+
+  function fail(msg) { $('#title').textContent = 'הקישור לא נפתח'; $('#lede').textContent = msg; }
+
+  function priceText(d) {
+    return d.price ? Number(d.price).toLocaleString('en-US') + ' ₪ ' + (d.price_type === 'total' ? 'סה"כ' : 'למנה') : '';
+  }
+
+  function render(d) {
+    $('#title').textContent = d.venue ? 'פנייה ל' + d.venue : 'פנייה לאירוע';
+    $('#lede').textContent = d.closed ? 'הפנייה הזו כבר סגורה. תודה!' : 'יש לקוח לאירוע שמתאים למקום שלכם. אפשר לענות בלחיצה.';
+    var dl = $('#brief'); dl.innerHTML = '';
+    d.brief.forEach(function (row) {
+      var dt = document.createElement('dt'); dt.textContent = row[0];
+      var dd = document.createElement('dd'); dd.textContent = row[1];
+      dl.appendChild(dt); dl.appendChild(dd);
+    });
+    $('#details').hidden = false;
+    var answered = d.status === 'available' || d.status === 'unavailable';
+    if (answered) {
+      $('#donetext').textContent = d.status === 'available' ? 'סימנתם: פנוי · ' + priceText(d) : 'סימנתם: לא פנוי';
+      $('#edit').hidden = !!d.closed;
+      $('#done').hidden = false; $('#f').hidden = true;
+      if (d.price) $('#price').value = d.price;
+      if (d.price_type) document.querySelector('input[name=price_type][value="' + d.price_type + '"]').checked = true;
+      $('#note').value = d.note || '';
+    } else if (!d.closed) {
+      $('#f').hidden = false;
+    }
+  }
+
+  function choose(a) {
+    answer = a;
+    $('.yes').classList.toggle('sel', a === true);
+    $('.no').classList.toggle('sel', a === false);
+    $('#pricebox').hidden = !a;
+    $('#notebox').hidden = false; $('#sendbox').hidden = false;
+    $('#err').textContent = '';
+    if (a) $('#price').focus();
+  }
+  $('.yes').addEventListener('click', function () { choose(true); });
+  $('.no').addEventListener('click', function () { choose(false); });
+  $('#edit').addEventListener('click', function () { $('#done').hidden = true; $('#f').hidden = false; });
+
+  $('#f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (answer === null) { $('#err').textContent = 'נא לבחור פנוי או לא פנוי'; return; }
+    if (answer && !(+$('#price').value > 0)) { $('#err').textContent = 'נא לציין מחיר'; return; }
+    var btn = $('#send'); btn.disabled = true; btn.textContent = 'שולחים…';
+    fetch('/check/api/inquiry', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ t: token, available: answer, price: $('#price').value, price_type: (document.querySelector('input[name=price_type]:checked') || {}).value, note: $('#note').value }),
+    })
+      .then(function (r) { return r.json().catch(function () { return {}; }); })
+      .then(function (d) { if (!d.ok) throw new Error(d.error || 'תקלה בשליחה. אפשר לנסות שוב.'); render(d); })
+      .catch(function (err) { $('#err').textContent = err.message; })
+      .then(function () { btn.disabled = false; btn.textContent = 'שליחת תשובה'; });
+  });
+
+  if (!token) return fail('חסר קוד פנייה בקישור. אפשר לפנות לערדית בוואטסאפ.');
+  fetch('/check/api/inquiry?t=' + encodeURIComponent(token))
+    .then(function (r) { return r.json().catch(function () { return {}; }); })
+    .then(function (d) { if (!d.ok) throw new Error(d.error || 'הקישור לא תקין'); render(d); })
+    .catch(function (err) { fail(err.message + '. אפשר לפנות לערדית בוואטסאפ.'); });
+})();
+</script>
+</body>
+</html>
