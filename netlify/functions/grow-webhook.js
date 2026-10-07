@@ -191,7 +191,13 @@ exports.handler = async (event) => {
       await fetch(HOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: 'mb-lead-2026-a7k9x2', action: 'guideEmail', email, name, link }),
+        // שולחים גם את פרטי ההתראה לערדית (אימייל + טלפון + כפתור וואטסאפ מוכן),
+        // כדי שה-Apps Script יוכל לשלוח הכול מ-Gmail בלי צורך ב-Resend.
+        body: JSON.stringify({
+          token: 'mb-lead-2026-a7k9x2', action: 'guideEmail',
+          email, name, link,
+          arditEmail: process.env.ARDIT_EMAIL || '', phone: phone || rawPhone, amount, waUrl,
+        }),
       });
     } catch (e) {
       console.error('[grow-webhook] guide email webhook:', String(e && e.message));
