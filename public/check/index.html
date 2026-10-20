@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MULTIBRAWN CHECK · מקום לאירוע בבקשה אחת</title>
+<meta name="description" content="ממלאים פעם אחת מה מחפשים: תאריך, אורחים, אזור, תקציב והכשר מדויק. אנחנו בודקים מול המקומות שעובדים איתנו מי פנוי ובכמה.">
+<meta name="theme-color" content="#7C3AED">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;800&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/check/check.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="mark"><i></i>MULTIBRAWN CHECK</div>
+    <h1>בקשה אחת. <em>המקומות עונים בכתב.</em></h1>
+    <p class="lede">כותבים פעם אחת מה מחפשים לאירוע. אנחנו בודקים מול המקומות שעובדים איתנו מי פנוי ובכמה, בלי עשרות טלפונים.</p>
+    <ul class="how">
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>הכשר מדויק, לא "כשר" כללי</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>אולמות, יקבים, מלונות ומתחמים</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>כ-2 דקות מילוי</li>
+    </ul>
+  </header>
+
+  <form id="f" novalidate>
+    <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <p class="stepname" id="stepname"></p>
+
+    <!-- 1 · האירוע -->
+    <section class="card step" data-name="האירוע">
+      <h2>על האירוע</h2>
+      <fieldset class="q"><legend>מי פונה?</legend><div class="chips" data-radio="who" data-opts="who"></div></fieldset>
+      <fieldset class="q"><legend>סוג האירוע</legend><div class="chips" data-radio="event_type" data-opts="eventTypes"></div></fieldset>
+      <div class="q"><label class="l" for="guests">כמה אורחים? <span class="hint">הערכה מספיקה</span></label>
+        <input type="number" id="guests" name="guests" inputmode="numeric" min="10" max="3000" placeholder="לדוגמה: 180"></div>
+    </section>
+
+    <!-- 2 · מתי -->
+    <section class="card step" data-name="מתי" hidden>
+      <h2>מתי?</h2>
+      <div class="q"><label class="l" for="event_date">תאריך האירוע</label>
+        <input type="date" id="event_date" name="event_date"></div>
+      <fieldset class="q"><legend>שעה ביום</legend><div class="chips" data-radio="time_of_day" data-opts="timeOfDay"></div></fieldset>
+      <div class="q">
+        <label class="toggle"><input type="checkbox" id="date_flexible"> התאריך גמיש</label>
+        <input type="text" id="flex_note" maxlength="120" placeholder="לדוגמה: כל חמישי בנובמבר" hidden style="margin-top:10px">
+      </div>
+    </section>
+
+    <!-- 3 · איפה -->
+    <section class="card step" data-name="איפה" hidden>
+      <h2>איפה?</h2>
+      <fieldset class="q"><legend>אזור <span class="hint">אפשר לבחור כמה</span></legend><div class="chips" data-multi="areas" data-opts="areas"></div></fieldset>
+      <fieldset class="q"><legend>סוג מקום <span class="hint">לא חובה. בלי בחירה = פתוחים לכל סוג</span></legend><div class="chips" data-multi="venue_types" data-opts="venueTypes"></div></fieldset>
+    </section>
+
+    <!-- 4 · דרישות -->
+    <section class="card step" data-name="דרישות" hidden>
+      <h2>מה חייב להיות?</h2>
+      <fieldset class="q"><legend>הכשר נדרש <span class="hint">אפשר לבחור כמה</span></legend><div class="chips" data-multi="kashrut" data-opts="kashrut"></div></fieldset>
+      <div class="q"><label class="l" for="budget_amount">תקציב <span class="hint">לא חובה, אבל עוזר לסנן</span></label>
+        <div class="row">
+          <input type="number" id="budget_amount" inputmode="numeric" min="0" placeholder="עד כמה?">
+          <div class="seg" id="budget_type">
+            <label><input type="radio" name="budget_type" value="per_guest" checked><span>₪ למנה</span></label>
+            <label><input type="radio" name="budget_type" value="total"><span>₪ סה"כ</span></label>
+          </div>
+        </div>
+      </div>
+      <fieldset class="q"><legend>דרישות חובה</legend><div class="chips" data-multi="must_haves" data-opts="mustHaves"></div></fieldset>
+      <div class="q"><label class="l" for="notes">עוד משהו שחשוב לדעת? <span class="hint">לא חובה</span></label>
+        <textarea id="notes" maxlength="500" placeholder="לדוגמה: חצי מהאורחים מבוגרים, צריך מעלית"></textarea></div>
+    </section>
+
+    <!-- 5 · פרטים -->
+    <section class="card step" data-name="פרטים" hidden>
+      <h2>לאן לחזור אליכם?</h2>
+      <div class="q"><label class="l" for="name">שם</label><input type="text" id="name" autocomplete="name" maxlength="80"></div>
+      <div class="q"><label class="l" for="phone">טלפון <span class="hint">נחזור בוואטסאפ</span></label><input type="tel" id="phone" autocomplete="tel" inputmode="tel" placeholder="050-0000000"></div>
+      <div class="q"><label class="l" for="email">אימייל <span class="hint">לא חובה</span></label><input type="email" id="email" autocomplete="email"></div>
+      <div class="hp" aria-hidden="true"><input type="text" id="company_website" tabindex="-1" autocomplete="off"></div>
+      <label class="consent"><input type="checkbox" id="consent">
+        <span>הבנתי: ערדית עוברת על כל בקשה. אם היא מתאימה, יישלח אליי קישור לדמי שירות של 50 ₪ (לא מוחזרים, עם מדריך במתנה), ורק אז הבקשה יוצאת למקומות. השם והטלפון שלי לא נמסרים למקום בלי אישור.</span></label>
+    </section>
+
+    <div class="nav">
+      <button type="button" class="btn ghost" id="back" hidden>חזרה</button>
+      <button type="submit" class="btn" id="next">המשך</button>
+    </div>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+
+  <!-- תוצאה -->
+  <section class="card" id="result" hidden>
+    <h2>הבקשה התקבלה</h2>
+    <p class="hint" style="margin:0 0 6px">זה הסיכום שיוצא למקומות (בלי השם והטלפון שלכם):</p>
+    <p class="summary" id="summary"></p>
+    <ol class="next">
+      <li>ערדית עוברת על הבקשה וחוזרת אליכם בוואטסאפ.</li>
+      <li>אחרי אישור ותשלום דמי השירות, הבקשה יוצאת ל-3 עד 4 מקומות מתאימים.</li>
+      <li>מקבלים מאיתנו את המקומות שפנויים, עם מחיר, ומתאמים פגישה.</li>
+    </ol>
+  </section>
+
+  <p class="foot">MULTIBRAWN · <a href="https://multibrawn.co.il">multibrawn.co.il</a></p>
+</div>
+
+<script src="/check/options.js"></script>
+<script>
+(function () {
+  var O = window.MB_CHECK;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  // צ'יפים מתוך options.js (מקור אמת אחד עם השרת)
+  $$('[data-opts]').forEach(function (box) {
+    var name = box.getAttribute('data-radio') || box.getAttribute('data-multi');
+    var type = box.hasAttribute('data-radio') ? 'radio' : 'checkbox';
+    box.innerHTML = O[box.getAttribute('data-opts')].map(function (v) {
+      return '<label class="chip"><input type="' + type + '" name="' + name + '" value="' + v.replace(/"/g, '&quot;') + '"><span>' + v + '</span></label>';
+    }).join('');
+  });
+
+  // "לא משנה" בהכשר מבטל בחירות אחרות, ולהפך
+  $('[data-multi="kashrut"]').addEventListener('change', function (e) {
+    var any = e.target.value === 'לא משנה';
+    $$('input[name="kashrut"]').forEach(function (c) {
+      if (c !== e.target && e.target.checked && (any || c.value === 'לא משנה')) c.checked = false;
+    });
+  });
+
+  var today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  $('#event_date').min = today;
+  $('#date_flexible').addEventListener('change', function () { $('#flex_note').hidden = !this.checked; });
+
+  var v = function (id) { return ($('#' + id).value || '').trim(); };
+  var radio = function (n) { var c = $('input[name="' + n + '"]:checked'); return c ? c.value : ''; };
+  var multi = function (n) { return $$('input[name="' + n + '"]:checked').map(function (c) { return c.value; }); };
+
+  // בדיקה קלה לכל שלב (השרת מאמת שוב הכול)
+  var checks = [
+    function () {
+      if (!radio('who')) return 'נא לבחור מי פונה';
+      if (!radio('event_type')) return 'נא לבחור סוג אירוע';
+      var g = +v('guests'); if (!(g >= O.limits.guestsMin && g <= O.limits.guestsMax)) return 'נא למלא כמות אורחים';
+    },
+    function () { if (!v('event_date')) return 'נא לבחור תאריך'; if (v('event_date') < today) return 'התאריך כבר עבר'; },
+    function () { if (!multi('areas').length) return 'נא לבחור לפחות אזור אחד'; },
+    function () { if (!multi('kashrut').length) return 'נא לבחור הכשר (או "לא משנה")'; },
+    function () {
+      if (!v('name')) return 'נא למלא שם';
+      if (v('phone').replace(/\D/g, '').length < 9) return 'נא למלא מספר טלפון';
+      if (!$('#consent').checked) return 'נא לאשר את תנאי השירות';
+    },
+  ];
+
+  var steps = $$('.step'), bars = $$('.progress span'), cur = 0, sending = false;
+  function show(i) {
+    cur = i;
+    steps.forEach(function (s, k) { s.hidden = k !== i; });
+    bars.forEach(function (b, k) { b.classList.toggle('on', k <= i); });
+    $('#stepname').textContent = 'שלב ' + (i + 1) + ' מתוך ' + steps.length + ' · ' + steps[i].getAttribute('data-name');
+    $('#back').hidden = i === 0;
+    $('#next').textContent = i === steps.length - 1 ? 'שליחת הבקשה' : 'המשך';
+    $('#err').textContent = '';
+  }
+  function top() { $('#f').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+  $('#back').addEventListener('click', function () { show(cur - 1); top(); });
+
+  $('#f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (sending) return;
+    var msg = checks[cur]();
+    if (msg) { $('#err').textContent = msg; return; }
+    if (cur < steps.length - 1) { show(cur + 1); top(); return; }
+
+    var data = {
+      who: radio('who'), event_type: radio('event_type'), guests: v('guests'),
+      event_date: v('event_date'), time_of_day: radio('time_of_day'),
+      date_flexible: $('#date_flexible').checked, flex_note: v('flex_note'),
+      areas: multi('areas'), venue_types: multi('venue_types'),
+      kashrut: multi('kashrut'), budget_amount: v('budget_amount'), budget_type: radio('budget_type'),
+      must_haves: multi('must_haves'), notes: v('notes'),
+      name: v('name'), phone: v('phone'), email: v('email'),
+      consent: $('#consent').checked, company_website: v('company_website'),
+      source: new URLSearchParams(location.search).get('src') || 'site',
+    };
+    sending = true; $('#next').disabled = true; $('#next').textContent = 'שולחים…';
+    fetch('/check/api/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().catch(function () { return {}; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.error || 'תקלה בשליחה. אפשר לנסות שוב.');
+        $('#summary').textContent = res.summary;
+        $('#f').hidden = true; $('#result').hidden = false;
+        $('#result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      })
+      .catch(function (err) {
+        $('#err').textContent = err.message;
+        sending = false; $('#next').disabled = false; $('#next').textContent = 'שליחת הבקשה';
+      });
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

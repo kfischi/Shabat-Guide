@@ -8,6 +8,6 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node test/run.js"
+    "test": "node test/run.js && node test/check.js"
   }
 }

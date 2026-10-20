@@ -65,3 +65,26 @@
   from = "/free-guide"
   to = "/.netlify/functions/free-guide"
   status = 200
+
+# ── MULTIBRAWN CHECK ── שאלון התאמת מקום לאירוע + תשובת המקום.
+# הכול תחת /check כדי שהאתר הראשי (multibrawn.co.il) יוכל להגיש אותו בכלל proxy אחד.
+[[redirects]]
+  from = "/check/api/request"
+  to = "/.netlify/functions/check-request"
+  status = 200
+
+[[redirects]]
+  from = "/check/api/inquiry"
+  to = "/.netlify/functions/check-inquiry"
+  status = 200
+
+[[redirects]]
+  from = "/check/api/admin"
+  to = "/.netlify/functions/check-admin"
+  status = 200
+
+[[headers]]
+  for = "/check/v/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Referrer-Policy = "no-referrer"
